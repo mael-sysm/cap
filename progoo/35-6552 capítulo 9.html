@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<head>
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Language" content="es">
+
+  <title>35-6552 capítulo 9</title>
+  
+    <!-- Librería y hoja de estilos KATEX  -->
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/katex/katex.min.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/katex/katex.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/katex/contrib/auto-render.min.js"></script>
+
+    <!-- Librerías y hojas de estilo CodeMirror -->
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/lib/codemirror.min.css">
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/theme/mdn-like.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/lib/codemirror.min.js"></script>
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/fold/foldgutter.min.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/fold/foldcode.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/fold/brace-fold.min.js"></script>
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/dialog/dialog.min.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/dialog/dialog.min.js"></script>
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/hint/show-hint.min.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/hint/show-hint.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/hint/javascript-hint.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/search/searchcursor.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/search/search.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/edit/matchbrackets.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/edit/closebrackets.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/comment/comment.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/wrap/hardwrap.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/javascript/javascript.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/mathematica/mathematica.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/octave/octave.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/python/python.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/css/css.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/xml/xml.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/markdown/markdown.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/htmlmixed/htmlmixed.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/keymap/sublime.min.js"></script>
+
+    <!-- Librería Plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script><style id="plotly.js-style-global"></style>
+
+    <!-- Librerías y hojas de estilo function-plot -->
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/function-plot/site/js/vendor/d3.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/function-plot/dist/function-plot.js"></script>
+    
+    <!-- Librería quantities -->
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/quantities/quantities.min.js"></script>
+
+    <!-- Librería GoJs para la creación de diagramas de flujo -->
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/gojs/release/go.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/flowchart_gojs.js"></script>
+
+    <!-- Librerías matemáticas propias -->
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/math.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/number.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/array.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/string.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/cplx.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/function.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/object.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/prq.js"></script>
+
+    <!-- Librería y hoja de estilos propias para la creación y manejo de la calculadora  -->
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/src/cjs.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/cjs.js"></script>
+
+    <!-- Librería y hoja de estilos propias para la creación y manejo de los capítulos -->
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/src/texto.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/texto.js"></script>
+
+   <!-- Librería del capítulo actual -->
+    <script src="https://cursosabiertos.usfx.bo/materias/progoo/capitulos/capitulo9/files/capitulo9.js"></script>
+
+    <!-- Fuentes empleadas en el capítulo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300;400;500;600;700;800&amp;family=Roboto+Mono&amp;display=swap" rel="stylesheet">
+
+    <script>
+        function katexRender() {
+            renderMathInElement(document.getElementById("capitulo"));
+        }
+        document.addEventListener("DOMContentLoaded", katexRender);
+        window.onerror = function(msg, url, lineNo, columnNo, error) {
+            __error__ = msg;
+        };
+        window.onload = function(){
+            capitulo.iniciar();
+        };
+    </script>
+
+</head>
+
+<body class="text">  
+
+
+<div id="capitulo">
+
+    <button id="btGuardar" style="z-index:15;" onclick="savePage()">Guardar</button>
+
+    <h1 class="text" style="cursor: pointer;">Arreglos 2</h1>
+
+    <p class="text">Si bien la forma correcta de crear las clases, respetando los 4 principios de la POO, es la empleada en el capítulo 7, por claridad, en este y en los siguientes capítulos se es mucho más flexible y por ejemplo, no siempre se declararán todas las propiedades como privadas, no se escribirán todos los métodos getter/setter y no se sobreescribirán todos los métodos "toString" y "valueOf".</p>
+
+    <p class="text">En este capítulo se resuelven algunos problemas que involucran vectores. Para ese fin se emplean las estructuras <strong class="style1">for</strong> y <strong class="style1">for-of</strong>, así como los métodos iterativos disponibles para el trabajo con matrices. En general, los problemas que involucran arreglos, se resuelven de forma más sencilla (aunque no siempre más eficiente) empleando los métodos disponibles.</p>
+
+    <p class="text">Por ejemplo, para calcular el valor de la siguiente expresión:</p>
+
+    <table class="ecuacionsn">
+        <tbody><tr>
+            <td>
+                \[ \sum_{i=1}^{n}{v_i} \]
+            </td>
+            <td></td>
+        </tr>
+    </tbody></table>
+
+    <p class="text">Es decir, calcular la sumatoria de los elementos de un vector "v", como el siguiente:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">v = [1, 2, 4, 5, 6, 8, 12, 23, 25, 42, 2, 6, 7, 3, 112];</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">La forma más simple consiste en llamar al método <dfn class="style1">sum</dfn>:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">v.sum()</div>
+        <div class="resultado"></div>
+    </div>
+    
+    <p class="text">Igualmente (sobre todo si no se trabaja en la calculadora) se puede recurrir al método <dfn class="style">reduce</dfn>:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">v.reduce((s,e)=&gt;s+e)</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Es posible, también, emplear el método <dfn class="style1">forEach</dfn>:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">s = 0;<br>v.forEach(e =&gt; s+=e);<br>s</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">En este caso, como <b>forEach</b> simplemente ejecuta la función para cada uno de los elementos del array (v), el acumulador "s" debe ser iniciado antes del método y mostrado al final del mismo.</p>
+    
+    <p class="text">Se puede emplear también la estructura <b class="style1">for-of</b>, que es una variante de la estructura <b class="style1">for</b> y que tiene la siguiente sintaxis:</p>
+
+    <p style="text-align: center;"><span style="color:blue;font-weight:bold;">for</span> (<span style="color:green">e</span> <span style="color:blue;font-weight:bold;">of</span> <span style="color:green">array</span>) <span style="color: #0e9678;">instrucciones</span>;</p>
+
+    <p class="text">Donde las <dfn class="style1">instrucciones</dfn> son ejecutadas para cada uno de los elementos <dfn class="style1">e</dfn> del <dfn class="style1">array</dfn>. Estando el elemento <dfn class="style1">e</dfn> disponible en las instrucciones del ciclo.</p>
+
+    <p class="text">Empleando esta estructura, la solución es similar a la del método <b>forEach</b>:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">s = 0;<br>for (let e of v) s+=e;<br>s</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Como <dfn class="style1">for-of</dfn> no recibe una función, sino que ejecuta directamente las instrucciones, se escribe la expresión que suma los elementos "e" del vector.</p>
+
+    <p class="text">Por supuesto, también se puede emplear la recursividad para resolver este tipo de problemas. Así, con una función flecha recursiva inmediatamente invocada, la solución es:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">(sum=(v,i=v.length-1)=&gt;i===0?v[0]:sum(v,i-1)+v[i])(v)</div>
+        <div class="resultado"></div>
+    </div>
+    
+    <p class="text">Como ya se vio previamente, una sumatoria (o productoria) con límites definidos, puede ser traducida directamente en un ciclo <dfn class="style1">for</dfn>, siendo los límites del ciclo los límites de la sumatoria (o productoria) y la variable de la sumatoria (o productoria) el contador del ciclo. El acumulador (la variable que almacena el resultado) debe iniciar en 0 si es una sumatoria y en 1 si es una productoria.</p>
+
+    <p class="text">Así, para calcular la sumatoria con la estructura <dfn class="style1">for</dfn>, se escribe:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">s = 0;<br>for (let i=0; i&lt;v.length; i++) s+=v[i];<br>s</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Es importante recordar que cuando se trabaja con vectores (y objetos en general) las variables son <strong class="style1">punteros</strong>, es decir <strong class="style1">variables que guardan la dirección de memoria del objeto</strong> no el objeto en sí. Por esa razón, para efectivamente copiar un vector, se debe emplear el método <dfn class="style1">slice</dfn> (o si se trabaja en la calculadora, se puede emplear también el método <dfn class="style1">copy</dfn>).</p>
+
+
+
+    <h2 class="text">Añadir métodos y atributos a una clase</h2>
+
+    <p class="text">Aunque no es una práctica recomendada, en ocasiones resulta útil añadir un nuevo método (rara vez un nuevo atributo) a una clase.</p>
+
+    <p class="text">En JavaScript, es posible añadir nuevos atributos (propiedades) y métodos estáticos y dinámicos, a las clases tanto predefinidas, como creadas. Como se recordará, los métodos/atributos estáticos son aquellos que pertenecen únicamente a la clase, los objetos de esa clase no tienen acceso directo a los atributos estáticos y los métodos estáticos no tienen acceso directo a los atributos de los objetos de esa clase. Los métodos y atributos estáticos se comportan igual que las variables y funciones de la PE, sólo que deben ser llamadas escribiendo previamente el nombre de la clase (y un punto), tal como se ha hecho con <dfn class="style1">Math</dfn>, que sólo cuenta con métodos (funciones) y atributos (variables) estáticos.</p>
+
+    <p class="text">Los métodos y atributos dinámicos, por otra parte, son propiamente métodos y atributos de la POO. Los métodos dinámicos de una clase tienen acceso a los atributos de los objetos de esa clase y los objetos de una clase tienen acceso directo a los métodos de esa clase. Los atributos dinámicas permiten proteger los datos del objeto (el <dfn class="sytyle1">estado</dfn> del objeto) validando los valores recibidos y permitiendo que sólo se tenga acceso a un conjunto limitado de los atributos desde los objetos de la clase o desde otras la clases.</p>
+
+    <p class="text">Los métodos y atributos estáticos se añaden a la clase, simplemente escribiendo el nombre del nuevo método (o propiedad) al nombre de la clase (separados con un punto) y asignándole la nueva función (o valor). Por ejemplo en las siguientes instrucciones se añaden a <dfn class="style1">Math</dfn> la propiedad "miNúmero", con el valor 5 y el método "cubo", que calcula el cubo del número que recibe. Luego se emplea el nuevo método y el nuevo atributo:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">Math.miNúmero = 5;</div>
+        <div class="resultado"></div>
+        <div class="instruccion">Math.cubo = x =&gt; x*x*x;</div>
+        <div class="resultado"></div>
+        <div class="instruccion">Math.cubo(Math.miNúmero)</div>
+        <div class="resultado"></div>
+    </div>
+    
+    <p class="text">Los métodos dinámicos estándar, se añaden a la propiedad <strong class="style1">prototype</strong> de la clase, en la práctica, casi nunca se añaden nuevas propiedades dinámicas, porque no es útil que todos los objetos de una clase tengan un atributo con el mismo valor. Por ejemplo, en las siguientes instrucciones se añade a la clase <dfh class="style1">Number</dfh> el método dinámico "cubo" (que calcula el cubo del número). Luego se emplea el nuevo método para calcular el cubo de los números 5 y 7:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">Number.prototype.cubo = function() {<br>  return this*this*this;<br>};</div>
+        <div class="resultado"></div>
+        <div class="instruccion">(5).cubo()</div>
+        <div class="resultado"></div>
+        <div class="instruccion">(7).cubo()</div>
+        <div class="resultado"></div>
+    </div>
+    
+    <p class="text">Como se muestra en el ejemplo, el nuevo método se añade como una función anónima. En estos casos no se puede emplear una función flecha, porque las funciones flecha no tienen la variable <strong class="style1">this</strong> (como se recordará "this" es el nombre que le da JavaScript al objeto desde el cual se llama al método).</p>
+
+    <p class="text">Observe que el nuevo método es llamado directamente desde dos números. Esto es posible porque JavaScript convierte automáticamente el número en un objeto de tipo Number y luego llama al método desde ese objeto. Se emplean los paréntesis únicamente para que el punto del método no sea confundido con el punto decimal. En lugar de escribir paréntesis, se pude emplear igualmente un espacio:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">5 .cubo()</div>
+        <div class="resultado"></div>
+        <div class="instruccion">7 .cubo()</div>
+        <div class="resultado"></div>
+    </div>
+    
+    <p class="text">Para añadir métodos getter/setter, se debe emplear el método estático <strong class="style1">defineProperty</strong> de la clase <strong class="style1">Object</strong>, de acuerdo a la siguiente sintaxis:</p>
+    
+    <div class="codigo">Object.defineProperty(objeto o clase, propiedad, {<br><br>    get() {<br>        ...<br>    },<br><br>    set(valor) {<br>        ...<br>    },<br><br>    enumerable: true/false,<br><br>    configurable: true/false<br><br>})</div>
+    
+    <p class="text">Donde solo es imprescindible definir un método getter (<dfn class="style1">get</dfn>) o setter (<dfn class="style1">set</dfn>), el resto las propiedades son opcionales.</p>
+    
+    <p class="text">Por defecto <dfn class="style1">enumerable</dfn> y <dfn class="style1">configurable</dfn> son falsos, lo que implica que él o los métodos definidos no aparecen como propiedades de la clase (enumerable) y que no pueden ser modificados (configurable). Dado que, casi siempre, es necesario modificar o corregir el código, <b>es prácticamente imprescindible</b> (cuando se trabaja en la calculadora Javascript) <b>colocar la propiedad configurable en true</b>.</p>
+
+    <p class="text">Con el método <dfn class="style1">defineProperty</dfn> se puede añadir también una propiedad a la clase, de acuerdo a la siguiente sintaxis:</p>
+
+    <div class="codigo">Object.defineProperty(objeto o clase, propiedad, {<br><br>  value: valor,<br><br>  writable: true/false,<br><br>  enumerable: true/false,<br><br>  configurable: true/false<br>  <br>})</div>
+
+    <p class="text">Donde sólo es necesario asignar el valor a la propiedad <dfn class="style1">value</dfn>. El resto de las campos son opcionales y por defecto tienen un valor igual a <dfn class="style1">false</dfn>, que, en el caso de <dfn class="style1">writable</dfn>, significa que el valor asignado a la propiedad no puede ser modificado.</p>
+
+    <p class="text">Para definir dos o más métodos (o propiedades) al mismo tiempo, una mejor alternativa es el método estático <dfn class="style1">defineProperties</dfn>, que tiene la sintaxis:</p>
+
+    <div class="codigo">Object.defineProperties(objeto o clase, {<br><br>  propiedad1/método1: {<br>      ...<br>  },<br><br>  propiedad2/método2: {<br>      ...<br>  },<br><br>  ...<br><br>  propiedadn/métodon: {<br>      ...<br>  }<br><br>})</div>
+
+    <p class="text">Donde, cada propiedad/método, puede tener todos los campos mostrados en <dfn class="style1">defineProperty</dfn>.</p>
+
+    <p class="text">Sin embargo, se recalca que el añadir propiedades y métodos dinámicos a una clase predefinida, <b>no</b> es una práctica aconsejable, porque los métodos dinámicos afectan a todos los objetos creados a partir de esa clase. En la asignatura se añaden porque simplifica la elaboración de programas en la calculadora y porque, los cambios hechos, sólo afecta al código escrito en el capítulo.</p>
+
+
+
+    <h2 class="text">Ejemplos</h2>
+
+    <h3 class="text">Promedio de un vector de números</h3>
+
+    <p class="text">En este ejemplo se programa un método para calcular el promedio de los elementos de un vector:</p>
+
+    <table class="ecuacionsn">
+        <tbody><tr>
+            <td>
+                \[ \bar{x}  = \dfrac{\displaystyle\sum_{i=0}^{n-1}{x_i}}{n} \]
+            </td>
+            <td></td>
+        </tr>
+    </tbody></table> 
+
+    <p class="text">Para ese fin se crea la clase "SV", donde el vector se recibe en la propiedad privada "x". El promedio se calcula en el método getter "promedio" y se programan el método getter para devolver el valor de la propiedad privada "x":</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">SV = class {<br>  <br>  #x;<br><br>  constructor(...elementos) {<br>    this.#x = elementos;<br>  }<br><br>	get promedio() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n===0) throw new Error("vector vacío");<br>    let s = 0;<br>    for (let i=0; i&lt;n; i++) s+=x[i];<br>    return s/n;<br>  }<br><br>	get x() {<br>    return this.#x;<br>  }<br><br>};</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Observe que en el constructor se ha empleado un parámetro de tipo <b class="style1">rest</b> (resto), el cual se identifica escribiendo 3 puntos delante del nombre del parámetro (<b>...elementos</b>). Los parámetros de tipo <b class="style1">rest</b> deben ser o el único parámetro de la función o el último de los parámetros de la función. Un parámetro <b>rest</b> crea un array con todos los datos que recibe, por eso es empleado en el constructor, para que todos los datos que se pasen al mismo sean convertidos en un array.</p>
+
+    <p class="text">Las constantes "x" y "n"", en el getter "promedio", se declaran por comodidad y claridad, para no tener que trabajar con "this.x" y "this.x.length".</p>
+
+    <p class="text">Llamando al método con algunos valores de prueba, se obtiene:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">v1 = new SV(1, 9, 12, 3, 5, 7, 12); print(v1.x)</div>
+        <div class="resultado"></div>
+        <div class="instruccion">v1.promedio</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">No obstante, si el objeto se emplea únicamente para hacer una llamado (como ocurre en este caso) lo más práctico es crear el objeto y llamar al método directamente desde el objeto creado (sin guardar el objeto en una variable):</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">new SV(1, 9, 12, 3, 5, 7, 12).promedio</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Se procede de manera similar en el siguiete ejemplod, donde primero se genera un vector con 20 números enteros aleatorios comprendidos entre 1 y 30. Luego se crea un objeto de la clase SV con los elementos de ese vector y se llama al getter "promedio":</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">randseed = 1;<br>b = [].rand(20, 1, 30).round(); print(b);<br>new SV(...b).promedio</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">En este ejemplo, para que el constructor de la clase reciba los elementos del vector (no el vector), se emplea el operador <b class="style1">spread</b> (esparcir) que tiene el mismo símbolo que el operador <b class="style1">rest</b> (es decir 3 puntos consecutivos <b class="style1">...</b>), pero que hace lo contrario, es decir, convierte un array en una secuencia de valores separados con comas (que son los datos que requiere el constructor de la clase).</p>
+
+    <p class="text">Observe también que antes de generar el vector con números aleatorios, se inicia la semilla (<dfn class="style1">randseed</dfn>) en 1, para que genere siempre la misma secuencia de números pseudoaleatorios (de manera que el ejemplo pueda ser repetido). Recuerde que para volver a generar números realmente aleatorios, se debe asignar <i class="style1">null</i> a la variable <i class="style1">randseed</i> ).</p>
+
+    <p class="text">Otros ejemplos similares, pero generando los vectores con los métodos <dfn class="style1">range</dfn> y <dfn class="style1">linspace</dfn>, son:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">c = [].range(17, 51, 2); print(c);<br>new SV(...c).promedio</div>
+        <div class="resultado"></div>
+        <div class="instruccion">d = [].linspace(5, 10, 21); print(d);<br>new SV(...d).promedio</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Por supuesto, el problema puede ser resuelto con otras estructuras y métodos, así con la estructura <i class="style1">for-of</i>, la solución, es:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">Object.defineProperty(SV.prototype, "promedioa", {<br><br>  get() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n===0) throw new Error("vector vacío");<br>    let s = 0;<br>    for (let e of x) s+=e;<br>    return s/n;<br>  },<br><br>  configurable: true<br><br>});</div>
+        <div class="resultado"></div>
+        <div class="instruccion">new SV(1, 9, 12, 3, 5, 7, 12).promedioa</div>
+        <div class="resultado"></div>
+        <div class="instruccion">randseed = 1;<br>b = [].rand(20, 1, 30).round(); print(b);<br>new SV(...b).promedioa</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">El problema resuelto con el método <dfn class="style1">forEach</dfn>, es:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">Object.defineProperty(SV.prototype, "promediob", {<br>                      <br>  get() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n===0) throw new Error("vector vacío");<br>    let s = 0;<br>    x.forEach(e=&gt;s+=e);<br>    return s/n;<br>  },<br><br>  configurable: true<br><br>});</div>
+        <div class="resultado"></div>
+        <div class="instruccion">new SV(1, 9, 12, 3, 5, 7, 12).promediob</div>
+        <div class="resultado"></div>
+        <div class="instruccion">randseed = 1;<br>b = [].rand(20, 1, 30).round(); print(b);<br>new SV(...b).promediob</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Como se vio en el anterior capítulo, además del valor del elemento ("e"), la función (en este caso la función flecha: e=&gt;s+=e) puede recibir también el índice y el array, sin embargo, en este ejemplo, no se reciben esos datos, porque no son empleados dentro de la función.</p>
+
+    <p class="text">El problema resuelto con el método <dfn class="style1">reduce</dfn>, es:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">Object.defineProperty(SV.prototype, "promedioc", {<br>  <br>  get() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n===0) throw new Error("vector vacío");<br>    return x.reduce((s,e)=&gt;s+e)/n;    <br>  },<br>  <br>  configurable: true<br>  <br>});</div>
+        <div class="resultado"></div>
+        <div class="instruccion">new SV(1, 9, 12, 3, 5, 7, 12).promedioc</div>
+        <div class="resultado"></div>
+        <div class="instruccion">randseed = 1;<br>b = [].rand(20, 1, 30).round(); print(b);<br>new SV(...b).promedioc</div>
+        <div class="resultado"></div>
+    </div>
+    
+    <p class="text">En este caso, <b>reduce</b> devuelve la sumatoria, la cual se divide entre el número de elementos para obtener el promedio.</p>
+
+    <p class="text">Al igual que la función de <dfn class="style1">forEach</dfn> y como ocurre con la mayoría de las funciones de los métodos de la clase <dfn class="style1">Array</dfn>, <dfn class="style1">reduce</dfn>, puede recibir, además del acumulador, el valor actual del elemento, el índice y el array, pero, en este caso no son recibidos, porque no se utilizan en la función.</p>
+
+    <p class="text">Cono ya se vio en el anterior capítulo y aunque no es necesario en este caso, se puede asignar también un valor inicial al acumulador "s" (en este caso 0, porque se trata de una sumatoria):</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">Object.defineProperty(SV.prototype, "promediod", {<br>  <br>  get() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n===0) throw new Error("vector vacío");<br>    return x.reduce((s,e)=&gt;s+e, 0)/n;<br>  },<br>  <br>  configurable: true<br>  <br>});</div>
+        <div class="resultado"></div>
+        <div class="instruccion">new SV(1, 9, 12, 3, 5, 7, 12).promediod</div>
+        <div class="resultado"></div>
+        <div class="instruccion">randseed = 1;<br>b = [].rand(20, 1, 30).round(); print(b);<br>new SV(...b).promediod</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">El problema resuelto con el método <dfn class="style1">sum</dfn>, es:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">Object.defineProperty(SV.prototype, "promedioe", {<br>  <br>  get() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n===0) throw new Error("vector vacío");<br>    return x.sum()/n;<br>  },<br>  <br>  configurable: true<br>  <br>});</div>
+        <div class="resultado"></div>
+        <div class="instruccion">new SV(1, 9, 12, 3, 5, 7, 12).promedioe</div>
+        <div class="resultado"></div>
+        <div class="instruccion">randseed = 1;<br>b = [].rand(20, 1, 30).round(); print(b);<br>new SV(...b).promedioe</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Igualmente, el problema puede ser resuelto con el método <dfn class="style1">map</dfn>:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">Object.defineProperty(SV.prototype, "promediof", {<br>  <br>  get() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n===0) throw new Error("vector vacío");<br>    s = 0;<br>    x.map(e=&gt;s+=e);<br>    return s/n;<br>  },<br>  <br>  configurable: true<br>  <br>});</div>
+        <div class="resultado"></div>
+        <div class="instruccion">new SV(1, 9, 12, 3, 5, 7, 12).promediof</div>
+        <div class="resultado"></div>
+        <div class="instruccion">randseed = 1;<br>b = [].rand(20, 1, 30).round(); print(b);<br>new SV(...b).promediof</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Desde el punto de vista de la eficiencia, esta no es la mejor opción, porque <dfn class="style1">map</dfn> devuelve un nuevo array con el mismo número de elementos que el array original (con los valores intermedios de la sumatoria), sin embargo, en este ejemplo, ese array no es empleado y por esa razón esta solución es menos eficiente (se pierde el tiempo en generar un array que, finalmente, no se emplea).</p>
+
+    <p class="text">También se puede resolver el problema con el método <dfn class="style1">every</dfn>:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">Object.defineProperty(SV.prototype, "promediog", {<br>  <br>  get() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n===0) throw new Error("vector vacío");<br>   	s = 0;<br>    x.every(e=&gt;(s+=e,true));<br>    return s/n;<br>  },<br>  <br>  configurable: true<br>  <br>});</div>
+        <div class="resultado"></div>
+        <div class="instruccion">new SV(1, 9, 12, 3, 5, 7, 12).promediog</div>
+        <div class="resultado"></div>
+        <div class="instruccion">randseed = 1;<br>b = [].rand(20, 1, 30).round(); print(b);<br>new SV(...b).promediog</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Como el método <dfn class="style1">every</dfn> termina de iterar cuando uno de los resultados es falso y en este caso es necesario que se itere con todos los elementos del array, la función debe devolver, siempre, un valor verdadero (true, 1 o cualquier valor equivalente a verdadero), porque de no ser así, un resultado equivalente a falso (como 0, cuando alguno de los elementos del array es 0) haría que las iteraciones terminen, devolviendo ub resultado erróneo.</p>
+
+    <p class="text">Note que, en este ejemplo, para no emplear el comando <dfn class="style1">return</dfn>, las dos instrucciones de la función flecha (<span class="textocodigo">s+=e</span> y <span class="textocodigo">true</span>) han sido encerradas entre paréntesis y separadas con una coma, tal como se ha hecho en capítulos previos con el operador ternario <b class="style1">?-:</b>, siendo el resultado el valor devuelto por la última expresión. Así, en este ejemplo, como la última expresión es el valor booleano <dfn class="style1">true</dfn> ese es el valor que devuelve (siempre) las insrucciones entre los paréntesis.</p>
+
+    <p class="text">Igualmente, se puede emplear el método <dfn class="style1">some</dfn> (que es el complemento de <dfn class="style1">every</dfn>):</p>
+
+    <p class="text">En este caso, como <dfn class="style1">some</dfn> termina cuando el resultado es verdadero y se quiere iterar para todos los elementos del array, el resultado de la función debe ser siempre falso (false, 0 o cualquier valor equivalente a falso).</p>
+
+    <p class="text">De forma similar se pueden emplear los métodos <dfn class="style1">find</dfn>, <dfn class="style1">findIndex</dfn>, <dfn class="style1">findLast</dfn>, <dfn class="style1">findLastIndex</dfn> y <dfn class="style1">filter</dfn>. Sin embargo, es necesario dejar en claro que <b><i>ninguno de estos métodos es adecuado para resolver este tipo de problemas</i></b>, porque su propósito es otro: Verificar si todos los elementos cumplen una determinada condición (<dfn class="style1">every</dfn>), si alguno de los elementos cumple una determinada condición (<dfn class="style1">some</dfn>), si un valor dado es uno de los elementos del array (<dfn class="style1">find</dfn> y <dfn class="style1">findLast</dfn>), encontrar la posición de un determinado elemento en el array (<dfn class="style1">findIndex</dfn> y <dfn class="style1">findLastIndex</dfn>) y obtener un array con los elementos que cumplen una determinada condición (<dfn class="style1">filter</dfn>).</p>
+
+    <p class="text">En la asignatura se emplean estos métodos (sabienod que no son adecuados en estos casos), únicamente para comprender mejor la forma en que operan (su lógica), pero no deben ser empleados (para estos casos) en la solución de un problema real.</p>
+
+    <p class="text">Finalmente, el problema puede ser resuelto también empleando una función recursiva inmediatamente invocada (una IIFE):</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">Object.defineProperty(SV.prototype, "promedioj", {<br>  <br>  get() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n===0) throw new Error("vector vacío");<br>   	s = 0;<br>    x.some(e=&gt;(s+=e,false));<br>    return (s=i=&gt;i===0?x[i]:s(i-1)+x[i])(n-1)/n<br>  },<br>  <br>  configurable: true<br>  <br>});</div>
+        <div class="resultado"></div>
+        <div class="instruccion">new SV(1, 9, 12, 3, 5, 7, 12).promedioj</div>
+        <div class="resultado"></div>
+        <div class="instruccion">randseed = 1;<br>b = [].rand(20, 1, 30).round(); print(b);<br>new SV(...b).promedioj</div>
+        <div class="resultado"></div>
+    </div>
+
+
+
+    <h3 class="text">Vector de números aleatorios</h3>
+
+    <p class="text">En este ejemplo se elabora un método que genera un vector con "n" números enteros aleatorios comprendidos entre 1 y 1000.</p>
+
+    <p class="text">El problema puede ser resuelto fácilmente con el método <dfn class="style1">rand</dfn>: simplemente se generan "n" números aleatorios comprendidos entre 1 y 1000 y se redondea el vector resultante, tal como se muestra en la siguiente función:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">function rand1000(n) {<br>  if (!(Number.isInteger(n) &amp;&amp; n&gt;0)) throw new Error("El número debe ser entero positivo");<br>  return [].rand(n, 1, 1000).round();<br>};</div>
+        <div class="resultado"></div>
+    </div>
+    
+    <p class="text">Llamando al método con algunos valores de prueba, se obtiene:</p>
+    
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">randseed = 10;</div>
+        <div class="resultado"></div>
+        <div class="instruccion">rand1000(5)</div>
+        <div class="resultado"></div>
+        <div class="instruccion">rand1000(10)</div>
+        <div class="resultado"></div>
+        <div class="instruccion">rand1000(20)</div>
+        <div class="resultado"></div>
+        <div class="instruccion">rand1000(25)</div>
+        <div class="resultado"></div>
+        <div class="instruccion">rand1000(-10)</div>
+        <div class="resultado"></div>
+        <div class="instruccion">rand1000(5.7)</div>
+        <div class="resultado"></div>
+    </div>
+    
+    <p class="text">Si embargo, si no se tiene acceso al método <dfn class="style1">rand</dfn>, porque no se está trabajando en la calculadora o no se ha importado la librería <dfn class="style1">array.js</dfn>, el problema puede ser resuelto empleando la estructura <dfn class="style1">for</dfn> y la función estándar <dfn class="style1">random</dfn>.</p>
+    
+    <p class="text">Para transformar el número aleatorio comprendido entre 0 y 1 (que es el resultado devuelto por <dfn class="style1">random</dfn>) en un número comprendido entre "li" y "ls", se aplica la siguiente expresión:</p>
+
+    <table class="ecuacionsn">
+        <tbody><tr>
+            <td>
+                \[                \begin{aligned}                \text{Nú}&amp;\text{mero aleatorio comprendido entre li y ls}=\\                &amp;(\text{Número aleatorio comprendido entre 0 y 1})\times (\text{ls}-\text{li})+\text{li}                \end{aligned}                                \]
+            </td>
+            <td></td>
+        </tr>
+    </tbody></table>
+
+    <p class="text">Entonces, en cada repetición del ciclo <dfn class="style1">for</dfn>, que va desde 0 hasta "n-1", se genera y guarda un número aleatorio, en este ejemplo implementado como un método getter de la clase "RAND", probando el método con algunos valores de prueba:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">RAND = class {<br>  <br>  #n;<br>  <br>  constructor(número) {<br>    this.#n = número;<br>  }<br>  <br>	get rand1000() {<br>    const n = this.n;<br>    if (!(Number.isInteger(n) &amp;&amp; n&gt;0)) throw new Error("El número debe ser entero positivo");<br>    const v= [];<br>    for (let i=0; i&lt;n; i++) v[i] = (Math.random()*999+1).round();<br>    return v;    <br>  }  <br><br>  get n() {<br>    return this.#n;<br>  }<br><br>};</div>
+        <div class="resultado"></div>
+        <div class="instruccion">randseed = 10;</div>
+        <div class="resultado"></div>
+        <div class="instruccion">new RAND(5).rand1000</div>
+        <div class="resultado"></div>
+        <div class="instruccion">new RAND(10).rand1000</div>
+        <div class="resultado"></div>
+        <div class="instruccion">new RAND(20).rand1000</div>
+        <div class="resultado"></div>
+        <div class="instruccion">new RAND(25).rand1000</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">La solución, implementada empleando el método <dfn class="style1">push</dfn> (en lugar de una asignación directa), es:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">Object.defineProperty(RAND.prototype, "rand1000_", {<br>  <br>  get() {<br>    const n = this.n;<br>    if (!(Number.isInteger(n) &amp;&amp; n&gt;0)) throw new Error("El número debe ser entero positivo");<br>    const v = [];<br>    for (let i=0; i&lt;n; i++) v.push((Math.random()*999+1).round());<br>    return v;<br>  },<br>  <br>  configurable: true<br>  <br>});</div>
+        <div class="resultado"></div>
+        <div class="instruccion">randseed = 10;</div>
+        <div class="resultado"></div>
+        <div class="instruccion">new RAND(5).rand1000_</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">El problema puede ser resuelto, igualmente, con el método estático <dfn class="style1">Array.from</dfn>:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">Object.defineProperty(RAND.prototype, "rand1000__", {<br>  <br>  get() {<br>    const n = this.n;<br>    if (!(Number.isInteger(n) &amp;&amp; n&gt;0)) throw new Error("El número debe ser entero positivo");<br>    return Array.from({length:n}, ()=&gt;(Math.random()*999+1).round());<br>  },<br>  <br>  configurable: true<br>  <br>});</div>
+        <div class="resultado"></div>
+        <div class="instruccion">randseed = 10;</div>
+        <div class="resultado"></div>
+        <div class="instruccion">new RAND(5).rand1000__</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text"></p>
+
+    <p class="text">El problema, resuelto con la estructura <dfn class="style1">for-of</dfn>, es:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">Object.defineProperty(RAND.prototype, "rand1000a", {<br>  <br>  get() {<br>    const n = this.n;<br>    if (!(Number.isInteger(n) &amp;&amp; n&gt;0)) throw new Error("El número debe ser entero positivo");<br>    const v = [];<br>    for (const _ of [].zeros(n)) v.push((Math.random()*999+1).round());<br>    return v;<br>  },<br>  <br>  configurable: true<br>  <br>});</div>
+        <div class="resultado"></div>
+        <div class="instruccion">randseed = 10;</div>
+        <div class="resultado"></div>
+        <div class="instruccion">new RAND(5).rand1000a</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Como el método <dfn class="style1">for-of</dfn> itera para cada uno de los elementos de un array y en este caso, ese array no existe, es necesario crear uno con ese número de elementos (en este ejemplo se crea con <span class="textocodigo">zeros</span>). Luego se itera para cada uno de los elementos de ese array, pero no se emplea ninguno de esos elementos y por ello son recibidos en el parámetro "<b class="style1">_</b>" (que como se explicó, suele emplearse para identificar parámetros/variables, que son recibidos/declarados, pero que no son utilizados). Debido a que <dfn class="style1">for-of</dfn>, requiere la creación de un array adicional (cuyos elementos no se utilizan), no es la estructura más adecuada para resolver este problema, porque el crear ese array consume tiempo y memoria adicional.</p>
+
+    <p class="text">Los "n" elementos del array pueden ser generados con cualquiera de los métodos disponibles: <dfn class="style1">const</dfn>, <dfn class="style1">range</dfn>, <dfn class="style1">rand</dfn>, <dfn class="style1">Array.from</dfn>, <dfn class="style1">new Array</dfn>, etc., sin que ello afecte ni la lógica ni el resultado obtenido (porque únicamente es importante que el array tenga el número correcto de elementos).</p>
+
+    <p class="text">El problema puede ser resuelto también con el método <dfn class="style1">forEach</dfn>:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">Object.defineProperty(RAND.prototype, "rand1000b", {<br><br>  get() {<br>    const n = this.n;<br>    if (n%1!==0 || n&lt;0) throw "El número debe ser entero positivo";<br>    const v = [].zeros(n);<br>    v.forEach((_,i,v)=&gt;v[i]=(Math.random()*999+1).round());<br>    return v;<br>    },<br><br>  configurable: true<br>  <br>});</div>
+        <div class="resultado"></div>
+        <div class="instruccion">randseed = 10;</div>
+        <div class="resultado"></div>
+        <div class="instruccion">new RAND(5).rand1000b</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Al igual que en la solución anterior se genera un array con "n" elementos (que tampoco son utilizados). Luego, con <dfn class="style1">forEach</dfn>, se itera para cada uno de esos elementos, pero ahora se recibe el índice "i", de cada elemento, para reemplazar ese elemento (<b>v[i]</b>) con el número aleatorio generado. Esta solución es un poco más eficiente que la anterior, porque solo se genera un array, pero, al igual que en el ejemplo anterior, los elementos del array generado no son empleados.</p>
+
+    <p class="text">El problema resuelto con el método <dfn class="style1">reduce</dfn> (y <dfn class="style1">zeros</dfn> para generar el array), es:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">Object.defineProperty(RAND.prototype, "rand1000c", {<br><br>  get() {<br>    const n = this.n;<br>    if (!(Number.isInteger(n) &amp;&amp; n&gt;0)) throw new Error("El número debe ser entero positivo");<br>    return [].zeros(n).reduce(v=&gt;(v.push((Math.random()*999+1).round()),v),[]);<br>  },<br><br>  configurable: true<br>  <br>});</div>
+        <div class="resultado"></div>
+        <div class="instruccion">randseed = 10;</div>
+        <div class="resultado"></div>
+        <div class="instruccion">new RAND(5).rand1000c</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Como no se emplean los elementos del array, en la función solo se recibe el primer parámetro (el acumulador "v") que se convertirá en el array con los números aleatorios. Por esa razón, el acumulador "v" inicia como un vector vacío ([]), luego, en cada iteración, se le añada un número aleatorio y se devuelve el array con el nuevo elemento añadido. De esa manera, en la última iteración, <dfn class="style1">reduce</dfn> devuelve el array con todos los números aleatorios generados.</p>
+
+    <p class="text">El problema puede ser resuelto, también, con el método <dfn class="style1">some</dfn>, aunque, como se explicó previamente, no es la opción correcta para este tipo de problemas:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">Object.defineProperty(RAND.prototype, "rand1000d", {<br><br>  get() {<br>    const n = this.n;<br>    if (!(Number.isInteger(n) &amp;&amp; n&gt;0)) throw new Error("El número debe ser entero positivo");<br>    const v = [];<br>    [].zeros(n).some(()=&gt;(v.push((Math.random()*999+1).round()),false));<br>    return v;<br>  },<br><br>  configurable: true<br>  <br>});</div>
+        <div class="resultado"></div>
+        <div class="instruccion">randseed = 10;</div>
+        <div class="resultado"></div>
+        <div class="instruccion">new RAND(5).rand1000d</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Como ocurre con <dfn class="style1">for=of</dfn>, no se emplean los elementos del array generado (zeros), por lo que la función no recibe nada y para garantizar que el método itere para todos los elementos, la función devuelve siempre un valor <dfn class="style1">false</dfn>.</p>
+
+    <p class="text">De la misma forma, se puede emplear el método <dfn class="style1">every</dfn>:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">Object.defineProperty(RAND.prototype, "rand1000e", {<br><br>  get() {<br>    const n = this.n;<br>    if (!(Number.isInteger(n) &amp;&amp; n&gt;0)) throw new Error("El número debe ser entero positivo");<br>    const v = [];<br>    [].range(n).every(()=&gt;(v.push((Math.random()*999+1).round()),true));<br>    return v;<br>  },<br><br>  configurable: true<br>  <br>});</div>
+        <div class="resultado"></div>
+        <div class="instruccion">randseed = 10;</div>
+        <div class="resultado"></div>
+        <div class="instruccion">new RAND(5).rand1000e</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Que es prácticamente la misma solución que con <dfn class="style1">some</dfn>, sólo que ahora la función devuelve siempre <dfn class="style1">true</dfn> y el array se genera con <dfn class="style1">range</dfn>.</p>
+
+    <p class="text">El problema puede ser resuelto, igualmente, con el método <dfn class="stle1">map</dfn>.</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">Object.defineProperty(RAND.prototype, "rand1000f", {<br><br>  get() {<br>    const n = this.n;<br>    if (!(Number.isInteger(n) &amp;&amp; n&gt;0)) throw new Error("El número debe ser entero positivo");<br>    return Array.from({length:n}).map(()=&gt;(Math.random()*999+1).round());<br>  },<br><br>  configurable: true<br>  <br>});</div>
+        <div class="resultado"></div>
+        <div class="instruccion">randseed = 10;</div>
+        <div class="resultado"></div>
+        <div class="instruccion">new RAND(5).rand1000f</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Esta solución es similar a la lograda con <dfn class="style1">reduce</dfn>, en el sentido de que si bien no se emplean los elementos del array generado (el array de ceros), sí se emplea el array para reemplazar esos ceros con los valores aleatorios generados en la función.</p>
+
+    <p class="text">Como en casi todos los casos, el problema puede ser resuelto también con <dfn class="style1">find</dfn>, <dfn class="style1">findIndex</dfn>, <dfn class="style1">findLast</dfn>, <dfn class="style1">findLastIndex</dfn> y <dfn class="style1">filter</dfn>, aunque, como también se dijo, no son los métodos más adecuados para resolver este tipo de problemas.</p>
+
+    <p class="text">El problema puede ser resuelto también con una función recursiva inmediatamente invocada (una IIFE):</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">Object.defineProperty(RAND.prototype, "rand1000g", {<br><br>  get() {<br>    const n = this.n;<br>    if (!(Number.isInteger(n) &amp;&amp; n&gt;0)) throw new Error("El número debe ser entero positivo");<br>    const v = [];<br>    return (a=n=&gt;n===0?v:(v.push((Math.random()*999+1).round()),a(n-1)))(n);<br>  },<br><br>  configurable: true<br>  <br>});</div>
+        <div class="resultado"></div>
+        <div class="instruccion">randseed = 10;</div>
+        <div class="resultado"></div>
+        <div class="instruccion">new RAND(5).rand1000g</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Que tampoco es la herramienta más adecuada para resolver el problema, pues es empleada únicamente para lograr el número de repeteciones requeridas. El resultado de la última llamada recursiva (cuando se cumple la condición base) simplemente se devuelve hasta llegar a la primera llamada recursiva.</p>
+
+
+
+    <div class="ejercicio" id="ejercicio1" enunciado="2"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span>Empleando la notación simplificada, operadores compuestos, los métodos más adecuados para cada caso y la variable "i" como contador:</p></div><p class="pregunta"><span class="pregunta"></span>Cree el vector vacío "a" y en un ciclo <dfn>for</dfn> añada al mismo los primeros 8 números impares (operador &lt;).</p><div id="pregunta17" class="calculadora" spellcheck="false"><div class="instruccion">a = [];<br>for(let i=1; i&lt;2*8;i+=2) a.push(i);<br>a</div><div class="resultado"></div><div class="instruccion">a.length</div><div class="resultado"></div></div><p class="pregunta" id="pregunta18"><span class="pregunta"></span>En la sexta iteración del ciclo for, el valor del contador "i", es: <span class="campo_literal correcta" tabindex="0" contenteditable="true">11</span><br>Al final de la séptima iteración los elementos del vector a, son: [<span class="campo_literal correcta" tabindex="0" contenteditable="true">1,3,5,7,9,11,13</span>]<br>El contador se incrementa en <span class="campo_literal correcta" tabindex="0" contenteditable="true">2</span> porque la diferencia entre dos números impares consecutivos es <span class="campo_literal correcta" tabindex="0" contenteditable="true">2</span></p><p class="pregunta"><span class="pregunta"></span>Cree el vector vacío "b" y en un ciclo <dfn>for</dfn> añada al mismo los primeros 7 números pares (operador &lt;=).</p><div id="pregunta19" class="calculadora" spellcheck="false"><div class="instruccion">b=[];<br>for(let i=2; i&lt;=2*7;i+=2 ) b.push(i);<br>b</div><div class="resultado"></div><div class="instruccion">b.length</div><div class="resultado"></div></div><p class="pregunta" id="pregunta20"><span class="pregunta"></span>En la cuarta iteración del ciclo for, el valor del contador "i", es: <span class="campo_literal correcta" tabindex="0" contenteditable="true">8</span><br>Al final de la sexta iteración los elementos del vector a, son: [<span class="campo_literal correcta" tabindex="0" contenteditable="true">2,4,6,8,10,12</span>]<br>El contador se incrementa en <span class="campo_literal correcta" tabindex="0" contenteditable="true">2</span> porque la diferencia entre dos números pares consecutivos es <span class="campo_literal correcta" tabindex="0" contenteditable="true">2</span></p><p class="pregunta"><span class="pregunta"></span>Cree la variable "s" y en un ciclo <dfn>for</dfn> calcule la sumatoria de los elementos del vector "a" (operador &lt;).</p><div id="pregunta21" class="calculadora" spellcheck="false"><div class="instruccion">s=0;<br>for(let i=0; i&lt;a.length;i++ ) s += a[i];<br>s</div><div class="resultado"></div></div><p class="pregunta" id="pregunta22"><span class="pregunta"></span>El acumulador "s" comienza en 0 porque un número más 0 es siempre igual al mismo <span class="campo_literal correcta" tabindex="0" contenteditable="true">número</span><br>El ciclo se repite desde que el contador "i" es igual a <span class="campo_literal correcta" tabindex="0" contenteditable="true">0</span> hasta que es igual a <span class="campo_literal correcta" tabindex="0" contenteditable="true">7</span>.<br>En la quinta repetición del ciclo se añade al acumulador "s" el valor del elemento a<span class="campo_literal correcta" tabindex="0" contenteditable="true">[4]<br></span></p><p class="pregunta"><span class="pregunta"></span>Cree la variable "p" y en un ciclo <dfn>for</dfn> calcule la productoria de los elementos del vector "b" (operador &lt;).</p><div id="pregunta23" class="calculadora" spellcheck="false"><div class="instruccion">p=1;<br>for(let i=0; i&lt;b.length;i++) p *=b[i];<br>p</div><div class="resultado"></div></div><p class="pregunta" id="pregunta24"><span class="pregunta"></span>El acumulador "p", comienza en 1, porque un número por 1 es siempre igual al mismo <span class="campo_literal correcta" tabindex="0" contenteditable="true">número</span><br>El ciclo se repite desde que el contador "i" es igual a <span class="campo_literal correcta" tabindex="0" contenteditable="true">0</span> hasta que es igual a <span class="campo_literal correcta" tabindex="0" contenteditable="true">6</span>.<br>En la quinta repetición del ciclo se multiplica el acumulador "p" por el valor del elemento b<span class="campo_literal correcta" tabindex="0" contenteditable="true">[4]<br></span></p><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="32" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- Ejercicio 1 -->
+
+    <div class="ejercicio" id="ejercicio2" enunciado="1"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span>Empleando la notación simplificada, operadores compuestos, los métodos más adecuados para cada caso y la variable "i" como contador:</p></div><p class="pregunta"><span class="pregunta"></span>Cree el vector vacío "a" y en un ciclo <dfn>for</dfn> añada al mismo los números 11, 14, 17, ... , 44 (operador &lt;=).</p><div id="pregunta33" class="calculadora" spellcheck="false"><div class="instruccion">a = [];<br>for(let i=11; i&lt;=44;i+=3) a.push(i);<br>a</div><div class="resultado"></div></div><p class="pregunta" id="pregunta34"><span class="pregunta"></span>En la cuarta iteración del ciclo for, el valor del contador "i", es: <span class="campo_literal correcta" tabindex="0" contenteditable="true">20</span><br>Al final de la quinta iteración los elementos del vector a, son: [<span class="campo_literal correcta" tabindex="0" contenteditable="true">11,14,17,20,23</span>]<br>El contador se incrementa en <span class="campo_literal correcta" tabindex="0" contenteditable="true">3</span> porque la diferencia entre dos números consecutivos es <span class="campo_literal correcta" tabindex="0" contenteditable="true">3</span></p><p class="pregunta"><span class="pregunta"></span>Cree el vector vacío "b" y en un ciclo <dfn>for</dfn> añada al mismo los números 19, 23, 27, ..., 59 (operador &lt;=).</p><div id="pregunta35" class="calculadora" spellcheck="false"><div class="instruccion">b=[];<br>for(let i=19; i&lt;=59;i+=4) b.push(i);<br>b</div><div class="resultado"></div></div><p class="pregunta" id="pregunta36"><span class="pregunta"></span>En la tercera iteración del ciclo for, el valor del contador "i", es: <span class="campo_literal correcta" tabindex="0" contenteditable="true">27</span><br>Al final de la cuarta iteración los elementos del vector a, son: [<span class="campo_literal correcta" tabindex="0" contenteditable="true">19,23,27,31</span>]<br>El contador se incrementa en <span class="campo_literal correcta" tabindex="0" contenteditable="true">4</span> porque la diferencia entre dos números consecutivos es <span class="campo_literal correcta" tabindex="0" contenteditable="true">4</span></p><p class="pregunta"><span class="pregunta"></span>Cree la variable "p" y en un ciclo <dfn>for</dfn> calcule la productoria de los elementos del vector "a" (operador &lt;).</p><div id="pregunta37" class="calculadora" spellcheck="false"><div class="instruccion">p=1;<br>for(let i=0; i&lt;a.length;i++) p *= a[i];<br>p</div><div class="resultado"></div><div class="instruccion">a.length</div><div class="resultado"></div></div><p class="pregunta" id="pregunta38"><span class="pregunta"></span>El acumulador "p", comienza en 1, porque un número por 1 es siempre igual al mismo <span class="campo_literal correcta" tabindex="0" contenteditable="true">número</span><br>El ciclo se repite desde que el contador "i" es igual a <span class="campo_literal correcta" tabindex="0" contenteditable="true">0</span> hasta que es igual a <span class="campo_literal correcta" tabindex="0" contenteditable="true">11</span>.<br>En la cuarta repetición del ciclo se multiplica el acumulador "p" por el valor del elemento a<span class="campo_literal correcta" tabindex="0" contenteditable="true">[3]</span></p><p class="pregunta"><span class="pregunta"></span>Cree la variable "s" y en un ciclo <dfn>for</dfn> calcule la sumatoria de los elementos del vector "b" (operador &lt;).</p><div id="pregunta39" class="calculadora" spellcheck="false"><div class="instruccion">s=0;<br>for(let i=0; i&lt;b.length;i++) s += b[i];<br>s</div><div class="resultado"></div><div class="instruccion">b.length</div><div class="resultado"></div></div><p class="pregunta" id="pregunta40"><span class="pregunta"></span>El acumulador "s" comienza en 0 porque un número más 0 es siempre igual al mismo <span class="campo_literal correcta" tabindex="0" contenteditable="true">número</span><br>El ciclo se repite desde que el contador "i" es igual a <span class="campo_literal correcta" tabindex="0" contenteditable="true">0</span> hasta que es igual a <span class="campo_literal correcta" tabindex="0" contenteditable="true">10</span>.<br>En la tercera repetición del ciclo se añade al acumulador "s" el valor del elemento b<span class="campo_literal correcta" tabindex="0" contenteditable="true"></span></p><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="32" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- Ejercicio 2 -->
+
+    <div class="ejercicio" id="ejercicio3" enunciado="1"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span>Empleando la notación simplificada, operadores compuestos, los métodos más adecuados para cada caso y la variable "i" como contador:</p></div><p class="pregunta"><span class="pregunta"></span>Cree el vector vacío "a" y en un ciclo <dfn>for</dfn> añada al mismo los números 32, 29, 26, ..., 11 (operador &gt;=).</p><div id="pregunta53" class="calculadora" spellcheck="false"><div class="instruccion">a = [];<br>for(let i=32; i&gt;=11;i-=3) a.push(i);<br>a</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree el vector vacío "b" y en un ciclo <dfn>for</dfn> añada al mismo los números 41, 37, 33, ..., 13 (operador &gt;=).</p><div id="pregunta54" class="calculadora" spellcheck="false"><div class="instruccion">b=[];<br>for(let i=41; i&gt;=13;i-=4) b.push(i);<br>b</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree la variable "s" y en un ciclo <dfn>for</dfn> calcule la sumatoria de los elementos del vector "a" (operador &lt;).</p><div id="pregunta55" class="calculadora" spellcheck="false"><div class="instruccion">s=0;<br>for(let i=0; i&lt;a.length;i++ ) s += a[i];<br>s</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree la variable "p" y en un ciclo <dfn>for</dfn> calcule la productoria de los elementos del vector "b" (operador &lt;).</p><div id="pregunta56" class="calculadora" spellcheck="false"><div class="instruccion">p=1;<br>for(let i=0; i&lt;b.length;i++ ) p *= b[i];<br>p</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="16" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- Ejercicio 3 -->
+
+    <div class="ejercicio" id="ejercicio4" enunciado="0"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Elabore el método "suma", que devuelve la sumatoria "s" de los elementos del array "x", si el array no tiene elementos el método debe devolver 0. Codifique el método (estructura for, operadores compuestos) como un método getter de la clase "SUM" que recibe (en su constructor) los "elementos" en la propiedad privada "x" y devuelve su valor en el getter "x".</p><div id="pregunta61" class="calculadora" spellcheck="false"><div class="instruccion">SUM = class {<br><br>  #x;<br>  <br>  constructor(...elementos) {<br>    this.x = elementos;<br>  }<br><br>  get x() {<br>    return this.#x;<br>  }<br><br>  get suma() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n===0) return 0 ;<br>    let s = 0;<br>    for(let i=0;i &lt; n;i++) s += x[i] ;<br>    return s;<br>  }<br><br>};</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule la sumatoria del objeto sin elementos</p><div id="pregunta62" class="calculadora" spellcheck="false"><div class="instruccion">new SUM().suma</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule la sumatoria de 1, 2, 3, 4, 5</p><div id="pregunta63" class="calculadora" spellcheck="false"><div class="instruccion">new SUM(1,2,3,4,5).suma</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule la sumatoria de 5, 8, 3, 9, 12</p><div id="pregunta64" class="calculadora" spellcheck="false"><div class="instruccion">new SUM(5,8,3,9,12).suma</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule la sumatoria de 1.5, 12.2, 3.4, 7.9, 9.3</p><div id="pregunta65" class="calculadora" spellcheck="false"><div class="instruccion">new SUM(1.5,12.2,3.4,7.9,9.3).suma</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Añada a la clase SUM el getter sumaa, que resuelve el problema, empleando la estructura for-of (elemento "e").</p><div id="pregunta66" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(SUM.prototype, "sumaa", {<br><br>  get() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n === 0) return 0;<br>    let s = 0;<br>    for(let e of x) s += e ;<br>    return s;<br>  },<br><br>  configurable: true <br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule la sumatoria de 1, 2, 3, 4, 5</p><div id="pregunta67" class="calculadora" spellcheck="false"><div class="instruccion">new SUM(1,2,3,4,5).sumaa</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Añada a la clase SUM el getter sumab, que resuelve el problema, empleando el método forEach (elemento "e").</p><div id="pregunta68" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(SUM.prototype, "sumab", {<br><br>  get() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n===0) return 0 ;<br>    let s = 0 ;<br>    x.forEach(e =&gt; s+=e);<br>    return s ;<br>  },<br><br>  configurable:true <br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule la sumatoria de 1, 2, 3, 4, 5</p><div id="pregunta69" class="calculadora" spellcheck="false"><div class="instruccion">new SUM(1,2,3,4,5).sumab</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Añada a la clase SUM el getter sumac, que resuelve el problema, empleando el método reduce (acumulador "s", elemento "e").</p><div id="pregunta70" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(SUM.prototype, "sumac", {<br><br>  get() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n===0) return 0 ;<br>    return x.reduce((s,e) =&gt; s+e);<br>  },<br><br>  configurable:true <br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule la sumatoria de 1, 2, 3, 4, 5</p><div id="pregunta71" class="calculadora" spellcheck="false"><div class="instruccion">new SUM(1,2,3,4,5).sumac</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="42" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- Ejercicio 4 -->
+
+    <div class="ejercicio" id="ejercicio5" enunciado="1"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Elabore el método "prodAbs", que devuelve la productoria "p" de los valores absolutos de los elementos del array "x", si el array no tiene elementos el método debe devolver 1. Codifique el método (estructura for, operadores compuestos) como un método getter de la clase "PRODA" que recibe (en su constructor) los "elementos" en la propiedad privada "x" y devuelve su valor en el getter "x".</p><div id="pregunta94" class="calculadora" spellcheck="false"><div class="instruccion">PRODA = class {<br><br>  #x;<br><br>  constructor(...elementos) {<br>    this.x = elementos;<br>  }<br><br>  get x() {<br>    return this.#x;<br>  }<br><br>  get prodAbs() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n===0) return 1 ;<br>    let p = 1;<br>    for(let i=0; i&lt;n;i++) p*= Math.abs(x[i]) ;<br>    return p ;<br>  }<br><br>};</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule la productoria del objeto sin elementos</p><div id="pregunta95" class="calculadora" spellcheck="false"><div class="instruccion">new PRODA().prodAbs</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule la productoria de 1, -5, 12, -15, 26</p><div id="pregunta96" class="calculadora" spellcheck="false"><div class="instruccion">new PRODA(1,-5,12,-15,26).prodAbs</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule la productoria de los números impares que existen entre -11 y 19.</p><div id="pregunta97" class="calculadora" spellcheck="false"><div class="instruccion">new PRODA(...[].range(-11,19,2)).prodAbs</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule la productoria de los 11 números igualmente espaciados que existen entre -5 y 15.</p><div id="pregunta98" class="calculadora" spellcheck="false"><div class="instruccion">new PRODA(...[].linspace(-5,15,11)).prodAbs</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Añada a la clase PRODA, el getter prodAbsa que resuelve el problema, empleando la estructura for-of (elemento "e").</p><div id="pregunta99" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(PRODA.prototype, "prodAbsa", {<br><br>  get() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n === 0) return 1 ;<br>    let p = 1;<br>    for(let e of x) p *= Math.abs(e) ;<br>    return p ;<br>  },<br><br>  configurable:true <br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule la productoria de 1, -5, 12, -15, 26</p><div id="pregunta100" class="calculadora" spellcheck="false"><div class="instruccion">new PRODA(1,-5,12,-15,26).prodAbsa</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Añada a la clase PRODA, el getter prodAbsb que resuelve el problema, empleando el método forEach (elemento "e").</p><div id="pregunta101" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(PRODA.prototype, "prodAbsb", {<br><br>  get() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n===0) return 1;<br>    let p = 1;<br>    x.forEach(e =&gt; p*=Math.abs(e));<br>    return p ;<br>  },<br><br>  configurable:true <br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule la productoria de 1, -5, 12, -15, 26</p><div id="pregunta102" class="calculadora" spellcheck="false"><div class="instruccion">new PRODA(1,-5,12,-15,26).prodAbsb</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Añada a la clase PRODA, el getter prodAbsc que resuelve el problema, empleando el método reduce (acumulador "p", elemento "e").</p><div id="pregunta103" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(PRODA.prototype, "prodAbsc", {<br><br>  get() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n===0) return 1;<br>    let p = 1;<br>    return x.reduce((p,e) =&gt; p*Math.abs(e));<br>  },<br><br>  configurable:true <br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule la productoria de 1, -5, 12, -15, 26</p><div id="pregunta104" class="calculadora" spellcheck="false"><div class="instruccion">new PRODA(1,-5,12,-15,26).prodAbsc</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="42" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- Ejercicio 5 -->
+
+    <div class="ejercicio" id="ejercicio6" enunciado="1"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Elabore el método "sumSqrt", que devuelve la sumatoria "s" de las raíces cuadradas de los elementos del array "x", si el array no tiene elementos el método debe devolver 0. Codifique el método (estructura for, operadores compuestos) como un método getter de la clase "SUMS2" que recibe (en su constructor) los "elementos" en la propiedad privada "x" y devuelve su valor en el getter "x".</p><div id="pregunta116" class="calculadora" spellcheck="false"><div class="instruccion">SUMS2 = class {<br><br>  #x;<br><br>  constructor(...elementos) {<br>    this.x = elementos;<br>  }<br><br>  get x() {<br>    return this.#x;<br>  }<br><br>  get sumSqrt() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n===0) return 0;<br>    let s = 0;<br>    for(let i=0;i&lt;n;i++) s+=Math.sqrt(x[i]);<br>    return s;<br>  }<br><br>};</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule la sumatoria del objeto sin elementos</p><div id="pregunta117" class="calculadora" spellcheck="false"><div class="instruccion">new SUMS2().sumSqrt</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule la sumatoria de 1, 5, 12, 15, 26</p><div id="pregunta118" class="calculadora" spellcheck="false"><div class="instruccion">new SUMS2(1,5,12,15,26).sumSqrt</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule la sumatoria de los números 10, 13, 16, ..., 25.</p><div id="pregunta119" class="calculadora" spellcheck="false"><div class="instruccion">new SUMS2(...[].range(10,25,3)).sumSqrt</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule la sumatoria de los 9 números igualmente espaciados que existen entre 7 y 27.</p><div id="pregunta120" class="calculadora" spellcheck="false"><div class="instruccion">new SUMS2(...[].linspace(7,27,9)).sumSqrt</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Añada a la clase SUMS2 el getter sumSqrta, que resuelva el problema empleando la estructura for-of (elemento "e").</p><div id="pregunta121" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(SUMS2.prototype, "sumSqrta", {<br><br>  get() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n === 0) return 0 ;<br>    let s = 0;<br>    for(let e of x) s += Math.sqrt(e) ;<br>    return s ;<br>  },<br><br>  configurable:true <br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule la sumatoria de los 9 números igualmente espaciados que existen entre 7 y 27.</p><div id="pregunta122" class="calculadora" spellcheck="false"><div class="instruccion">new SUMS2(...[].linspace(7,27,9)).sumSqrta</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Añada a la clase SUMS2 el getter sumSqrtb, que resuelva el problema empleando el método forEach (elemento "e").</p><div id="pregunta123" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(SUMS2.prototype, "sumSqrtb", {<br><br>  get() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n === 0) return 0 ;<br>    let s = 0;<br>    x.forEach(e =&gt; s+=Math.sqrt(e)) ;<br>    return s ;<br>  },<br><br>  configurable:true <br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule la sumatoria de los 9 números igualmente espaciados que existen entre 7 y 27.</p><div id="pregunta124" class="calculadora" spellcheck="false"><div class="instruccion">new SUMS2(...[].linspace(7,27,9)).sumSqrtb</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Añada a la clase SUMS2 el getter sumSqrtc, que resuelva el problema empleando el método reduce (acumulador "s", elemento "e").</p><div id="pregunta125" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(SUMS2.prototype, "sumSqrtc", {<br><br>  get() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n === 0) return 0 ;<br>    let s = 0;<br>    return x.reduce((s,e)=&gt; s+Math.sqrt(e),0)<br>  },<br><br>  configurable:true <br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule la sumatoria de los 9 números igualmente espaciados que existen entre 7 y 27.</p><div id="pregunta126" class="calculadora" spellcheck="false"><div class="instruccion">new SUMS2(...[].linspace(7,27,9)).sumSqrtc</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="42" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- Ejercicio 6 -->
+
+    <div class="ejercicio" id="ejercicio7" enunciado="1"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Elabore el método "menor", que devuelve la posición "k" (el índice, no el valor) del elemento, del vector "x", con el menor valor absoluto. Pista: se asume que el primer elemento (0) es el menor, luego, en un ciclo que va desde el segundo hasta el último elemento, se pregunta si el elemento "i" es menor al elemento "k" y de ser así "k" toma el valor de "i". Codifique el método (estructura for, operadores compuestos) como un método getter de la clase "MEN" que recibe (en su constructor) los "elementos" en la propiedad privada "x" y devuelve su valor en el getter "x". Si el array no tiene elementos el método debe generar el error "vector vacío".</p><div id="pregunta149" class="calculadora" spellcheck="false"><div class="instruccion">MEN = class {<br><br>  #x;<br><br>  constructor(...elementos) {<br>    this.x = elementos;<br>  }<br><br>  get x() {<br>    return this.#x;<br>  }<br><br>  get menor() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n===0) throw new Error("vector vacío");<br>    let k = 0;<br>    for(let i=1;i&lt;n ;i++)<br>      if (Math.abs(x[i])&lt;Math.abs(x[k])) k=i;<br>    return k ;<br>  }<br><br>};</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Encuentre el índice del menor valor absoluto de un objeto vacío.</p><div id="pregunta150" class="calculadora" spellcheck="false"><div class="instruccion">new MEN().menor</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Encuentre el índice del menor valor absoluto en 1, -24, 15, -29, 27, 5</p><div id="pregunta151" class="calculadora" spellcheck="false"><div class="instruccion">new MEN(1, -24, 15, -29, 27, 5).menor</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Encuentre el índice del menor valor absoluto en los senos de: 1, 1.2, 1.4, 1.6, ..., 4.</p><div id="pregunta152" class="calculadora" spellcheck="false"><div class="instruccion">new MEN(...[].range(1,4,0.2).sin()).menor</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Encuentre el índice del menor valor absoluto en los cosenos de los 16 números igualmente espaciados que existen entre 0 y 4.</p><div id="pregunta153" class="calculadora" spellcheck="false"><div class="instruccion">new MEN(...[].linspace(0,4,16).cos()).menor</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Añada a la clase MEN el getter menora, que resuelva el problema empleando el método reduce (acumulador "k" valor inicial 0, elemento "e", contador "i").</p><div id="pregunta154" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(MEN.prototype, "menora", {<br><br>  get() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n===0) throw new Error("vector vacío") ;<br>    return x.reduce((k,e,i)=&gt; Math.abs(e) &lt; Math.abs(x[k])? i:k, 0);<br>  },<br><br>  configurable:true <br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Encuentre el índice del menor valor absoluto en los cosenos de los 16 números igualmente espaciados que existen entre 0 y 4.</p><div id="pregunta155" class="calculadora" spellcheck="false"><div class="instruccion">new MEN(...[].linspace(0,4,16).cos()).menora</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Añada a la clase MEN el getter menorb, que resuelva el problema empleando el método forEach (elemento "e", contador "i").</p><div id="pregunta156" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(MEN.prototype, "menorb", {<br><br>  get() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n === 0) throw new Error("vector vacío") ;<br>    let k = 0;<br>    x.forEach((e,i)=&gt;k= Math.abs(e) &lt; Math.abs(x[k]) ? i:k);<br>    return k ;<br>  },<br><br>  configurable:true <br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Encuentre el índice del menor valor absoluto en los cosenos de los 16 números igualmente espaciados que existen entre 0 y 4.</p><div id="pregunta157" class="calculadora" spellcheck="false"><div class="instruccion">new MEN(...[].linspace(0,4,16).cos()).menorb</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Añada a la clase MEN el getter menorc, que resuelva el problema empleando la estructura for-of (elemento "e")</p><div id="pregunta158" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(MEN.prototype, "menorc", {<br><br>  get() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n===0) throw new Error("vector vacío") ;<br>    let k = 0, i =0;<br>    for(let e of x) (k= Math.abs(e) &lt; Math.abs(x[k])? i:k, i++);<br>    return k ;<br>  },<br><br>  configurable:true <br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Encuentre el índice del menor valor absoluto en los cosenos de los 16 números igualmente espaciados que existen entre 0 y 4.</p><div id="pregunta159" class="calculadora" spellcheck="false"><div class="instruccion">new MEN(...[].linspace(0,4,16).cos()).menorc</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="42" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- Ejercicio 7 -->
+    
+    <div class="ejercicio" id="ejercicio8" enunciado="1"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Elabore el método "sqrts", que devuelve la raíz cuadrada de la sumatoria "s" de los cuadrados de los "n" elementos del array "x". Si el array no tiene elementos el método debe devolver 0. Codifique el método (estructura: for, operadores compuestos), redondeando el resultado al séptimo dígito después del punto, como un método getter de la clase "SQ1" que recibe (en su constructor) los "elementos" en la propiedad privada "x" y devuelve su valor en el getter "x".</p><div id="pregunta182" class="calculadora" spellcheck="false"><div class="instruccion">SQ1 = class {<br><br>  #x;<br><br>  constructor(...elementos) {<br>    this.x = elementos;<br>  }<br><br>  get x() {<br>    return this.#x;<br>  }<br><br>  get sqrts() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n === 0) return 0 ;<br>    let s = 0;<br>    for(let i=0;i&lt;n;i++) s+=x[i]**2;<br>    return Math.sqrt(s).round(7);<br>  }<br>};</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule la raíz cuadrada de la sumatoria de los cuadrados de los elementos del vector []</p><div id="pregunta183" class="calculadora" spellcheck="false"><div class="instruccion">new SQ1().sqrts</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule la raíz cuadrada de la sumatoria de los cuadrados de los elementos del vector 1, -11, -17, 14, 6</p><div id="pregunta184" class="calculadora" spellcheck="false"><div class="instruccion">new SQ1(1, -11, -17, 14, 6).sqrts</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule la raíz cuadrada de la sumatoria de los cuadrados de los elementos del vector con los números pares que existen entre 12 y 24.</p><div id="pregunta185" class="calculadora" spellcheck="false"><div class="instruccion">new SQ1(...[].range(12,24,2)).sqrts</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule la raíz cuadrada de la sumatoria de los cuadrados de los elementos del vector con los 6 números igualmente espaciados que existen entre 14 y 34.</p><div id="pregunta186" class="calculadora" spellcheck="false"><div class="instruccion">new SQ1(...[].linspace(14,34,6)).sqrts</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Añada a la clase "SQ1" el getter "sqrtsa", que resuelve el problema empleando la estructura for-of (elemento "e"), redondeando el resultado al séptimo dígito después del punto.</p><div id="pregunta187" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(SQ1.prototype, "sqrtsa", {<br><br>  get() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n === 0) return 0 ;<br>    let s = 0;<br>    for(let e of x) s += e**2 ;<br>    return Math.sqrt(s).round(7);<br>  },<br><br>  configurable:true <br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule la raíz cuadrada de la sumatoria de los cuadrados de los elementos del vector con los 6 números igualmente espaciados que existen entre 14 y 34.</p><div id="pregunta188" class="calculadora" spellcheck="false"><div class="instruccion">new SQ1(...[].linspace(14,34,6)).sqrtsa</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Añada a la clase "SQ1" el getter "sqrtsb", que resuelve el problema empleando el método forEach (elemento "e"), redondeando el resultado al séptimo dígito después del punto.</p><div id="pregunta189" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(SQ1.prototype, "sqrtsb", {<br><br>  get() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n=== 0) return 0 ;<br>    let s = 0;<br>    x.forEach(e =&gt; s+=e**2);<br>    return Math.sqrt(s).round(7) ;<br>  },<br><br>  configurable:true <br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule la raíz cuadrada de la sumatoria de los cuadrados de los elementos del vector con los 6 números igualmente espaciados que existen entre 14 y 34.</p><div id="pregunta190" class="calculadora" spellcheck="false"><div class="instruccion">new SQ1(...[].linspace(14,34,6)).sqrtsb</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Añada a la clase "SQ1" el getter "sqrtsc", que resuelve el problema empleando el método reduce (acumulador "s", elemento "e"), redondeando el resultado al séptimo dígito después del punto.</p><div id="pregunta191" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(SQ1.prototype, "sqrtsc", {<br><br>  get() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n=== 0) return 0 ;<br>    let s = 0;<br>    return x.reduce((s,e) =&gt; s+e**2,0).sqrt().round(7)<br>    <br>  },<br><br>  configurable:true <br><br>});<br></div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule la raíz cuadrada de la sumatoria de los cuadrados de los elementos del vector con los 6 números igualmente espaciados que existen entre 14 y 34.</p><div id="pregunta192" class="calculadora" spellcheck="false"><div class="instruccion">new SQ1(...[].linspace(14,34,6)).sqrtsc</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="42" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- Ejercicio 8 -->
+
+    <div class="ejercicio" id="ejercicio9" enunciado="1"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Elabore el método "rotari", que rote los "n" elementos del array "x", una posición a la izquierda, devolviendo el array rotado. Por ejemplo, si el array es [1, 2, 3, 4, 5], al aplicar el algoritmo debe quedar con [2, 3, 4, 5, 1]. Pista: al recorrer los elementos hacia la izquierda, el primer elemento es reemplazado por el segundo, el segundo por el tercero y así, hasta que el penúltimo elemento es reemplazado por el último. Como en el proceso se pierde el valor del primer elemento, es necesario guardar el mismo para que sea asignado al último elemento. Codifique el método (estructura: for, operadores compuestos) como un método getter de la clase "ROT2" que recibe (en su constructor) los "elementos" en la propiedad privada "x" y devuelve su valor en el getter "x". Si el vector no tiene elementos debe lanzar el error "vector vacío".</p><div id="pregunta202" class="calculadora" spellcheck="false"><div class="instruccion">ROT2 = class {<br><br>  #x;<br><br>  constructor(...elementos) {<br>    this.x = elementos;<br>  }<br><br>  get x() {<br>    return this.#x;<br>  }<br><br>  get rotari() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n === 0) throw new Error("vector vacío");<br>    const aux = x[0];<br>    for(let i=0;i&lt;n-1;i++) x[i] = x[i+1];<br>    x[n-1] = aux;<br>    return x;<br>  }<br><br>};</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Rote, una posición a la izquierda, los elementos del vector 4, 5, 12, 14, 17</p><div id="pregunta203" class="calculadora" spellcheck="false"><div class="instruccion">new ROT2(4, 5, 12, 14, 17).rotari</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Rote, una posición a la izquierda, los elementos del vector con los números enteros del 5 al 12.</p><div id="pregunta204" class="calculadora" spellcheck="false"><div class="instruccion">new ROT2(...[].range(5,12)).rotari</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Rote, una posición a la izquierda, los elementos del vector con los números impares que existen entre 7 y 16.</p><div id="pregunta205" class="calculadora" spellcheck="false"><div class="instruccion">new ROT2(...[].range(7,16,2)).rotari</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Rote, una posición a la izquierda, los elementos del vector con los números pares que existen entre 4 y 16.</p><div id="pregunta206" class="calculadora" spellcheck="false"><div class="instruccion">new ROT2(...[].range(4,16,2)).rotari</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Escriba el código que resuelve el problema, como el método getter "rotaria" de la clase "ROT2", empleando el método reduce (acumulador "_", elemento "e", contador "i"). Pista: en cada repetición se asigna al anterior elemento (el elemento i-1), el valor del elemento actual (e).</p><div id="pregunta207" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(ROT2.prototype, "rotaria", {<br><br>  get() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n===0) throw new Error("vector vacío");<br>    const aux = x[0];<br>    x.reduce((_,e,i)=&gt;x[i-1]=e);<br>    x[n-1] = aux;<br>    return x ;<br>  },<br><br>  configurable:true <br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Rote, una posición a la izquierda, los elementos del vector con los números pares que existen entre 4 y 16.</p><div id="pregunta208" class="calculadora" spellcheck="false"><div class="instruccion">new ROT2(...[].range(4,16,2)).rotaria</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Escriba el código que resuelve el problema, como el método getter "rotarib" de la clase "ROT2", empleando los métodos push y shift (pista: se quita el primer elemento y se añade el elemento quitado al final del array).</p><div id="pregunta209" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(ROT2.prototype, "rotarib", {<br><br>  get() {<br>    const x = this.x;<br>    const n = x.length;<br>    if (n===0) throw new Error("vector vacío");<br>    const aux = x[0];<br>    x.push(x.shift());<br>    return x;<br>  },<br><br>  configurable:true <br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Rote, una posición a la izquierda, los elementos del vector con los números pares que existen entre 4 y 16.</p><div id="pregunta210" class="calculadora" spellcheck="false"><div class="instruccion">new ROT2(...[].range(4,16,2)).rotarib</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="33" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- Ejercicio 9 -->
+
+    <div class="ejercicio" id="ejercicio10" enunciado="2"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Elabore el método "restav", que devuelve un nuevo vector con la resta de los "n" elementos del vector "x" y los "m" elementos del vector "y", así si el vector "x" es [4, 2, 7] y el vector "y" es [2, 3, 4], el vector resultante será [2, -1, 3]. El método debe comprobar que los vectores "x" y "y" tengan el mismo número de elementos y de no ser así, lanzar el error "Dimensiones incompatibles". Codifique el método (estructura: for, operadores compuestos) como un método getter de la clase "RV" que recibe (en su constructor) los vectores "vector1" y "vector2" en las propiedades privadas "x" y "y", devolviéndolos en los getter "x" y "y".</p><div id="pregunta233" class="calculadora" spellcheck="false"><div class="instruccion">RV = class {<br><br>  #x;<br>  #y;<br><br>  constructor(vector1,vector2) {<br>    this.#x = vector1;<br>    this.#y = vector2;<br>  }<br><br>  get x() {<br>    return this.#x;<br>  }<br><br>  get y() {<br>    return this.#y;<br>  }<br><br>  get restav() {<br>    const x = this.x, y = this.y;<br>    const n=x.length, m=y.length;<br>    if (n!==m) throw new Error("dimensiones incompatibles");<br>    const r = [];<br>    for(let i=0;i&lt;n;i++) r.push(x[i]-y[i]);<br>    return r;<br>  }<br><br>};</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Reste los vectores [3, 5, 7, 12, 15] y [1, 3, 4, 5, 9]</p><div id="pregunta234" class="calculadora" spellcheck="false"><div class="instruccion">new RV( [3, 5, 7, 12, 15],[1, 3, 4, 5, 9]).restav</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Reste al vector con los números pares del 2 al 10, el vector con los números enteros del 1 al 5.</p><div id="pregunta235" class="calculadora" spellcheck="false"><div class="instruccion">new RV([].range(2,10,2), [].range(1,5)).restav</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Iniciando la semilla de números aleatorios en 0, Reste al vector con 6 números enteros pseudoaleatorios comprendidos entre 0 y 8, el vector con 6 números enteros pseudoaleatorios comprendidos entre 2 y 9.</p><div id="pregunta236" class="calculadora" spellcheck="false"><div class="instruccion">randseed = 0;<br>new RV([].rand(6,0,8).round(), [].rand(6,2,9).round()).restav</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Reste los vectores [1, 2, 3, 4] y [3, 4, 5, 6, 7].</p><div id="pregunta237" class="calculadora" spellcheck="false"><div class="instruccion">new RV([1, 2, 3, 4], [3, 4, 5, 6, 7]).restav</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Escriba el código que resuelve el problema, como el método getter "restava" de la clase "RV", empleando el método forEach (elemento "e", contador "i").</p><div id="pregunta238" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(RV.prototype, "restava", {<br><br>  get() {<br>    const x = this.x, y = this.y;<br>    const n=x.length, m=y.length;<br>    if (n!==m) throw new Error("dimensiones incompatibles");<br>    const r = [];<br>    x.forEach((e,i)=&gt;r.push(e-y[i]));<br>    return r ;<br>  },<br><br>  configurable:true <br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Reste al vector con los números pares del 2 al 10, el vector con los números enteros del 1 al 5.</p><div id="pregunta239" class="calculadora" spellcheck="false"><div class="instruccion">new RV([].range(2,10,2), [].range(1,5)).restava</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Escriba el código que resuelve el problema, como el método getter "restavb" de la clase "RV", empleando el método reduce (acumulador "r" valor inicial [], elemento "e", contador "i", resultado devuelto directamente).</p><div id="pregunta240" class="calculadora" spellcheck="false"><div class="instruccion"> Object.defineProperty(RV.prototype, "restavb", {<br><br>  get() {<br>    const x = this.x, y = this.y;<br>    const n=x.length, m=y.length;<br>    if (n!==m) throw new Error("dimensiones incompatibles");<br>    const r = [];<br>    return x.reduce((r,e,i)=&gt;(r.push(e-y[i]),r), []);<br>  },<br><br>  configurable:true <br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Reste al vector con los números pares del 2 al 10, el vector con los números enteros del 1 al 5.</p><div id="pregunta241" class="calculadora" spellcheck="false"><div class="instruccion">new RV([].range(2,10,2), [].range(1,5)).restavb</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Escriba el código que resuelve el problema, como el método getter "restavc" de la clase "RV", empleando el método some (elemento "e", contador "i").</p><div id="pregunta242" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(RV.prototype, "restavc", {<br><br>  get() {<br>    const x = this.x, y = this.y;<br>    const n=x.length, m=y.length;<br>    if (n!==m) throw new Error("dimensiones incompatibles");<br>    const r = [];<br>    x.some((e,i)=&gt;(r.push(e -y[i]), false));<br>    return r ;<br>  },<br><br>  configurable:true <br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Reste al vector con los números pares del 2 al 10, el vector con los números enteros del 1 al 5.</p><div id="pregunta243" class="calculadora" spellcheck="false"><div class="instruccion">new RV([].range(2,10,2), [].range(1,5)).restavc</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="42" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- Ejercicio 10 -->
+
+    <div class="ejercicio" id="ejercicio11" enunciado="1"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Elabore el método "prepend", que añade al principio del vector "x", los "m" elementos del vector "y", así si el vector "x" es [3, 4, 5] y el vector "y" [1, 2], el vector resultante es [1, 2, 3, 4, 5]. Codifique el método (estructura: for, operadores compuestos) como un método getter de la clase "PP" que recibe (en su constructor) los vectores "vector1" y "vector2" en las propiedades privadas "x" y "y", devolviéndolos en los getter "x" y "y".</p><div id="pregunta257" class="calculadora" spellcheck="false"><div class="instruccion">PP = class {<br><br>  #x;<br>  #y;<br><br>  constructor(vector1, vector2) {<br>    this.#x = vector1;<br>    this.#y = vector2;<br>  }<br><br>  get x() {<br>    return this.#x;<br>  }<br><br>  get y() {<br>    return this.#y;<br>  }<br><br>  get prepend() {<br>    const x = this.x, y = this.y;<br>    const m = y.length;<br>    for(let i=m-1;i&gt;=0;i-- ) x.unshift(y[i]);<br>    return x ;<br>  }<br><br>};</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Añada al principio del vector [7, 9] el vector [1, 4, 6]</p><div id="pregunta258" class="calculadora" spellcheck="false"><div class="instruccion">new PP([7, 9],[1,4,6]).prepend</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Añada al principio del vector [14, 15, 21, 23] el vector [1, 4, 5, 9, 12]</p><div id="pregunta259" class="calculadora" spellcheck="false"><div class="instruccion">new PP([14, 15, 21, 23],[1, 4, 5, 9, 12]).prepend</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Añada al principio del vector conformado por los números enteros del 9 al 15, el vector conformado por los números enteros del 1 al 7.</p><div id="pregunta260" class="calculadora" spellcheck="false"><div class="instruccion">new PP([].range(9,15), [].range(1,7)).prepend</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Añada al principio del vector conformado por los números pares del 2 al 10, el vector conformado por los números pares del 10 al 16.</p><div id="pregunta261" class="calculadora" spellcheck="false"><div class="instruccion">new PP([].range(2,10,2), [].range(10,16,2)).prepend</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Escriba el código que resuelve el problema, como el método "prependa" de la clase "PP", con la estructura for-of (elemento "e").  Pista: como para añadir el vector "y", al principio del vector "x", sus elementos deben estar invertidos, pero el vector original no debe ser modificado, se debe iterar con la copia (slice) invertida (reverse) de "y".</p><div id="pregunta262" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(PP.prototype, "prependa", {<br><br>  get() {<br>    const x = this.x, y = this.y;<br>    for(let e of y.slice().reverse()) x.unshift(e);<br>    return x ;<br>  },<br><br>  configurable:true <br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Añada al principio del vector conformado por los números enteros del 9 al 15, el vector conformado por los números enteros del 1 al 7.</p><div id="pregunta263" class="calculadora" spellcheck="false"><div class="instruccion">new PP([].range(9,15), [].range(1,7)).prependa</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Escriba el código que resuelve el problema, como el método "prependb" de la clase "PP", con el método forEach (elemento "e").  Pista: como para añadir el vector "y", al principio del vector "x", sus elementos deben estar invertidos, pero el vector original no debe ser modificado, se debe iterar con la copia (slice) invertida (reverse) de "y".</p><div id="pregunta264" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(PP.prototype, "prependb", {<br><br>  get() {<br>    const x = this.x, y = this.y;<br>    y.slice().reverse().forEach(e=&gt;x.unshift(e));<br>    return x ;<br>  },<br><br>  configurable:true <br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Añada al principio del vector conformado por los números enteros del 9 al 15, el vector conformado por los números enteros del 1 al 7.</p><div id="pregunta265" class="calculadora" spellcheck="false"><div class="instruccion">new PP([].range(9,15), [].range(1,7)).prependb</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Escriba el código que resuelve el problema, como el método "prependc" de la clase "PP", con el método every (elemento "e").  Pista: como para añadir el vector "y", al principio del vector "x", sus elementos deben estar invertidos, pero el vector original no debe ser modificado, se debe iterar con la copia (slice) invertida (reverse) de "y".</p><div id="pregunta266" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(PP.prototype, "prependc", {<br><br>  get() {<br>    const x = this.x, y = this.y;<br>    y.slice().reverse().every(e=&gt;(x.unshift(e), true));<br>    return x ;<br>  },<br><br>  configurable:true <br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Añada al principio del vector conformado por los números enteros del 9 al 15, el vector conformado por los números enteros del 1 al 7.</p><div id="pregunta267" class="calculadora" spellcheck="false"><div class="instruccion">new PP([].range(9,15), [].range(1,7)).prependc</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Escriba el código que resuelve el problema, como el método "prependd" de la clase "PP", con el método reduceRight (acumulador "_" valor inicial 0, elementos "e", resultado devuelto directamente). Pista: En cada repetición se debe añadir al inicio de "x" el elemento "e" del vector "y" y devolver "x".</p><div id="pregunta268" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(PP.prototype, "prependd", {<br><br>  get() {<br>    const x = this.x, y = this.y;<br>    return y.reduceRight((_,e)=&gt;(x.unshift(e), x), 0);<br>  },<br><br>  configurable:true <br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Añada al principio del vector conformado por los números enteros del 9 al 15, el vector conformado por los números enteros del 1 al 7.</p><div id="pregunta269" class="calculadora" spellcheck="false"><div class="instruccion">new PP([].range(9,15), [].range(1,7)).prependd</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="51" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- Ejercicio 11 -->
+
+    <div class="ejercicio" id="ejercicio12" enunciado="0"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Elabore el método "rand10", que recibe un número entero "n" y devuelva un array ("x"), con ese número de elementos aleatorios, comprendidos entre 1 y 10. Codifique el método (estructura: for, operadores compuestos), redondeando los números generados al segundo dígito después del punto, como un método getter de la clase "RAND" que recibe (en su constructor) el "número" de elementos en la propiedad privada "n".</p><div id="pregunta270" class="calculadora" spellcheck="false"><div class="instruccion">RAND = class {<br><br>  #n;<br><br>  constructor(número) {<br>    this.#n = número;<br>  }<br><br>  get n() {<br>    return this.#n;<br>  }<br><br>  get rand10() {<br>    const n = this.n;<br>    const x = [];<br>    for(let i =0;i&lt;n;i++) x.push((Math.random()*9+1).round(2));<br>    return x ;<br>  }<br><br>};</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Inicie la semilla de números aleatorios en 2:</p><div id="pregunta271" class="calculadora" spellcheck="false"><div class="instruccion">randseed = 2;</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Genere un vector con 3 números aleatorios comprendidos entre 1 y 10</p><div id="pregunta272" class="calculadora" spellcheck="false"><div class="instruccion">new RAND(3).rand10</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Genere un vector con 5 números aleatorios comprendidos entre 1 y 10</p><div id="pregunta273" class="calculadora" spellcheck="false"><div class="instruccion">new RAND(5).rand10</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Genere un vector con 7 números aleatorios comprendidos entre 1 y 10</p><div id="pregunta274" class="calculadora" spellcheck="false"><div class="instruccion">new RAND(7).rand10</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Escriba el código que resuelve el problema, como el método getter "rand10a" de la clase "RAND", con la estructura for-of (vector generado con "zeros", elementos "_", números redondeados al segundo dígito).</p><div id="pregunta275" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(RAND.prototype, "rand10a", {<br><br>  get() {<br>    const n = this.n;<br>    const x = [];<br>    for(let _ of [].zeros(n)) x.push((Math.random()*9+1).round(2));<br>    return x ;<br>  },<br><br>  configurable:true <br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Genere un vector con 7 números aleatorios comprendidos entre 1 y 10 (semilla=2)</p><div id="pregunta276" class="calculadora" spellcheck="false"><div class="instruccion">randseed=2;<br>new RAND(7).rand10a</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Escriba el código que resuelve el problema, como el método getter "rand10b" de la clase "RAND", con el método reduce (vector generado con "zeros", acumulador "x" valor inicial [], números redondeados al segundo dígito, resultado devuelto directamente).</p><div id="pregunta277" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(RAND.prototype, "rand10b", {<br><br>  get() {<br>    const n = this.n;<br>    return [].zeros(n).reduce(x=&gt;(x.push((Math.random()*9+1).round(2)),x ), []);<br>  },<br><br>  configurable:true <br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Genere un vector con 7 números aleatorios comprendidos entre 1 y 10 (semilla=2)</p><div id="pregunta278" class="calculadora" spellcheck="false"><div class="instruccion">randseed=2;<br>new RAND(7).rand10b</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Escriba el código que resuelve el problema, como el método getter "rand10c" de la clase "RAND", con el método every (vector generado con "zeros", función interna sin parámetros, números redondeados al segundo dígito).</p><div id="pregunta279" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(RAND.prototype, "rand10c", {<br><br>  get() {<br>    const n = this.n;<br>    const x = [];<br>    [].zeros(n).every(()=&gt;(x.push((Math.random()*9+1).round(2)), true));<br>    return x ;<br>  },<br><br>  configurable:true <br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Genere un vector con 7 números aleatorios comprendidos entre 1 y 10 (semilla=2)</p><div id="pregunta280" class="calculadora" spellcheck="false"><div class="instruccion">randseed=2;<br>new RAND(7).rand10c</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Escriba el código que resuelve el problema, como el método getter "rand10d" de la clase "RAND", con el método map (vector generado con "zeros", función interna sin parámetros, números redondeados al segundo dígito, resultado devuelto directamente).</p><div id="pregunta281" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(RAND.prototype, "rand10d", {<br><br>  get() {<br>    const n = this.n;<br>    return [].zeros(n).map(()=&gt;(Math.random()*9+1).round(2));<br>  },<br><br>  configurable:true <br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Genere un vector con 7 números aleatorios comprendidos entre 1 y 10 (semilla=2)</p><div id="pregunta282" class="calculadora" spellcheck="false"><div class="instruccion">randseed=2;<br>new RAND(7).rand10d</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="51" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- Ejercicio 12 -->
+    
+
+    
+    
+    <div id="generarPrueba" data-scroll-y="42668.890625"><br><hr><label class="lnotacapitulo">Nota del capítulo: </label><input type="text" id="notaCapitulo" disabled="disabled" class="itnotacapitulo"><br><br><button id="btGenerarPrueba" style="visibility: visible;" onclick="capitulo.registrarCapitulo()">Iniciar defensa</button><button id="btEmplearBono" style="margin-left:1.1rem;width:9.686rem;display:none;" onclick="capitulo.emplearBono()">Emplear Bono</button><br><br></div>
+
+
+<d id="dAutor" style="font-size: 0.9rem;text-align:center;color: #0808f24f;font-weight:bolder;position:fixed;top: 5px;right: 5px;user-select:none;display:inline-block;z-index:15;">Hernan G. Peñaranda V.</d></div><!-- Cierre del div capítulo -->
+
+
+<div id="dato" style="display:none;">KqbJCKyn938lCZ0oDYGpDIqsDJKo93apD30aD3Ot93GsDoGnC30aC2HNLsjJIG00</div>
+<div id="reg" style="display:none;">Cp0mCJioC34mEp8mCJ0xCJ4mEp8mCJioC34mEp8mCJ0xCZ0nEp8mCJipC30nEp8mCJinCJ00</div>
+
+
+
+
+<div id="divDialogo" style="display: none;"><div onfocus="document.querySelector('#divDialogo input').focus();"><div>Carnet universitario</div><div>Escriba el número de su carnet universitario, verificando que el guión haya sido correctamente insertado.</div><input type="text" onkeydown="return Capitulo.divDialogo.funKeydown(event)" onkeyup="Capitulo.divDialogo.funKeyup(event)"><div><button onclick="Capitulo.divDialogo.funClick('aceptar');">Aceptar</button><button style="margin-left:35px;" onclick="Capitulo.divDialogo.funClick('cancelar');">Cancelar</button></div></div></div></body>

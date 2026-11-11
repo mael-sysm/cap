@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<head>
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Language" content="es">
+
+  <title>35-6741 capítulo 5</title>
+  
+    <!-- Librería y hoja de estilos KATEX  -->
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/katex/katex.min.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/katex/katex.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/katex/contrib/auto-render.min.js"></script>
+
+    <!-- Librerías y hojas de estilo CodeMirror -->
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/lib/codemirror.min.css">
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/theme/mdn-like.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/lib/codemirror.min.js"></script>
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/fold/foldgutter.min.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/fold/foldcode.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/fold/brace-fold.min.js"></script>
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/dialog/dialog.min.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/dialog/dialog.min.js"></script>
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/hint/show-hint.min.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/hint/show-hint.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/hint/javascript-hint.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/search/searchcursor.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/search/search.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/edit/matchbrackets.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/edit/closebrackets.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/comment/comment.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/wrap/hardwrap.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/javascript/javascript.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/css/css.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/xml/xml.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/markdown/markdown.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/htmlmixed/htmlmixed.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/keymap/sublime.min.js"></script>
+
+    <!-- Librería Plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script><style id="plotly.js-style-global"></style><style id="plotly.js-style-global"></style>
+
+    <!-- Librerías y hojas de estilo function-plot -->
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/function-plot/site/js/vendor/d3.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/function-plot/dist/function-plot.js"></script>
+    
+    <!-- Librería quantities -->
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/quantities/quantities.min.js"></script>
+
+    <!-- Librería GoJs para la creación de diagramas de flujo -->
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/gojs/release/go.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/flowchart_gojs.js"></script>
+
+    <!-- Librerías matemáticas propias -->
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/math.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/number.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/array.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/string.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/cplx.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/function.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/object.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/prq.js"></script>
+
+    <!-- Librería y hoja de estilos propias para la creación y manejo de la calculadora  -->
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/src/cjs.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/cjs.js"></script>
+
+    <!-- Librería y hoja de estilos propias para la creación y manejo de los capítulos -->
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/src/texto.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/texto.js"></script>
+
+   <!-- Librería del capítulo actual -->
+    <script src="https://cursosabiertos.usfx.bo/materias/progoo/capitulos/capitulo5/files/capitulo5.js"></script>
+
+    <!-- Fuentes empleadas en el capítulo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300;400;500;600;700;800&amp;family=Roboto+Mono&amp;display=swap" rel="stylesheet">
+
+    <script>
+        function katexRender() {
+            renderMathInElement(document.getElementById("capitulo"));
+        }
+        document.addEventListener("DOMContentLoaded", katexRender);
+        window.onerror = function(msg, url, lineNo, columnNo, error) {
+            __error__ = msg;
+        };
+        window.onload = function(){
+            capitulo.iniciar();
+        };
+    </script>
+          
+
+</head>
+
+<body class="text">  
+
+
+<div id="capitulo">
+
+  <button id="btGuardar" style="z-index:15;" onclick="savePage()">Guardar</button>
+
+
+  <h1 class="text" onclick="alerta(capitulo.idPagina,'')" style="cursor: pointer;">Estructuras Iterativas 2</h1>
+
+  <p class="text">En este capítulo se completa el repaso de las estructuras iterativas, con algunos ejemplos donde se programan series de Taylor y se emplea la estructura <dfn class="style1">for</dfn> para resolver problemas que implican sumatorias/productorias.</p>
+  
+
+
+  <h3 class="text">Exponente de un número</h3>
+
+  <p class="text">En este ejemplo se elabora una función que calcula el exponente de un número "x", empleando la serie de Taylor respectiva:</p>
+
+  <table class="ecuacionsn">
+      <tbody><tr>
+      <td>
+          \[ \text{e}^x = 1+x+\dfrac{x^2}{2!}+\dfrac{x^3}{3!}+\dfrac{x^4}{4!}+\dots + \infty \]
+      </td>
+      <td></td>
+      </tr>
+  </tbody></table>
+
+  <p class="text">En consecuencia, el problema se reduce a calcular el valor de una sumatoria, sin embargo, como las series de Taylor son sumatorias infinitas, no es posible calcularlas directamente. En su lugar se sigue un proceso iterativo: <b>a)</b> Se calcula y asigna el primer término de la serie a la variable "ter"; <b>b)</b> Se inicia el valor de la sumatoria "s1" en el primer término "ter" de la serie (s1=ter); <b>c)</b> Se calcula el nuevo término de la serie "ter", empleando su valor anterior (ter = ter*...); <b>d)</b> Con "s1" y el nuevo término de la serie "ter", se calcula el nuevo valor de la serie "s2" (s2 = s1+ter); <b>e)</b> Se compara el valor anterior de la serie "s1", con el valor nuevo "s2" (Math.abs(s1/s2-1)&lt;1e-n); <b>f)</b> Si "s1" y "s2" son iguales en el número "n" de dígitos establecido, el proceso termina, siendo la solución el valor de "s2"; <b>f)</b> Caso contario, "s1" toma el valor de "s2" (s1 = s2), se actualizan variables y se repite el proceso desde el paso <b>c</b>.</p>
+
+  <p class="text">En consecuencia, para resolver una serie, básicamente el problema radica en deducir la regla que permite calcular el nuevo término en base a su término anterior.</p>
+
+  <p class="text">Para ello se analizan dos términos consecutivos. Por ejemplo (en el caso del exponente) el cálculo del cuarto término, en base al tercero, requiere las siguientes operaciones:</p>
+
+  <table class="ecuacionsn">
+      <tbody><tr>
+      <td>
+          \[ \dfrac{x^3}{3!} \cdot \dfrac{x}{4} = \dfrac{x^4}{4!} \]
+      </td>
+      <td></td>
+      </tr>
+  </tbody></table>
+  
+  <p class="text">Y para calcular el quinto, en base al cuarto, las siguientes:</p>
+
+  <table class="ecuacionsn">
+      <tbody><tr>
+      <td>
+          \[ \dfrac{x^4}{4!} \cdot \dfrac{x}{5} = \dfrac{x^5}{5!} \]
+      </td>
+      <td></td>
+      </tr>
+  </tbody></table>
+  
+  <p class="text">Por tanto, el nuevo término se calcula multiplicando el término anterior por \(\dfrac{x}{i}\). Al multiplicar el numerador por "x" se consigue la siguiente potencia (porque x<sup>n</sup> = x<sup>n-1</sup>*x<sup>1</sup>) y al multiplicar el denominador por "i" se consigue el siguiente factorial (porque n! = (n-1)!*n). El contador "i" (en este caso) debe iniciar en 1 e incrementar en 1 en cada iteración.</p>
+
+  <p class="text">Siempre que se pueda, <strong class="style1">en las series infinitas se deben evitar las restas</strong>, porque en las series los números crecen rápidamente y la resta de números muy grandes producen errores de redondeo muy grandes, dando lugar a resultados erróneos. <strong class="style1">Si no es posible evitar las restas se debe tratar de trabajar con números o muy grandes o muy pequeños</strong>.</p> 
+    
+  <p class="text">En el caso del exponente, si el número (x) es negativo, las potencias impares son negativas y en consecuencia en la serie aparecen restas. Para evitar las restas, se trabaja con el valor positivo del número. En este caso es posible hacerlo porque en las potencias se cumple que:</p>
+
+  <table class="ecuacionsn">
+      <tbody><tr>
+      <td>
+          \[ \text{e}^{-x} = \dfrac{1}{\text{e}^x} \]
+      </td>
+      <td></td>
+      </tr>
+  </tbody></table>
+
+    <p class="text"><dfn class="style1">Entonces, si el número es negativo, se trabaja con el valor positivo y antes de devolver el resultado, si el número era negativo en se devuelve la inversa del resultado calculado, caso contrario se devuelve el valor resultado calculado. Sin embargo, <strong class="style1">se aclara que esta relación sólo es válida para las potencias</strong></dfn>. No puede ser empleada en otros casos.</p>
+
+  <p class="text">El código respectivo, empleando la estructura <dfn class="style1">do-while</dfn> y el comando <dfn class="style1">break</dfn>, es:</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">exponente = y =&gt; {<br>  const x = y&lt;0 ? -y : y;<br>  if (x === 0) return 1;<br>  let ter = 1, s1 = ter, i = 1, s2;<br>  do {<br>    ter *= x/i;<br>    s2 = s1+ter;<br>    if (Math.abs(s1/s2-1)&lt;1e-14) break;<br>    s1 = s2;<br>    i++;<br>  } while (true);<br>  return y &lt; 0 ? 1/s2 : s2;<br>};</div>
+      <div class="resultado"></div>
+  </div>
+
+  <p class="text">Llamando a la función, con los valores de prueba, se obtienen los resultados correctos:</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">exponente(0)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">exponente(2)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">exponente(3.5)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">exponente(4.7)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">exponente(-9.2)</div>
+      <div class="resultado"></div>
+  </div>
+
+
+
+  <h3 class="text">Seno de un ángulo en radianes</h3>
+
+  <p class="text">En este ejemplo se programa una función que recibe un ángulo en radianes y devuelve el seno de ese ángulo, empleando la serie de Taylor:</p>
+
+  <table class="ecuacionsn">
+      <tbody><tr>
+      <td>
+          \[ \sin(x) = x-\dfrac{x^3}{3!}+\dfrac{x^5}{5!}-\dfrac{x^7}{7!} +\cdots \infty \]
+      </td>
+      <td></td>
+      </tr>
+  </tbody></table>    
+      
+  <p class="text">Como en el ejemplo anterior, el problema radica en deducir la regla que permite calcular un nuevo término en base al anterior. Por ejemplo, para calcular el tercer término, a partir del segundo, las operaciones son:</p>
+  
+  <table class="ecuacionsn">
+      <tbody><tr>
+      <td>
+          \[ -\dfrac{x^3}{3!} \cdot \left( -\dfrac{x^2}{4 \cdot 5}\right) = \dfrac{x^5}{5!} \]
+      </td>
+      <td></td>
+      </tr>
+  </tbody></table>    
+  
+  <p class="text">Y para calcular el cuarto término, a partir del tercero, las operaciones son:</p>
+  
+  <table class="ecuacionsn">
+      <tbody><tr>
+      <td>
+          \[ \dfrac{x^5}{5!} \cdot \left( -\dfrac{x^2}{6 \cdot 7}\right) = -\dfrac{x^7}{7!} \]
+      </td>
+      <td></td>
+      </tr>
+  </tbody></table>    
+  
+  <p class="text">De donde se deduce que el nuevo término se calcula multiplicando el término anterior por:</p>
+  
+  <table class="ecuacionsn">
+      <tbody><tr>
+      <td>
+          \[ \left(-\dfrac{x^2}{i \cdot j}\right) \]
+      </td>
+      <td></td>
+      </tr>
+  </tbody></table>    
+
+  <p class="text">Donde el signo negativo hace que el símbolo intercale (en cada iteración) de positivo a negativo y viceversa, "i" y "j" son dos contadores que comienzan en 2 y 3 y que incrementan de 2 en 2 en cada repetición del ciclo. Por supuesto, en lugar de dos contadores, se puede emplear solo uno "i", cambiando las operaciones del denominador por: <span class="textocodigo">i*(i+1)</span>.</p>
+
+  <p class="text">En este caso las potencias son impares y la serie en sí tiene restas, por lo que no es posible evitarlas. Pero, para reducir los errores de redondeo, se puede evitar trabajar con números muy grandes, recordando que las funciones trigonométricas son cíclicas y un ángulo mayor o igual a 360 grados (mayor a 2*π), puede ser reducido a su equivalente entre 0 y 360 grados (entre 0 y 2*π), simplemente trabajando con el residuo de su división entre 2*π.</p>
+
+  <p class="text">La función estándar que resuelve el problema, empleando la estructura <dfn class="style1">for</dfn> y el comando break, es:</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">function seno(x) {<br>  x = x%(2*Math.PI);<br>  if (x === 0) return 0;<br>  const xx = -x*x;<br>  let s2, ter = x, s1 = ter, i = 2, j = 3;<br>  for(;;) {<br>    ter *= xx/(i*j);<br>    s2 = s1+ter;<br>    if (Math.abs(s1/s2-1)&lt;1e-14) break;<br>    s1 = s2;<br>    i += 2;<br>    j += 2;<br>  }<br>  return s2;<br>};</div>
+      <div class="resultado"></div>
+  </div>
+
+  <p class="text">Llamando a la función con los valores de prueba, se obtiene:</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">seno(0)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">seno(2.45)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">seno(3.22)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">seno(56.8)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">seno(-83.1)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">seno(127.4)</div>
+      <div class="resultado"></div>
+  </div>
+
+  <p class="text">La función flecha que resuelve el problema, empleando un solo contador, la estructura <dfn class="style1">while</dfn> y el comando <dfn class="style1">break</dfn> con la estructura <dfn class="style1">try-catch</dfn>, es:</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">function senob(x) {<br>  x = x%(2*Math.PI);<br>  if (x === 0) return 0;<br>  const xx = -x*x;<br>  let s2, ter = x, s1 = ter, i = 2;<br>  try {<br>    while(true) {<br>      ter *= xx/(i*(i+1));<br>      s2 = s1+ter;<br>      if (Math.abs(s1/s2-1)&lt;1e-14) throw s2;<br>      s1 = s2;<br>      i += 2;<br>    }<br>  } catch(e) {<br>    return s2;<br>  }<br>};</div>
+      <div class="resultado"></div>
+  </div>
+
+  <p class="text">Con la cual, por supuesto, se obtienen los mismos resultados.</p>
+
+
+  <div class="ejercicio" id="ejercicio1" enunciado="2"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Programe la función estándar "exponente3", que reciba un número real "y", trabaje con su valor positivo "x" y calcule el exponente con la serie de Taylor:\[\text{e}^x = 1+x+\dfrac{x^2}{2!}+\dfrac{x^3}{3!}+\dfrac{x^4}{4!}+\dots + \infty\]Empleando la estructura "while", el comando "return" y devolviendo el resultado con 10 dígitos de precisión. Posteriormente llame al método con los números: a) 0; b) 2; c) 3.5; d) 4.7; e) 9.2 y f) -14.5.</p><div id="pregunta5" class="calculadora" spellcheck="false"><div class="instruccion">function exponente3(y) {<br>  const x = y&lt; 0?-y :y ;<br>  if (x===0) return 1;<br>  let s2, ter=1, s1=ter, i=1;<br>  while(true) {<br>    ter *=x/i ;<br>    s2 =s1+ter ;<br>    if (Math.abs(s1/s2-1)&lt;1e-10) return y&lt;0 ? 1/s2 :s2 ;<br>    s1 =s2 ;<br>    i++;<br>  }<br>};</div><div class="resultado"></div><div class="instruccion">exponente3(0)</div><div class="resultado"></div><div class="instruccion">exponente3(2)</div><div class="resultado"></div><div class="instruccion">exponente3(3.5)</div><div class="resultado"></div><div class="instruccion">exponente3(4.7)</div><div class="resultado"></div><div class="instruccion">exponente3(9.2)</div><div class="resultado"></div><div class="instruccion">exponente3(-14.5)</div><div class="resultado"></div></div><p class="pregunta" id="pregunta6"><span class="pregunta"></span>Si "y" es igual a -3.1, el valor de "x" es <span class="campo_literal correcta" tabindex="0" contenteditable="true">-3.1</span>.<br>En la séptima iteración las operaciones (acumuladas) realizadas para el cálculo del término (ter), son: x*x*<span class="campo_literal correcta" tabindex="0" contenteditable="true">x*x*x*x*x</span>/(1*2*<span class="campo_literal correcta" tabindex="0" contenteditable="true">3*4*5*6*7</span>).<br>Si en lugar de recibir "y", se recibe "x" y "x" es -2, el valor del término (ter),  en la tercera iteración, será: <span class="campo_literal correcta" tabindex="0" contenteditable="true">-8</span>/<span class="campo_literal correcta" tabindex="0" contenteditable="true">6</span>.<br>En la sexta iteración (i=6), en el nuevo término (ter) "x" estará elevado a <span class="campo_literal correcta" tabindex="0" contenteditable="true">6</span> y el denominador será el factorial de <span class="campo_literal correcta" tabindex="0" contenteditable="true">6</span>.<br>Si en la serie los signos intercalarían entre negativo y positivo: "1-x+x^2/2!-...", el nuevo término (ter) se calcularía con: ter *= <span class="campo_literal correcta" tabindex="0" contenteditable="true">-x/i</span>.</p><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="30" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 1 -->
+
+  <div class="ejercicio" id="ejercicio2" enunciado="1"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Programe la función anónima "senoh", que reciba un número real "x" y calcule el seno hiperbólico con la serie de Taylor:\[\sinh(x) = x+\dfrac{x^3}{3!}+\dfrac{x^5}{5!}+\dfrac{x^7}{7!}+\cdots \infty\]Empleando la estructura "while", el comando "throw" con la estructura "try-catch" y devolviendo el resultado con 10 dígitos de precisión. Posteriormente llame a la función con los números: a) 0; b) 3.6; c) 12.3; d) -29.3 y e) 145.7</p><div id="pregunta9" class="calculadora" spellcheck="false"><div class="instruccion">senoh = function(x) {<br>  if (x===0) return 0;<br>  const xx =x*x ;<br>  let s2, ter=x, s1=ter, i=2, j=3;<br>  try {<br>    while(true) {<br>      ter *=xx/(i*j) ;<br>      s2 =s1+ter ;<br>      if (Math.abs(s1/s2-1)&lt;1e-10)throw s2 ;<br>      s1 = s2;<br>      i +=2;<br>      j +=2;<br>    }<br>  } catch(e) {<br>    return e ;<br>  }<br>};</div><div class="resultado"></div><div class="instruccion">senoh(0<br>     )</div><div class="resultado"></div><div class="instruccion">senoh(3.6)</div><div class="resultado"></div><div class="instruccion">senoh(12.3)</div><div class="resultado"></div><div class="instruccion">senoh(-29.3)</div><div class="resultado"></div><div class="instruccion">senoh(145.7)</div><div class="resultado"></div></div><p class="pregunta" id="pregunta10"><span class="pregunta"></span>Si "x" es 0, el resultado es <span class="campo_literal correcta" tabindex="0" contenteditable="true">0</span>, porque el numerador de todos los t<span class="campo_literal correcta" tabindex="0" contenteditable="true">érminos</span> sería 0.<br>Si el valor de "x" es -5, el valor de "xx" será: <span class="campo_literal correcta" tabindex="0" contenteditable="true">25</span>.<br>Las operaciones acumuladas para el cálculo del término, en la quinta iteración son: x*xx*<span class="campo_literal correcta" tabindex="0" contenteditable="true">xx*xx*xx*xx</span>/(1*2*<span class="campo_literal correcta" tabindex="0" contenteditable="true">3*4*5*6*7*8*9*10*11</span>).<br>Los valores de los contadores, en la quinta iteración, son: i=<span class="campo_literal correcta" tabindex="0" contenteditable="true">10</span>, j=<span class="campo_literal correcta" tabindex="0" contenteditable="true">11</span>.<br>Si el valor de "x" es negativo, todos los términos tendrán signo <span class="campo_literal correcta" tabindex="0" contenteditable="true">negativo</span>.<br>Si solo se emplea un contador, el contador "j", el nuevo término se calcularía con: ter *= xx/((<span class="campo_literal correcta" tabindex="0" contenteditable="true">j-1</span>)*j).</p><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="30" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 2 -->
+
+  <div class="ejercicio" id="ejercicio3" enunciado="1"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Programe la función anónima "cosenoh", que reciba un número real "x" y calcule el coseno hiperbólico con la serie de Taylor:\[\cosh(x) = 1+\dfrac{x^2}{2!}+\dfrac{x^4}{4!}+\dfrac{x^6}{6!}+\cdots \infty\]Empleando la estructura "do-while", el comando "break" y devolviendo el resultado con 14 dígitos de precisión. Posteriormente llame a la función con los números: a) 0; b) 3.6; c) 12.3; d) -29.3 y e) 145.7</p><div id="pregunta14" class="calculadora" spellcheck="false"><div class="instruccion">cosenoh = function(x) {<br>  if (x===0) return 1;<br>  const xx = x*x;<br>  let s2, ter=1, s1=ter, i=1, j=2;<br>  do {<br>    ter *=xx/(i*j) ;<br>    s2 =s1+ter ;<br>    if (Math.abs(s1/s2-1)&lt;1e-14)break ;<br>    s1 =s2 ;<br>    i +=2;<br>    j +=2;<br>  } while(true);<br>  return s2 ;<br>};</div><div class="resultado"></div><div class="instruccion">cosenoh(0)</div><div class="resultado"></div><div class="instruccion">cosenoh(3.6)</div><div class="resultado"></div><div class="instruccion">cosenoh(12.3)</div><div class="resultado"></div><div class="instruccion">cosenoh(-29.3)</div><div class="resultado"></div><div class="instruccion">cosenoh(145.7)</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="20" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 3 -->
+
+  <div class="ejercicio" id="ejercicio4" enunciado="1"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Programe la función anónima "atangenteh", que reciba un número real "x" y calcule el arcotangente hiperbólico con la serie de Taylor:\[\tanh^{-1}(x) = x+\dfrac{x^3}{3}+\dfrac{x^5}{5}+\dfrac{x^7}{7}+\cdots \infty \hspace{1cm} |x|&lt;1\]Empleando la estructura "do-while", el comando "break" y devolviendo el resultado con 15 dígitos de precisión. Se debe validar que el valor absoluto de "x" sea menor a 1, lanzando el error "El número debe ser menor a 1". Posteriormente llame a la función con los números: a) 0; b) 0.5; c) -0.75; d) 0.84; e) -0.32 y f) 2.5.</p><div id="pregunta18" class="calculadora" spellcheck="false"><div class="instruccion">atangenteh = function(x) {<br>  if (Math.abs(x)&gt;=1) throw "El número debe ser menor a 1";<br>  if (x===0) return 0;<br>  const xx =x*x ;<br>  let s2, ter=x, s1=ter, i=3;<br>  do {<br>    ter *=xx*(i-2)/i ;<br>    s2 =s1+ter ;<br>    if (Math.abs(s1/s2-1)&lt;1e-15)break ;<br>    s1 =s2 ;<br>    i +=2;<br>  } while(true);<br>  return s2 ;<br>};</div><div class="resultado"></div><div class="instruccion">atangenteh(0)</div><div class="resultado"></div><div class="instruccion">atangenteh(0.5)</div><div class="resultado"></div><div class="instruccion">atangenteh(-0.75)</div><div class="resultado"></div><div class="instruccion">atangenteh(0.84)</div><div class="resultado"></div><div class="instruccion">atangenteh(-0.32)</div><div class="resultado"></div><div class="instruccion">atangenteh(2.5)</div><div class="resultado"></div></div><p class="pregunta" id="pregunta19"><span class="pregunta"></span>Las operaciones con las que se calcula el nuevo término, en la cuarta iteración, son: x^<span class="campo_literal correcta" tabindex="0" contenteditable="true">7</span>/7*x^2*(<span class="campo_literal correcta" tabindex="0" contenteditable="true">9-2</span>)/<span class="campo_literal correcta" tabindex="0" contenteditable="true">9</span><br>Si el nuevo término se calcula con: <span class="textocodigo">ter *= xx*i/j</span>, el contador "i" debería iniciar en <span class="campo_literal correcta" tabindex="0" contenteditable="true">1</span> y el contador "j" en <span class="campo_literal correcta" tabindex="0" contenteditable="true">3</span>.<br>Si al calcular el nuevo término no se multiplica por (i-2) el valor del denominador, en la tercera iteración, sería: <span class="campo_literal correcta" tabindex="0" contenteditable="true">105</span>.</p><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="30" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 4 -->
+
+  <div class="ejercicio" id="ejercicio5" enunciado="2"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Programe la función estándar "atangente", que reciba un número real "x" y calcule el arcotangente con la serie de Taylor:\[\tan^{-1}(x) = x-\dfrac{x^3}{3}+\dfrac{x^5}{5}-\dfrac{x^7}{7}+\cdots \infty \hspace{1cm} |x|&lt;1\]Empleando la estructura "do-while", el comando "throw" con la estructura "try-catch" y devolviendo el resultado con 12 dígitos de precisión. Se debe validar que el valor absoluto de "x" sea menor a 1, lanzando el error "El número debe ser menor a 1". Posteriormente llame a la función con los números: a) 0; b) 0.5; c) -0.75; d) 0.84; e) -0.32 y f) 2.5.</p><div id="pregunta24" class="calculadora" spellcheck="false"><div class="instruccion">atangente = x =&gt; {<br>  if (Math.abs(x)&gt;=1) throw "El número debe ser menor a 1";<br>  if (x===0) return 0;<br>  const xx =-x*x ;<br>  let s2, ter=x, s1=ter, i=3;<br>  try {<br>    do {<br>      ter *=xx*(i-2)/i ;<br>      s2 =s1+ter ;<br>      if (Math.abs(s1/s2-1)&lt;1e-12)throw s2 ;<br>      s1 =s2 ;<br>      i +=2;<br>    } while(true);<br>  } catch(e) {<br>    return e ;<br>  }<br>};</div><div class="resultado"></div><div class="instruccion">atangente(0)</div><div class="resultado"></div><div class="instruccion">atangente(0.5)</div><div class="resultado"></div><div class="instruccion">atangente(-0.75)</div><div class="resultado"></div><div class="instruccion">atangente(0.84)</div><div class="resultado"></div><div class="instruccion">atangente(-0.32)</div><div class="resultado"></div><div class="instruccion">atangente(2.5)</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="23" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 5 -->
+
+
+
+
+  <h3 class="text">Doble productoria</h3>
+
+  <p class="text">En este ejemplo se programa un método para calcular el resultado de la siguiente productoria:</p>
+
+  <table class="ecuacionsn">
+      <tbody><tr>
+      <td>
+          \[ \prod_{x=1,2,3}^{n} \prod_{y=1,3,5}^{m}{\sqrt[3]{x+y}}  \]
+      </td>
+      <td></td>
+      </tr>
+  </tbody></table>
+
+  <p class="text">La solución de problemas que implican productorias o sumatorias con límites definidos, como en este ejemplo, puede ser implementada directamente con la estructura <dfn class="style1">for</dfn>: el contador de la productoria es el contador del ciclo, el límite inferior es el valor inicial del contador, el límite superior es el valor final del contador (la condición de finalización del ciclo), la diferencia entre dos valores consecutivos es el incremento del ciclo y la expresión dentro de la productoria (en este ejemplo la raíz cúbica), es la instrucción a programar dentro del ciclo interno.</p>
+
+  <p class="text">Adicionalmente, si se trata de una productoria, el acumulador tiene que iniciar en 1 (el número neutro de la multiplicación), mientras que si es una sumatoria, el acumulador tiene que iniciar en 0 (el número neutro de la suma).</p>
+
+  <p class="text">Así, en este ejemplo, al ser dos productorias, se requieren dos ciclos <dfn>for</dfn> anidados, con dos acumuladores: "p1" para el ciclo externo y "p2" para el interno. El contador del ciclo externo es "x" y va desde 1 hasta "n", con un incremento de uno en uno, mientras que el  contador del ciclo interno es "y" y va desde 1 hasta "m", con un incremento de dos en dos.</p>
+
+  <p class="text">La función anónima que resuelve el problema, es:</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">dobleProductoria = function(n, m) {<br>  if (n === undefined) throw "No ha definido el primer límite.";<br>  if (m === undefined) throw "No ha definido el segundo límite.";<br>  if (n%1!==0  || n&lt;0 || m%1!==0 || m&lt;0) throw "Los límites deben ser enteros positivos";<br>  let p1 = 1;<br>  for (let x=1; x&lt;=n; x++) {<br>    let p2 = 1;<br>    for (let y=1; y&lt;=m; y+=2)<br>      p2 *= Math.cbrt(x+y);<br>    p1 *= p2;<br>  }<br>  return p1;<br>};</div>
+      <div class="resultado"></div>
+  </div>
+ 
+  <p class="text">Llamando al método con algunos valores de prueba, se obtiene:</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">dobleProductoria(2, 3)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">dobleProductoria(5, 7)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">dobleProductoria(7, 7)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">dobleProductoria(3)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">dobleProductoria(2.5, 6.7)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">dobleProductoria(-7, -9)</div>
+      <div class="resultado"></div>
+  </div>
+
+
+  <br>
+  <div class="ejercicio" id="ejercicio6" enunciado="1"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Programe la función estándar "dobleSumatoria", que reciba el límite superior de la sumatoria externa "n", el de la interna "m" y calcule y devuelva el resultado de:\[\sum_{x=2,4,6}^{n} \sum_{y=1,3,5}^{m} {\sqrt{x^{2.1}+y^{2.1}}}\]Empleando la estructura "for", validando que los límites hayan sido definidos, lanzando los errores: "Primer límite no definido" y "Segundo límite no definido" y que sean enteros y positivos (%, !==, &lt;) error: "Los límites deben ser enteros positivos". Posteriormente llame a la función con valroes de ("n", "m") iguales a: a) 4, 4; b) 5, 7; c) 10, 10;  d) 12, 20; e) 17, 17; f) 15; g) 5.7, 9.2; h) -7, -14.</p><div id="pregunta27" class="calculadora" spellcheck="false"><div class="instruccion">var dobleSumatoria = function(n,m) {<br>  if (n===undefined) throw "Primer límite no definido";<br>  if (m===undefined) throw "Segundo límite no definido";<br>  if (n%1!==0 || n&lt;0 || m%1!==0 || m&lt;0) throw "Los límites deben ser enteros positivos";<br>  let s1=0;<br>  for(let x=2;x&lt;=n;x+=2) {<br>    let s2=0;<br>    for(let y=1;y&lt;=m;y+=2)<br>      s2 +=Math.sqrt(x**2.1+y**2.1);<br>    s1 +=s2;<br>  }<br>  return s1 ;<br>};</div><div class="resultado"></div><div class="instruccion">dobleSumatoria(4,4)</div><div class="resultado"></div><div class="instruccion">dobleSumatoria(5,7)</div><div class="resultado"></div><div class="instruccion">dobleSumatoria(10,10)</div><div class="resultado"></div><div class="instruccion">dobleSumatoria(12,20)</div><div class="resultado"></div><div class="instruccion">dobleSumatoria(17,17)</div><div class="resultado"></div><div class="instruccion">dobleSumatoria(15)</div><div class="resultado"></div><div class="instruccion">dobleSumatoria(5.7,9.2)</div><div class="resultado"></div><div class="instruccion">dobleSumatoria(-7,-14)</div><div class="resultado"></div></div><p class="pregunta" id="pregunta28"><span class="pregunta"></span>Si en la sumatoria de "y", los números son: y=-2,2,6, la estructura "for" sería: <span class="textocodigo">for(let <span class="campo_literal correcta" tabindex="0" contenteditable="true">y=-2</span>; y&lt;=m; <span class="campo_literal correcta" tabindex="0" contenteditable="true">y+=4</span>)</span>.<br>Si en la sumatoria de "y", los números son: y=-5,0,5, la estructura "for" sería: <span class="textocodigo">for(let <span class="campo_literal correcta" tabindex="0" contenteditable="true">y=-5</span>; y&lt;=m; <span class="campo_literal correcta" tabindex="0" contenteditable="true">y+=5</span>)</span>.</p><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="30" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 6 -->
+
+  <div class="ejercicio" id="ejercicio7" enunciado="0"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Programe la función estándar "prodSum", que reciba el límite superior "n" de la productoria, el límite superior "m" de la sumatoria y calcule y devuelva el resultado de:\[\prod_{i=1,2,3}^{n} \sum_{j=2,4,6}^{m} {\dfrac{i+j}{2}}\]Empleando la estructura "for", validando que los límites hayan sido definidos, lanzando los errores: "Primer límite no definido" y "Segundo límite no definido" y que sean enteros y positivos (%, !==, &lt;) error: "Los límites deben ser enteros positivos". Posteriormente llame a la función con ("n", "m"): a) 2, 4; b) 4, 6; c) 5, 10;  d) 7, 14; e) 3, 8; f) 15; g) 5.7, 9.2; h) -7, -14.</p><div id="pregunta31" class="calculadora" spellcheck="false"><div class="instruccion">function prodSum(n,m) {<br>  if (n===undefined) throw "Primer límite no definido";<br>  if (m===undefined) throw"Segundo límite no definido";<br>  if (n%1!==0 || n&lt;0 || m%1!==0 || m&lt;0) throw "Los límites deben ser enteros positivos";<br>  let p=1;<br>  for(let i=1;i&lt;=n;i++) {<br>    let s=0;<br>    for(let j=2;j&lt;=m;j+=2)<br>      s +=(i+j)/2;<br>    p *=s;<br>  }<br>  return p<br>  <br>  ;<br>};</div><div class="resultado"></div><div class="instruccion">prodSum(2,4)</div><div class="resultado"></div><div class="instruccion">prodSum(4,6)</div><div class="resultado"></div><div class="instruccion">prodSum(5,10)</div><div class="resultado"></div><div class="instruccion">prodSum(7,14)</div><div class="resultado"></div><div class="instruccion">prodSum(3,8)</div><div class="resultado"></div><div class="instruccion">prodSum(15)</div><div class="resultado"></div><div class="instruccion">prodSum(5.7,9.2)</div><div class="resultado"></div><div class="instruccion">prodSum(-7,-14)</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="25" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 7 -->
+
+  <div class="ejercicio" id="ejercicio8" enunciado="1"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Elabore la función estándar "sumProd", que reciba el límite superior "n" de la sumatoria, el límite superior "m" de la productoria y calcule y devuelva el resultado de:\[\sum_{a=2,4,6}^{n} \prod_{b=1,3,5}^{m} {a^{2}+b^{2}}\]Empleando la estructura "for", validando que los límites hayan sido definidos, lanzando los errores: "Primer límite no definido" y "Segundo límite no definido" y que sean enteros y positivos (%, !==, &lt;) error: "Los límites deben ser enteros positivos". Posteriormente llame a la función con ("n", "m"): a) 3, 4; b) 5, 7; c) 6, 10;  d) 7, 8; e) 9, 12; f) 15; g) 5.7, 9.2; h) -7, -14.</p><div id="pregunta35" class="calculadora" spellcheck="false"><div class="instruccion">var sumProd = function(n,m) {<br>  if (n===undefined) throw "Primer límite no definido";<br>  if (m===undefined) throw "Segundo límite no definido";<br>  if (n%1!==0 || n&lt;0 || m%1!==0 || m&lt;0) throw "Los límites deben ser enteros positivos";<br>  let s=0;<br>  for(let a=2;a&lt;=n;a+=2) {<br>    let p=1;<br>    for(let b=1;b&lt;=m;b+=2)<br>      p *=a**2+b**2;<br>    s +=p;<br>  }<br>  return s ;<br>};</div><div class="resultado"></div><div class="instruccion">sumProd(3,4)</div><div class="resultado"></div><div class="instruccion">sumProd(5,7)</div><div class="resultado"></div><div class="instruccion">sumProd(6,10)</div><div class="resultado"></div><div class="instruccion">sumProd(7,8)</div><div class="resultado"></div><div class="instruccion">sumProd(9,12)</div><div class="resultado"></div><div class="instruccion">sumProd(15)</div><div class="resultado"></div><div class="instruccion">sumProd(5.7,9.2)</div><div class="resultado"></div><div class="instruccion">sumProd(-7,-14)</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="25" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 8 -->
+
+
+
+  <div id="generarPrueba" data-scroll-y="11036"><br><hr><label class="lnotacapitulo">Nota del capítulo: </label><input type="text" id="notaCapitulo" disabled="disabled" class="itnotacapitulo"><br><br><button id="btGenerarPrueba" style="visibility: visible;" onclick="capitulo.registrarCapitulo()">Iniciar defensa</button><button id="btEmplearBono" style="margin-left:1.1rem;width:9.686rem;display:none;" onclick="capitulo.emplearBono()">Emplear Bono</button><br><br></div>
+
+
+<d id="dAutor" style="font-size: 0.9rem;text-align:center;color: #0808f24f;font-weight:bolder;position:fixed;top: 5px;right: 5px;user-select:none;display:inline-block;z-index:15;">Hernan G. Peñaranda V.</d></div><!-- Cierre del div capítulo -->
+          
+<div id="dato" style="display:none;">KqbJCKyn938lCZ0oDYGpDIqsDpGn93GoDZ0aCZ4p938nCoGnC30aC2HfLrGoP000</div>
+<div id="reg" style="display:none;">Cp0mCJioC34mEp8mCJ0xCZ0nC3ipC30nEp8mCJ0xCJ4mC3ioC34m</div>
+
+
+
+
+<div id="divDialogo" style="display: none;"><div onfocus="document.querySelector('#divDialogo input').focus();"><div>Carnet universitario</div><div>Escriba el número de su carnet universitario, verificando que el guión haya sido correctamente insertado.</div><input type="text" onkeydown="return Capitulo.divDialogo.funKeydown(event)" onkeyup="Capitulo.divDialogo.funKeyup(event)"><div><button onclick="Capitulo.divDialogo.funClick('aceptar');">Aceptar</button><button style="margin-left:35px;" onclick="Capitulo.divDialogo.funClick('cancelar');">Cancelar</button></div></div></div></body>
