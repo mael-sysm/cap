@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         Inyector Maestro V33.3 (Ghost Loop Anti-Freeze + Delays Seguros)
+// @name         Inyector Maestro V34.0 (Iteración Segura Guiada + Guardado Blindado)
 // @namespace    http://tampermonkey.net/
-// @version      33.3
-// @description  Descarga desde GitHub (mael-sysm/cap). Pestaña invisible. Bucle fantasma con "respiración" para evitar congelamientos, y pausas extendidas antes y después de corregir para asegurar el guardado de la nota.
+// @version      34.0
+// @description  Descarga desde GitHub (mael-sysm/cap). Pestaña invisible. Combina iteración DOM limpia con manipulación matemática de Math.random para encontrar la variante rápido sin corromper el botón Corregir.
 // @author       mercz d
 // @match        https://cursosabiertos.usfx.bo/materias/*/capitulos/*
 // @grant        none
@@ -258,10 +258,18 @@
         }
 
         const sInp = ejResuelto.querySelectorAll('input[type="text"]:not(.notas):not(.ittiempo)');
-        ejActual.querySelectorAll('input[type="text"]:not(.notas):not(.ittiempo)').forEach((i, idx) => { if (sInp[idx]) { i.value = sInp[idx].value || sInp[idx].getAttribute('value') || ''; i.dispatchEvent(new Event('input', { bubbles: true })); i.dispatchEvent(new Event('change', { bubbles: true })); } });
+        ejActual.querySelectorAll('input[type="text"]:not(.notas):not(.ittiempo)').forEach((i, idx) => {
+            if (sInp[idx]) {
+                i.value = sInp[idx].value || sInp[idx].getAttribute('value') || '';
+                // Despachar eventos completos para que la plataforma registre los caracteres
+                i.dispatchEvent(new Event('input', { bubbles: true }));
+                i.dispatchEvent(new Event('change', { bubbles: true }));
+                i.dispatchEvent(new KeyboardEvent('keyup', { bubbles: true, key: 'Enter', code: 'Enter' }));
+                i.dispatchEvent(new Event('blur', { bubbles: true }));
+            }
+        });
         
-        // PAUSA CRÍTICA: Esperar a que la plataforma registre los eventos 'input' y 'change'
-        await sleep(500); 
+        await sleep(400); // Dar tiempo a que los eventos se procesen en memoria
         return { diagramaFallo: false };
     }
 
@@ -269,7 +277,7 @@
     // MÓDULO 5: INTERFAZ GRÁFICA INVISIBLE
     // =========================================================================
     const metaActual = obtenerMetadatosCapitulo();
-    const etiquetaCap = metaActual ? `${metaActual.materia.toUpperCase()} · Cap ${metaActual.num}` : 'V33.3';
+    const etiquetaCap = metaActual ? `${metaActual.materia.toUpperCase()} · Cap ${metaActual.num}` : 'V34.0';
     const contenedorRaiz = document.createElement('div'); contenedorRaiz.className = 'tm-inyectado';
     Object.assign(contenedorRaiz.style, { position: 'fixed', bottom: '28px', right: '0', zIndex: '9999', display: 'flex', alignItems: 'center', fontFamily: 'system-ui, sans-serif' });
     const panelMenu = document.createElement('div'); Object.assign(panelMenu.style, { display: 'none', flexDirection: 'column', gap: '8px', background: 'rgba(15, 23, 42, 0.95)', padding: '10px 12px', border: '1px solid rgba(255,255,255,0.15)', borderRight: 'none' });
@@ -287,7 +295,7 @@
     function resetearBtn() { desactivarEscudoFoco(); if (cancelado) return; btnGitHub.disabled = btnLocal.disabled = selectModo.disabled = false; btnGitHub.innerHTML = iconoDescarga; btnGitHub.style.opacity = '1'; }
 
     // =========================================================================
-    // MÓDULO 6: EL BUCLE FANTASMA SEGURO (CON RESPIRACIÓN Y ESPERAS)
+    // MÓDULO 6: ITERACIÓN SEGURA GUIADA Y GUARDADO BLINDADO
     // =========================================================================
     async function ejecutarInyeccionConHTML(htmlTexto) {
         activarEscudoFoco();
@@ -329,64 +337,64 @@
             let firmaAct = firmaCampos(ejActual);
             let ejResueltoFinal = resueltos.find(r => firmaCampos(r) === firmaAct);
 
-            // BUCLE FANTASMA SEGURO (Solo si el texto no coincide)
+            // BUCLE DE ITERACIÓN SEGURA (GUIADO CON HACK MATEMÁTICO)
             if (!ejResueltoFinal) {
-                if (esVisible(btnCor) && !tieneGenerar && !tieneRepetir) {
-                    btnCor.removeAttribute('disabled'); btnCor.disabled = false; btnCor.click();
-                    await esperarHasta(() => esVisible(ejActual.querySelector('.btRepetir')), 2000);
-                }
-
-                const botonAccion = esVisible(ejActual.querySelector('.btGenerar')) ? ejActual.querySelector('.btGenerar') : ejActual.querySelector('.btRepetir');
+                const maxIntentosLimpios = 40;
                 
-                if (botonAccion) {
-                    const originalRandom = Math.random;
-                    const maxGhostAttempts = 150; 
-                    let matchFound = false;
-
-                    for (let att = 0; att < maxGhostAttempts; att++) {
-                        if (typeof window.Ejercicio !== 'undefined' && window.Ejercicio.intervalId) {
-                            clearInterval(window.Ejercicio.intervalId);
-                            window.Ejercicio.intervalId = null;
-                        }
-
-                        // Matemáticas del hack
-                        Math.random = function() { return (att * 0.137 + originalRandom() * 0.05) % 1; };
-                        botonAccion.click(); // Disparo síncrono
-
-                        let currentFirma = firmaCampos(ejActual);
-                        ejResueltoFinal = resueltos.find(r => firmaCampos(r) === currentFirma);
-
-                        if (ejResueltoFinal) {
-                            matchFound = true;
-                            break; 
-                        }
-
-                        // Respiración: Cada 10 intentos, dejamos al navegador descansar 10ms para evitar el congelamiento
-                        if (att % 10 === 0) await sleep(10);
-                    }
+                for (let att = 0; att < maxIntentosLimpios; att++) {
+                    if (cancelado) return;
                     
-                    Math.random = originalRandom; // Restaurar siempre
-                    if (matchFound) await sleep(300); // Darle tiempo a la UI para estabilizarse visualmente
+                    // PASO A: Cerrar el ejercicio abierto (Corregir) de forma segura
+                    let currentCor = ejActual.querySelector('#btCorregir, .btCorregir');
+                    if (currentCor && esVisible(currentCor) && !esVisible(ejActual.querySelector('.btGenerar')) && !esVisible(ejActual.querySelector('.btRepetir'))) {
+                        currentCor.removeAttribute('disabled'); currentCor.disabled = false;
+                        currentCor.click();
+                        await esperarHasta(() => esVisible(ejActual.querySelector('.btRepetir')), 2500);
+                    }
+
+                    // PASO B: Girar la ruleta con Math.random manipulado
+                    let bAccion = esVisible(ejActual.querySelector('.btGenerar')) ? ejActual.querySelector('.btGenerar') : ejActual.querySelector('.btRepetir');
+                    if (bAccion) {
+                        const originalRandom = Math.random;
+                        Math.random = function() { return (att * 0.047) % 1; }; // Distribución matemática
+                        
+                        const htmlAntes = ejActual.innerHTML;
+                        bAccion.click(); 
+                        
+                        Math.random = originalRandom; // Restaurar inmediatamente
+                        
+                        // Esperar a que la plataforma dibuje y termine el proceso visual
+                        await esperarHasta(() => ejActual.innerHTML !== htmlAntes, 2500);
+                        await sleep(250); 
+                        
+                        // Verificar si cayó el que queríamos
+                        let firmaNueva = firmaCampos(ejActual);
+                        ejResueltoFinal = resueltos.find(r => firmaCampos(r) === firmaNueva);
+                        
+                        if (ejResueltoFinal) break; 
+                    } else {
+                        break; 
+                    }
                 }
             }
 
-            // INYECCIÓN Y CORRECCIÓN SEGURA
+            // INYECCIÓN Y CORRECCIÓN BLINDADA
             if (ejResueltoFinal) {
                 const { diagramaFallo } = await rellenarContenidoEjercicio(ejActual, ejResueltoFinal);
                 if (!diagramaFallo && !cancelado) {
                     
-                    // Espera estricta antes de corregir (para que registren las notas)
-                    await sleep(500); 
-
-                    const nuevoCor = ejActual.querySelector('#btCorregir, .btCorregir');
-                    if (nuevoCor) { 
-                        nuevoCor.removeAttribute('disabled'); 
-                        nuevoCor.disabled = false; 
-                        nuevoCor.click(); 
-
-                        // Espera estricta DESPUÉS de corregir para que la nota se guarde en el servidor
-                        await sleep(1500); 
-                        await esperarHasta(() => esVisible(ejActual.querySelector('.btRepetir')), 3000);
+                    let finalCor = ejActual.querySelector('#btCorregir, .btCorregir');
+                    if (finalCor) { 
+                        finalCor.removeAttribute('disabled'); 
+                        finalCor.disabled = false; 
+                        
+                        // Disparar clic forzado asegurando que el navegador lo detecte
+                        if(finalCor.click) finalCor.click();
+                        finalCor.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+                        
+                        // ESPERA BLINDADA: No pasa al siguiente ejercicio hasta que el servidor guarda la nota (aparece "Repetir")
+                        await esperarHasta(() => esVisible(ejActual.querySelector('.btRepetir')), 4000);
+                        await sleep(500); // Margen extra de seguridad 
                     }
                     reemplazados++;
                 }
@@ -395,7 +403,7 @@
 
         if (reemplazados === 0 && modo !== 'sin_corregir') {
             const motivo = modo === 'no_iniciados' ? 'ya estaban iniciados' : (modo === 'iniciados' ? 'ya tienen nota 100' : 'sin botones activos');
-            showToast(omitidos > 0 ? `Omitidos: ${omitidos} (${motivo}).` : 'No se emparejó ningún ejercicio. (Ninguno coincidió con los números).', 'warning');
+            showToast(omitidos > 0 ? `Omitidos: ${omitidos} (${motivo}).` : 'No se emparejó ningún ejercicio.', 'warning');
         }
         resetearBtn();
     }
