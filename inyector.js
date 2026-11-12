@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         Inyector Maestro V33.2 (Ghost Loop Text-Match + 4 Modos)
+// @name         Inyector Maestro V33.3 (Ghost Loop Anti-Freeze + Delays Seguros)
 // @namespace    http://tampermonkey.net/
-// @version      33.2
-// @description  Descarga desde GitHub (mael-sysm/cap). Pestaña invisible. Resuelve el problema de las variables internas haciendo cientos de iteraciones invisibles en 0.1 segundos hasta que el texto coincide.
+// @version      33.3
+// @description  Descarga desde GitHub (mael-sysm/cap). Pestaña invisible. Bucle fantasma con "respiración" para evitar congelamientos, y pausas extendidas antes y después de corregir para asegurar el guardado de la nota.
 // @author       mercz d
 // @match        https://cursosabiertos.usfx.bo/materias/*/capitulos/*
 // @grant        none
@@ -163,7 +163,6 @@
     function obtenerNotaEjercicio(ej) { const inp = ej.querySelector('input.notas, input.itmostrar.notas'); return parseFloat(inp ? (inp.value || inp.getAttribute('value') || '0') : '0') || 0; }
     function textoInst(el) { const d = document.createElement('div'); d.innerHTML = el.innerHTML.replace(/<br\s*[\/]?>/gi, '\n').replace(/<\/p>|<\/div>/gi, '\n'); return d.textContent.replace(/\u200B/g, '').replace(/^\n+|\n+$/g, ''); }
 
-    // NUEVO SISTEMA DE HUELLA DACTILAR: Capta las variables internas del texto del problema
     function firmaCampos(ej) {
         const partes = Array.from(ej.querySelectorAll(SEL_TODO))
             .map(el => el.closest('p, div.dato tr, li') || el.parentElement)
@@ -260,14 +259,17 @@
 
         const sInp = ejResuelto.querySelectorAll('input[type="text"]:not(.notas):not(.ittiempo)');
         ejActual.querySelectorAll('input[type="text"]:not(.notas):not(.ittiempo)').forEach((i, idx) => { if (sInp[idx]) { i.value = sInp[idx].value || sInp[idx].getAttribute('value') || ''; i.dispatchEvent(new Event('input', { bubbles: true })); i.dispatchEvent(new Event('change', { bubbles: true })); } });
-        await sleep(100); return { diagramaFallo: false };
+        
+        // PAUSA CRÍTICA: Esperar a que la plataforma registre los eventos 'input' y 'change'
+        await sleep(500); 
+        return { diagramaFallo: false };
     }
 
     // =========================================================================
     // MÓDULO 5: INTERFAZ GRÁFICA INVISIBLE
     // =========================================================================
     const metaActual = obtenerMetadatosCapitulo();
-    const etiquetaCap = metaActual ? `${metaActual.materia.toUpperCase()} · Cap ${metaActual.num}` : 'V33.2';
+    const etiquetaCap = metaActual ? `${metaActual.materia.toUpperCase()} · Cap ${metaActual.num}` : 'V33.3';
     const contenedorRaiz = document.createElement('div'); contenedorRaiz.className = 'tm-inyectado';
     Object.assign(contenedorRaiz.style, { position: 'fixed', bottom: '28px', right: '0', zIndex: '9999', display: 'flex', alignItems: 'center', fontFamily: 'system-ui, sans-serif' });
     const panelMenu = document.createElement('div'); Object.assign(panelMenu.style, { display: 'none', flexDirection: 'column', gap: '8px', background: 'rgba(15, 23, 42, 0.95)', padding: '10px 12px', border: '1px solid rgba(255,255,255,0.15)', borderRight: 'none' });
@@ -285,7 +287,7 @@
     function resetearBtn() { desactivarEscudoFoco(); if (cancelado) return; btnGitHub.disabled = btnLocal.disabled = selectModo.disabled = false; btnGitHub.innerHTML = iconoDescarga; btnGitHub.style.opacity = '1'; }
 
     // =========================================================================
-    // MÓDULO 6: EL BUCLE FANTASMA SÍNCRONO (GHOST LOOP)
+    // MÓDULO 6: EL BUCLE FANTASMA SEGURO (CON RESPIRACIÓN Y ESPERAS)
     // =========================================================================
     async function ejecutarInyeccionConHTML(htmlTexto) {
         activarEscudoFoco();
@@ -324,11 +326,10 @@
             
             btnGitHub.innerHTML = `<span style="font-size:10px; font-weight:bold;">${i + 1}</span>`;
 
-            // Verificamos si el ejercicio actual ya coincide textualmente
             let firmaAct = firmaCampos(ejActual);
             let ejResueltoFinal = resueltos.find(r => firmaCampos(r) === firmaAct);
 
-            // Si no coincide, iniciamos el BUCLE FANTASMA
+            // BUCLE FANTASMA SEGURO (Solo si el texto no coincide)
             if (!ejResueltoFinal) {
                 if (esVisible(btnCor) && !tieneGenerar && !tieneRepetir) {
                     btnCor.removeAttribute('disabled'); btnCor.disabled = false; btnCor.click();
@@ -339,42 +340,54 @@
                 
                 if (botonAccion) {
                     const originalRandom = Math.random;
-                    const maxGhostAttempts = 200; // 200 clics ultra rápidos en memoria
+                    const maxGhostAttempts = 150; 
                     let matchFound = false;
 
                     for (let att = 0; att < maxGhostAttempts; att++) {
-                        // Limpiar el seguro de la plataforma para que nos deje hacer múltiples clics
                         if (typeof window.Ejercicio !== 'undefined' && window.Ejercicio.intervalId) {
                             clearInterval(window.Ejercicio.intervalId);
                             window.Ejercicio.intervalId = null;
                         }
 
-                        // Alimentamos a la plataforma con una semilla matemática diferente cada milisegundo
+                        // Matemáticas del hack
                         Math.random = function() { return (att * 0.137 + originalRandom() * 0.05) % 1; };
-                        
-                        botonAccion.click(); // Clic síncrono (el navegador no dibuja nada aún)
+                        botonAccion.click(); // Disparo síncrono
 
-                        // Leemos inmediatamente la firma de los números del texto
                         let currentFirma = firmaCampos(ejActual);
                         ejResueltoFinal = resueltos.find(r => firmaCampos(r) === currentFirma);
 
                         if (ejResueltoFinal) {
                             matchFound = true;
-                            break; // ¡Coincide con el texto exacto! Rompemos el bucle fantasma.
+                            break; 
                         }
+
+                        // Respiración: Cada 10 intentos, dejamos al navegador descansar 10ms para evitar el congelamiento
+                        if (att % 10 === 0) await sleep(10);
                     }
                     
-                    Math.random = originalRandom; // Restauramos
-                    if (matchFound) await sleep(100); // Pequeña pausa para que el navegador dibuje el resultado final en tu pantalla
+                    Math.random = originalRandom; // Restaurar siempre
+                    if (matchFound) await sleep(300); // Darle tiempo a la UI para estabilizarse visualmente
                 }
             }
 
-            // 3. INYECTAR LA RESPUESTA
+            // INYECCIÓN Y CORRECCIÓN SEGURA
             if (ejResueltoFinal) {
                 const { diagramaFallo } = await rellenarContenidoEjercicio(ejActual, ejResueltoFinal);
                 if (!diagramaFallo && !cancelado) {
+                    
+                    // Espera estricta antes de corregir (para que registren las notas)
+                    await sleep(500); 
+
                     const nuevoCor = ejActual.querySelector('#btCorregir, .btCorregir');
-                    if (nuevoCor) { nuevoCor.removeAttribute('disabled'); nuevoCor.disabled = false; nuevoCor.click(); await sleep(600); }
+                    if (nuevoCor) { 
+                        nuevoCor.removeAttribute('disabled'); 
+                        nuevoCor.disabled = false; 
+                        nuevoCor.click(); 
+
+                        // Espera estricta DESPUÉS de corregir para que la nota se guarde en el servidor
+                        await sleep(1500); 
+                        await esperarHasta(() => esVisible(ejActual.querySelector('.btRepetir')), 3000);
+                    }
                     reemplazados++;
                 }
             }
