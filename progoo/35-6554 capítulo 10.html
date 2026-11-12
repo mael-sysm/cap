@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<head>
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Language" content="es">
+
+    <title>35-6554 capítulo 10</title>
+    
+    <!-- Librería y hoja de estilos KATEX  -->
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/katex/katex.min.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/katex/katex.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/katex/contrib/auto-render.min.js"></script>
+
+    <!-- Librerías y hojas de estilo CodeMirror -->
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/lib/codemirror.min.css">
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/theme/mdn-like.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/lib/codemirror.min.js"></script>
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/fold/foldgutter.min.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/fold/foldcode.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/fold/brace-fold.min.js"></script>
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/dialog/dialog.min.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/dialog/dialog.min.js"></script>
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/hint/show-hint.min.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/hint/show-hint.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/hint/javascript-hint.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/search/searchcursor.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/search/search.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/edit/matchbrackets.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/edit/closebrackets.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/comment/comment.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/wrap/hardwrap.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/javascript/javascript.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/css/css.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/xml/xml.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/markdown/markdown.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/htmlmixed/htmlmixed.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/keymap/sublime.min.js"></script>
+
+    <!-- Librería Plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script><style id="plotly.js-style-global"></style><style id="plotly.js-style-global"></style>
+
+    <!-- Librerías y hojas de estilo function-plot -->
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/function-plot/site/js/vendor/d3.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/function-plot/dist/function-plot.js"></script>
+    
+    <!-- Librería quantities -->
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/quantities/quantities.min.js"></script>
+
+    <!-- Librería GoJs para la creación de diagramas de flujo -->
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/gojs/release/go.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/flowchart_gojs.js"></script>
+
+    <!-- Librerías matemáticas propias -->
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/math.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/number.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/array.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/string.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/cplx.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/function.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/object.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/prq.js"></script>
+
+    <!-- Librería y hoja de estilos propias para la creación y manejo de la calculadora  -->
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/src/cjs.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/cjs.js"></script>
+
+    <!-- Librería y hoja de estilos propias para la creación y manejo de los capítulos -->
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/src/texto.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/texto.js"></script>
+
+   <!-- Librería del capítulo actual -->
+    <script src="https://cursosabiertos.usfx.bo/materias/progoo/capitulos/capitulo10/files/capitulo10.js"></script>
+
+    <!-- Fuentes empleadas en el capítulo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300;400;500;600;700;800&amp;family=Roboto+Mono&amp;display=swap" rel="stylesheet">
+
+    <script>
+        function katexRender() {
+            renderMathInElement(document.getElementById("capitulo"));
+        }
+        document.addEventListener("DOMContentLoaded", katexRender);
+        window.onerror = function(msg, url, lineNo, columnNo, error) {
+            __error__ = msg;
+        };
+        window.onload = function(){
+            capitulo.iniciar();
+        };
+    </script>
+
+</head>
+
+<body class="text">  
+
+
+<div id="capitulo">
+
+    <button id="btGuardar" style="z-index:15;" onclick="savePage()">Guardar</button>
+
+
+    <h1 class="text" onclick="alerta(capitulo.idPagina,'')" style="cursor: pointer;">Arreglos 3</h1>
+
+    <p class="text">En JavaScript las matrices son simplemente vectores de vectores, es decir son vectores donde cada elemento es a su vez un vector (una fila).</p>
+
+    <p class="text">Por lo tanto una matriz se crea igual que un vector, es decir de manera formal con <dfn class="style1">new Array</dfn> o de manera abreviada (la forma recomendada) escribiendo las filas, separadas con comas, entre corchetes. Por ejemplo, la siguiente matriz:</p>
+
+    <table class="ecuacionsn">
+        <tbody><tr>
+            <td>
+                \[                a =                \begin{bmatrix}                1 &amp; 2 &amp; 3 &amp; 4 &amp; 5\\                2 &amp; 3 &amp; 4 &amp; 5 &amp; 6\\                3 &amp; 4 &amp; 5 &amp; 6 &amp; 7\\                4 &amp; 5 &amp; 6 &amp; 7 &amp; 8                \end{bmatrix}                \]
+            </td>
+            <td></td>
+        </tr>
+    </tbody></table>
+
+    <p class="text">Puede ser creada de la siguiente forma:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">var a = [[1, 2, 3, 4, 5],<br>         [2, 3, 4, 5, 6],<br>         [3, 4, 5, 6, 7],<br>         [4, 5, 6, 7, 8]];<br>a</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Como se puede ver, por defecto, la matriz se muestra en una sola línea. Para ver cada fila en una línea diferente, se emplea el método <dfn class="style1">show</dfn>:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">a.show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Con la forma estándar (que no será empleada en la práctica) la matriz se crea con:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">var b = new Array(<br>  new Array(1, 2, 3, 4, 5), <br>  new Array(2, 3, 4, 5, 6), <br>  new Array(3, 4, 5, 6, 7), <br>  new Array(4, 5, 6, 7, 8)<br>);<br>b.show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Como se mencionó al estudiar vectores, los métodos <i class="style1">add</i>, <i class="style1">sub</i>, <i class="style1">mul</i>, <i class="style1">div</i> y <i class="style1">neg</i> operan con vectores, matrices, números reales y complejos, por lo que son más generales que los operadores <i class="style1">+</i>, <i class="style1">-</i>, <i class="style1">*</i>, <i class="style1">/</i> y <i class="style1">-</i> (cuando es empleado como negación). Por ejemplo, dadas las siguientes matrices:</p>
+
+    <table class="ecuacionsn">
+        <tbody><tr>
+            <td>
+                \[                a =                \begin{bmatrix}                2 &amp; 8 &amp; 2 &amp; 3\\                1 &amp; 6 &amp; -1 &amp; 4\\                2 &amp; -1 &amp; 2 &amp; 5\\                4 &amp; 2 &amp; 3 &amp; 5                \end{bmatrix}                \hspace{1cm}                b =                \begin{bmatrix}                1 &amp; 4 &amp; -2 &amp; 3\\                2 &amp; 2 &amp; 0 &amp; 4\\                3 &amp; 0 &amp; -1 &amp; 2\\                1 &amp; 2 &amp; 2 &amp; -3                \end{bmatrix}                \]
+            </td>
+            <td></td>
+        </tr>
+    </tbody></table>
+
+    <p class="text">Puenden ser sumadas, restadas, multiplicadas y divididas:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">var a = [[2, 8, 2, 3], [1, 6, -1, 4], [2, -1, 2, 5], [4, 2, 3, 5]];<br>var b = [[1, 4, -2, 3], [2, 2, 0, 4], [3, 0, -1, 2], [1, 2, 2, -3]];</div>
+        <div class="resultado"></div>
+        <div class="instruccion">a.add(b).show()</div>
+        <div class="resultado"></div>
+        <div class="instruccion">a.sub(b).show()</div>
+        <div class="resultado"></div>
+        <div class="instruccion">a.mul(b).show()</div>
+        <div class="resultado"></div>
+        <div class="instruccion">a.div(b).round(2).show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Al ser las matrices vectores de vectores, se pueden emplear todas las propiedades y métodos disponibles para vectores. Adicionalmente, en la calculadora Javascript, se cuenta con los siguientes métodos (librería array):</p>
+
+    <div class="table borderAll">
+        <table align="center" style="width:450px;">
+            <caption>Métodos de matrices</caption>
+            <tbody><tr><th style="width:160px;">función</th><th>Descripción</th></tr>
+            <tr><td><dfn class="style1">identity(n,m)</dfn></td><td>Crea una matriz identidad con "n" filas y "m" columnas ("n" filas y columnas si sólo se manda "n"), o con las dimensiones de la matriz o vector desde el cual es llamado.</td></tr>
+            <tr><td><dfn class="style1">diagonal(k)</dfn></td><td>Crea una matriz con los elementos del vector desde el cual es llamado, en la diagonal principal o en la diagonal "k".</td></tr>
+            <tr><td><dfn class="style1">appendRows(b)</dfn></td><td>Añade al final de la matriz o vector desde el cual es llamado, las filas de la matriz o vector "b".</td></tr>
+            <tr><td><dfn class="style1">appendCols(b)</dfn></td><td>Añade al final de la matriz o vector desde el cual es llamado, las columnas de la matriz o vector "b"</td></tr>
+            <tr><td><dfn class="style1">insertRows(b,k)</dfn></td><td>Inserta al principio (o en la fila "k") de la matriz o vector desde el cual es llamado, la fila o filas de la matriz o vector "b".</td></tr>
+            <tr><td><dfn class="style1">insertCols(b,k)</dfn></td><td>Inserta al principio (o en la columna "k") de la matriz o vector desde el cual es llamado, la columna o columnas de la matriz o vector "b".</td></tr>
+            <tr><td><dfn class="style1">removeRows(k,l)</dfn></td><td>Quita la fila "k" o las filas "k" a "l" de la matriz o vector desde el cual es llamado, devolviendo la fila o filas removidas.</td></tr>
+            <tr><td><dfn class="style1">removeCols(k,l)</dfn></td><td>Quita la columna "k" o las columnas "k" a "l" de la matriz o vector desde el cual es llamado, devolviendo la columna o columnas removidas.</td></tr>
+            <tr><td><dfn class="style1">getRows(k,l)</dfn></td><td>Devuelve un vector o matriz con la fila "k", o las filas desde "k" hasta "l", de la matriz o vector desde el cual es llamado.</td></tr>
+            <tr><td><dfn class="style1">getCols(k,l)</dfn></td><td>Devuelve un vector o matriz con la columna "k", o las columnas desde "k" hasta "l", de la matriz o vector desde el cual es llamado.</td></tr>
+            <tr><td><dfn class="style1">getDiagonal(k)</dfn></td><td>Devuelve un vector con los elementos de la diagonal principal, o de la diagonal "k", de la matriz desde la cual es llamado.</td></tr>
+            <tr><td><dfn class="style1">replaceRows(b,k)</dfn></td><td>Reemplaza la fila "k", o la fila "k" y posteriores, de la matriz desde la cual es llamdo, con las filas de la matriz o vector "b".</td></tr>
+            <tr><td><dfn class="style1">replaceCols(b,k)</dfn></td><td>Reemplaza la columna "k", o la columna "k" y posteriores, de la matriz desde la cual es llamado, con las columnas de la matriz o vector "b".</td></tr>
+            <tr><td><dfn class="style1">rowSwap(i,j)</dfn></td><td>Intercambia las filas "i" y "j" de la matriz o vector desde el cual es llamado.</td></tr>
+            <tr><td><dfn class="style1">colSwap(i,j)</dfn></td><td>Intercambia las columnas "i" y "j" de la matriz o vector desde el cual es llamado.</td></tr>
+            <tr><td><dfn class="style1">det()</dfn></td><td>Devuelve el determinante de la matriz desde la cual es llamado.</td></tr>
+            <tr><td><dfn class="style1">inv()</dfn></td><td>Devuelve la inversa de la matriz desde la cual es llamado.</td></tr>
+            <tr><td><dfn class="style1">trace()</dfn></td><td>Devuelve el trazo de la matriz desde la cual es llamado.</td></tr>
+            <tr><td><dfn class="style1">transpose()</dfn></td><td>Devuelve una nueva matriz, con la transpuesta de la matriz desde la cual es llamado.</td></tr>
+        </tbody></table>
+    </div>
+
+    <p class="text">Con estos métodos se pueden llevar a cabo la mayoría de las operaciones requeridas en el trabajo con matrices, además, como se dijo, se pueden emplear también todos los métodos estudiados en vectores.</p>
+
+    <p class="text">De estos métodos los que se utilizan con mayor frecuencia en la resolución de sistemas de ecuaciones lineales son <dfn class="style1">inv</dfn>, <dfn class="style1">transpose</dfn> y <dfn class="style1">det</dfn>. De los métodos estudiados previamente, son de mayor utilidad en el trabajo con matrices: <dfn class="style1">rand</dfn>, <dfn class="style1">const</dfn> y <dfn class="style1">zeros</dfn>, además de los métodos de carácter general: <dfn class="style1">copy</dfn>, <dfn class="style1">round</dfn>, <dfn class="style1">precision</dfn>, <dfn class="style1">add</dfn>, <dfn class="style1">sub</dfn>, etc.</p>
+
+    <p class="text">Se recuerda que, el método <dfn class="style1">rand</dfn>, genera por defecto un vector o matriz con números realmente aleatorios, es decir con números que se generan en una secuencia no predecible, sin embargo, se pueden generar números pseudoaleatorios (secuencias que pueden volver a ser generadas) estableciendo un valor inicial o semilla (<dfn class="style1">randseed</dfn>).</p>
+
+
+
+
+
+    <h3 class="text">Ejemplos</h3>
+
+    <p class="ejemplo"><span class="ejemplo"></span>Mostrando las matrices con <dfn class="style1">show</dfn>:</p>
+    
+    <p class="ejemplosn">Genere y guarde en "a" una matriz con 3 filas y 4 columnas de números enteros pseudoaleatorios comprendidos entre 1 y 9 (randseed=1):</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">randseed = 1;<br>var a = [].rand(3, 4, 1, 9).round();<br>a.show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Genere y guarde en "b" una matriz con 4 filas y 4 columnas de números enteros pseudoaleatorios comprendidos entre 1 y 9 (randseed=0):</p>
+    
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">randseed = 0;<br>var b = [].rand(4, 4, 1, 9).round();<br>b.show()</div>
+        <div class="resultado"></div>
+    </div>
+    
+    <p class="ejemplosn">Genere y guarde en la variable "c" una matriz con 4 filas y 5 columnas de números 6:</p>
+    
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">var c = [].const(4, 5, 6);<br>c.show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Obtenga la transpuesta de la matriz "a":</p>
+    
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">a.transpose().show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Calcule la inversa de la matriz b, redondeando los resultados al segundo dígito después del punto:</p>
+    
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">b.inv().round(2).show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Calcule la matriz resultante de multiplicar la matriz "a" por la matriz "b":</p>
+    
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">a.mul(b).show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Divida la matriz "c" entre el número 2:</p>
+    
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">c.div(2).show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Genere una matriz con 4 filas y 6 columnas de ceros:</p>
+    
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">[].zeros(4, 6).show()</div>
+        <div class="resultado"></div>
+    </div>
+
+
+
+
+
+    <br>
+    <p class="ejemplo"><span class="ejemplo"></span>Mostrando las matrices con <dfn class="style1">show</dfn> y tomando en cuenta las siguientes matrices:</p>
+
+    <table class="ecuacionsn">
+        <tbody><tr>
+            <td>
+                \[                a = \begin{bmatrix}                1 &amp; 2 &amp; 2\\                4 &amp; 1 &amp; 2\\                3 &amp; 5&amp; 1                \end{bmatrix}\hspace{7mm}                b = \begin{bmatrix}                2 &amp; 3 &amp; 1\\                4 &amp; 5 &amp; 3\\                3 &amp; 7 &amp; 2                \end{bmatrix}                \]
+            </td>
+            <td></td>
+        </tr>
+    </tbody></table>
+
+    <p class="ejemplosn">Guárdelas en "a" y "b":</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">var a = [[1, 2, 3], [4, 1, 2], [3, 5, 1]];<br>var b = [[2, 3, 1], [4, 5, 3], [3, 7, 2]]</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Calcule su suma y guarde el resultado en "c":</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">var c = a.add(b);<br>c.show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Obtenga la transpuesta de la matriz "c":</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">c.transpose().show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Calcule la inversa de la matriz "c" mostrando el resultado con cuatro dígito después del punto:</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">c.inv().round(4).show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Calcule el trazo de la matriz "c":</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">c.trace()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Calcule el valor absoluto de la matriz "c":</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">c.abs()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Calcule el determinante de la matriz "c":</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">c.det()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Copie en "d" la matriz "a" y añada a la copia la primera fila de la matriz "b":</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">var d = a.copy();<br>d.appendRows(b.getRows(0)).show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Que puede ser resuelta, igualmente, con <dfn class="style1">slice</dfn>:</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">var d = a.slice();<br>d.appendRows(b.getRows(0)).show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Copie en "e" la matriz "b" y añada a la copia la segunda columna de la matriz "a":</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">e = b.copy();<br>e.appendCols(a.getCols(1)).show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Que, igualmente, puede ser resuelta con <dfn class="style1">slice</dfn>:</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">e = b.slice();<br>e.appendCols(a.getCols(1)).show()</div>
+        <div class="resultado"></div>
+    </div>
+
+
+
+
+
+    <br>
+    <p class="ejemplo"><span class="ejemplo"></span>Mostrando las matrices con show:</p>
+
+    <p class="ejemplosn">Genere la matriz "a" con 3 filas y 4 columnas de números enteros pseudoaleatorios comprendidos entre 10 y 20 (randseed=1):</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">randseed = 1;<br>var a = [].rand(3, 4, 10, 20).round();<br>a.show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Genere el vector "v" con 4 números enteros pseudoaleatorios comprendidos entre 11 y 19 (randseed=1):</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">randseed = 1;<br>var v = [].rand(4, 11, 19).round();<br>v.show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Cree la matriz "a1" con los elementos del vector "v" en su diagonal principal:</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">var a1 = v.diagonal();<br>a1.show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Cree la matriz "a2", con los elementos del vector "v", en la segunda diagonal a la derecha de la principal:</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">var a2 = v.diagonal(2);<br>a2.show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Cree la matriz "a3", con los elementos del vector "v", en la primera diagonal a la izquierda de la principal:</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">var a3 = v.diagonal(-1);<br>a3.show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Inserte el vector "v" en la segunda fila de la matriz "a":</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">a.insertRows(v, 1).show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Inserte el vector "v" en la primera columna de la matriz "a":</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">a.insertCols(v).show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Quite la tercera fila de la matriz "a":</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">a.removeRows(2);<br>a.show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Quite la segunda columna de la matriz "b":</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">a.removeCols(1);<br>a.show()</div>
+        <div class="resultado"></div>
+    </div>
+
+
+
+
+
+    <br>
+    <p class="ejemplo"><span class="ejemplo"></span>Mostrando las matrices con <df>show</df>:</p>
+
+    <p class="ejemplosn">Cree el vector "v1" con los números impares que existen entre 1 y 30:</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">var v1 = [].range(1, 30, 2);<br>v1</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Cree el vector "v2" con 25 elementos igualmente espaciados comprendidos entre 1 y 10:</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">var v2 = [].linspace(1, 10, 25);<br>v2</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Cree la matriz "a1" con 4 filas y 5 columnas de ceros:</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">var a1 = [].zeros(4, 5);<br>a1.show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Cree la matriz "a2" con 5 filas y 3 columnas de cincos:</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">var a2 = [].const(5, 3, 5);<br>a2.show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Cree la matriz identidad "a3" de 6 filas por 6 columnas:</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">var a3 = [].identity(6);<br>a3.show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Cree el vector "v3" con 5 números enteros pseudoaleatorios comprendidos entre 1 y 9 (randseed=0):</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">randseed = 0;<br>var v3 = [].rand(5, 1, 9).round();<br>v3</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Reemplace la segunda columna de la matriz "a2" con los elementos del vector "v3":</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">a2.replaceCols(v3, 1).show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Reemplace la tercera fila de la matriz "a1" con los elementos del vector "v3":</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">a1.replaceRows(v3, 2).show()</div>
+        <div class="resultado"></div>
+    </div>
+
+
+
+
+
+    <br>
+    <p class="ejemplo"><span class="ejemplo"></span>Mostrando las matrices con <dfn class="style1">show</dfn>:</p>
+
+    <p class="ejemplosn">Cree el vector "v1" con 5 elementos iguales a 7:</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">var v1 = [].const(5, 7);<br>v1</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Cree la matriz "a1" con 4 filas y 5 columnas de números enteros pseudoaleatorios (randseed = 2) comprendidos entre 10 y 30:</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">randseed = 2;<br>var a1 = [].rand(4, 5, 10, 30).round();<br>a1.show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Intercambia la segunda y tercera filas de la matriz "a1":</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">a1.rowSwap(1, 2).show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Intercambie la primera y quinta columnas de la matriz "a1":</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">a1.colSwap(0, 4).show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Cree el vector "v2" con los elementos de la segunda fila de la matriz "a1":</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">var v2 = a1.getRows(1);<br>v2</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Cree el vector "v3" con los elementos de la cuarta columna de la matriz "a1":</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">var v3 = a1.getCols(3);<br>v3</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Cree el vector "v4" con los elementos de la diagonal principal de la matriz "a1":</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">var v4 = a1.getDiagonal();<br>v4</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Cree el vector "v5" con los elementos de la primera diagonal a la derecha de la diagonal principal de la matriz "a1":</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">var v5 = a1.getDiagonal(1);<br>v5</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="ejemplosn">Cree el vector "v6" con los elementos de la segunda diagonal a la izquierda de la diagonal principal de la matriz "a1":</p>
+
+    <div class="calculadora" spellcheck="false" style="margin-left:1cm;">
+        <div class="instruccion">var v6 = a1.getDiagonal(-2);<br>v6</div>
+        <div class="resultado"></div>
+    </div>
+
+
+
+
+
+    <br>
+    <div class="ejercicio" id="ejercicio1" enunciado="2"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span>Mostrando las matrices con "show":</p></div><p class="pregunta"><span class="pregunta"></span>Genere y guarde en "a" una matriz con 5 filas y 4 columnas de números enteros pseudoaleatorios (randseed=5) comprendidos entre 1 y 9:</p><div id="pregunta17" class="calculadora" spellcheck="false"><div class="instruccion">randseed=5;<br>a = [].rand(5,4,1,9).round();<br>a.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Genere y guarde en "b" una matriz con 4 filas y 4 columnas de números enteros pseudoaleatorios (randseed=7) comprendidos entre 1 y 9:</p><div id="pregunta18" class="calculadora" spellcheck="false"><div class="instruccion">randseed=7;<br>b = [].rand(4,4,1,9).round();<br>b.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Genere y guarde en "c" una matriz con 5 filas y 4 columnas de números 7:</p><div id="pregunta19" class="calculadora" spellcheck="false"><div class="instruccion">var c = [].const(5,4,7);<br>c.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Obtenga la transpuesta de la matriz "a":</p><div id="pregunta20" class="calculadora" spellcheck="false"><div class="instruccion">a.transpose().show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule la inversa de la matriz "b", redondeando los resultados al tercer dígito después del punto:</p><div id="pregunta21" class="calculadora" spellcheck="false"><div class="instruccion">b.inv().round(3).show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule la matriz resultante de multiplicar la matriz "a" por la matriz "b":</p><div id="pregunta22" class="calculadora" spellcheck="false"><div class="instruccion">a.mul(b).show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Divida la matriz "c" entre el número 7:</p><div id="pregunta23" class="calculadora" spellcheck="false"><div class="instruccion">c.div(7).show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Genere y muestre una matriz con 4 filas y 5 columnas de ceros:</p><div id="pregunta24" class="calculadora" spellcheck="false"><div class="instruccion">[].zeros(4,5).show()</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="16" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 1 -->
+
+    <div class="ejercicio" id="ejercicio2" enunciado="0"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span>Mostrando las matrices con "show" y tomando en cuenta las siguientes matrices:\[a = \begin{bmatrix}1 &amp; 2 &amp; 3\\4 &amp; 1 &amp; 2\\3 &amp; 5&amp; 1\end{bmatrix}\hspace{7mm}b = \begin{bmatrix}2 &amp; 3 &amp; 1\\4 &amp; 5 &amp; 3\\3 &amp; 7 &amp; 2\end{bmatrix}\]</p></div><p class="pregunta"><span class="pregunta"></span>Empleando la notación simplificada, guarde en "a" y "b" las matrices</p><div id="pregunta25" class="calculadora" spellcheck="false"><div class="instruccion">a = [[1,2,3],[4,1,2],[3,5,1]];<br>b = [[2,3,1],[4,5,3],[3,7,2]];</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Sume "a" y "b" y guarde el resultado en "a1":</p><div id="pregunta26" class="calculadora" spellcheck="false"><div class="instruccion">a1 = a.add(b);<br>a1.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Divida "b" entre "a", redondeando el resultado al primer dígito después del punto y guarde el resultado en "a2":</p><div id="pregunta27" class="calculadora" spellcheck="false"><div class="instruccion">a2 = b.div(a).round(1);<br>a2.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Obtenga la transpuesta de la matriz "a" y guarde el resultado en "a3":</p><div id="pregunta28" class="calculadora" spellcheck="false"><div class="instruccion">a3 = a.transpose();<br>a3.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Obtenga el trazo de la matriz "a" y guarde el resultado en "d1":</p><div id="pregunta29" class="calculadora" spellcheck="false"><div class="instruccion">d1 = a.trace();<br>d1</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Obtenga el determinante de la matriz "a" y guarde el resultado en "d2":</p><div id="pregunta30" class="calculadora" spellcheck="false"><div class="instruccion">d2 = a.det();<br>d2</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule la inversa de la matriz "a", redondeando el resultado al tercer dígito después del punto y guarde el resultado en "a4":</p><div id="pregunta31" class="calculadora" spellcheck="false"><div class="instruccion">a4 = a.inv().round(3);<br>a4.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule el valor absoluto de la matriz "a" y guarde el resultado en "d3":</p><div id="pregunta32" class="calculadora" spellcheck="false"><div class="instruccion">d3 = a.abs();<br>d3</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Haga una copia de la matriz "a" en "a5" y añada a la copia una fila con los elementos de la segunda fila de la matriz "b":</p><div id="pregunta33" class="calculadora" spellcheck="false"><div class="instruccion">a5 = a.slice();<br>a5.appendRows(b.getRows(1));<br>a5.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Haga una copia de la matriz "b" en "a6" y añada a la copia una columna con los elementos de la tercera columna de la matriz "a":</p><div id="pregunta34" class="calculadora" spellcheck="false"><div class="instruccion">a6 = b.slice();<br>a6.appendCols(a.getCols(2));<br>a6.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Quite de la matriz "a5" la segunda fila y muestre la matriz resultante:</p><div id="pregunta35" class="calculadora" spellcheck="false"><div class="instruccion">a5.removeRows(1);<br>a5.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Quite de la matriz "a6" la primera columna y muestre la matriz resultante:</p><div id="pregunta36" class="calculadora" spellcheck="false"><div class="instruccion">a6.removeCols(0);<br>a6.show()</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="24" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 2 -->
+
+    <div class="ejercicio" id="ejercicio3" enunciado="0"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span>Mostrando las matrices con show:</p></div><p class="pregunta"><span class="pregunta"></span>Cree el vector "v" con 4 números enteros pseudoaleatorios (randseed=0) comprendidos entre 1 y 9</p><div id="pregunta61" class="calculadora" spellcheck="false"><div class="instruccion">randseed=0;<br>v = [].rand(4,1,9).round();<br>v</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree la matriz "a" con 4 filas y 3 columnas de números enteros pseudoaleatorios (randseed=0) comprendidos entre 1 y 10</p><div id="pregunta62" class="calculadora" spellcheck="false"><div class="instruccion">randseed=0;<br>a = [].rand(4,3,1,10).round();<br>a.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Añada a la matriz "a" una columna con los elementos del vector "v"</p><div id="pregunta63" class="calculadora" spellcheck="false"><div class="instruccion">a.appendCols(v);<br>a.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Añada a la matriz "a" una fila con los elementos del vector "v"</p><div id="pregunta64" class="calculadora" spellcheck="false"><div class="instruccion">a.appendRows(v);<br>a.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Inserte en la tercera fila de la matriz "a" los elementos del vector "v"</p><div id="pregunta65" class="calculadora" spellcheck="false"><div class="instruccion">a.insertRows(v,2);<br>a.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Añada al vector "v" los números 8 y 9 y muestre el vector resultante:</p><div id="pregunta66" class="calculadora" spellcheck="false"><div class="instruccion">v.push(8,9);<br>v</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Inserte en la segunda columna de la matriz "a" los elementos del vector "v":</p><div id="pregunta67" class="calculadora" spellcheck="false"><div class="instruccion">a.insertCols(v,1);<br>a.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree la matriz "a2" con los elementos del vector "v" en su diagonal principal</p><div id="pregunta68" class="calculadora" spellcheck="false"><div class="instruccion">a2 = v.diagonal();<br>a2.show()</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="16" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 3 -->
+
+    <div class="ejercicio" id="ejercicio4" enunciado="1"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span>Mostrando las matrices con "show":</p></div><p class="pregunta"><span class="pregunta"></span>Cree el vector "v1" con los números pares existentes entre 2 y 11:</p><div id="pregunta94" class="calculadora" spellcheck="false"><div class="instruccion">v1 = [].range(2,11,2);<br>v1</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree el vector "v2" con 9 números igualmente espaciados comprendidos entre 3 y 11:</p><div id="pregunta95" class="calculadora" spellcheck="false"><div class="instruccion">v2 = [].linspace(3,11,9);<br>v2</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree la matriz "a1" con 3 filas y 4 columnas de ceros:</p><div id="pregunta96" class="calculadora" spellcheck="false"><div class="instruccion">var a1 =[].zeros(3,4);<br>a1.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree la matriz "a2" con 4 filas y 3 columnas de números 5:</p><div id="pregunta97" class="calculadora" spellcheck="false"><div class="instruccion">a2 = [].const(4,3,5);<br>a2.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree la matriz "a3" como una matriz identidad de 3 filas y 3 columnas:</p><div id="pregunta98" class="calculadora" spellcheck="false"><div class="instruccion">a3 = [].identity(3);<br>a3.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree el vector "v3" con números consecutivos del 5 al 8:</p><div id="pregunta99" class="calculadora" spellcheck="false"><div class="instruccion">v3 = [].range(5,8);<br>v3</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree la matriz "a4" con los elementos del vector "v3" en su diagonal principal:</p><div id="pregunta100" class="calculadora" spellcheck="false"><div class="instruccion">a4 = v3.diagonal();<br>a4.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree la matriz "a5" con los elementos del vector "v3" en la segunda diagonal a la derecha de la principal:</p><div id="pregunta101" class="calculadora" spellcheck="false"><div class="instruccion">a5 = v3.diagonal(2);<br>a5.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree la matriz "a6" con los elementos del vector "v3" en la tercera diagonal a la izquierda de la principal:</p><div id="pregunta102" class="calculadora" spellcheck="false"><div class="instruccion">a6 = v3.diagonal(-3);<br>a6.show()</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="18" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 4 -->
+
+    <div class="ejercicio" id="ejercicio5" enunciado="1"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span>Mostrando las matrices con "show":</p></div><p class="pregunta"><span class="pregunta"></span>Cree el vector "v1" con los números enteros existentes entre 5 y 8:</p><div id="pregunta122" class="calculadora" spellcheck="false"><div class="instruccion">v1 = [].range(5,8);<br>v1</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree la matriz "a1" con 3 filas y 4 columnas de números enteros pseudoaleatorios (semilla=1) comprendidos entre 0 y 9:</p><div id="pregunta123" class="calculadora" spellcheck="false"><div class="instruccion">randseed=  1;<br>a1 = [].rand(3,4,0,9).round();<br>a1.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Añada a la matriz "a1" una fila con los elementos del vector "v1":</p><div id="pregunta124" class="calculadora" spellcheck="false"><div class="instruccion">a1.appendRows(v1);<br>a1.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Quite la segunda columna de la matriz "a1" y muestre la matriz resultante:</p><div id="pregunta125" class="calculadora" spellcheck="false"><div class="instruccion">a1.removeCols(1);<br>a1.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Quite el último elemento del vector "v1" y muestre el vector resultante:</p><div id="pregunta126" class="calculadora" spellcheck="false"><div class="instruccion">v1.pop();<br>v1</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Inserte en la segunda fila de la matriz "a1" los elementos del vector "v1":</p><div id="pregunta127" class="calculadora" spellcheck="false"><div class="instruccion">a1.insertRows(v1,1);<br>a1.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Quite la tercera y cuarta filas de la matriz "a1":</p><div id="pregunta128" class="calculadora" spellcheck="false"><div class="instruccion">a1.removeRows(2,3);<br>a1.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Transponga los elementos de la matriz "a1" y guarde el resultado en la misma matriz:</p><div id="pregunta129" class="calculadora" spellcheck="false"><div class="instruccion">a1 = a1.transpose();<br>a1.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Intercambie la primera y segunda filas de la matriz "a1":</p><div id="pregunta130" class="calculadora" spellcheck="false"><div class="instruccion">a1.rowSwap(0,1);<br>a1.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Intercambie la segunda y tercera columnas de la matriz "a1":</p><div id="pregunta131" class="calculadora" spellcheck="false"><div class="instruccion">a1.colSwap(1,2);<br>a1.show()</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="20" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 5 -->
+
+    <div class="ejercicio" id="ejercicio6" enunciado="0"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span>Mostrando las matrices con "show":</p></div><p class="pregunta"><span class="pregunta"></span>Cree la matriz "a1" con 4 filas y 3 columnas de números enteros pseudoaleatorios (semilla=3) comprendidos entre 1 y 9:</p><div id="pregunta142" class="calculadora" spellcheck="false"><div class="instruccion">randseed=3;<br>a1 = [].rand(4,3,1,9).round();<br>a1.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree el vector "v1" con números enteros consecutivos comprendidos entre 1 y 4:</p><div id="pregunta143" class="calculadora" spellcheck="false"><div class="instruccion">v1 = [].range(1,4);<br>v1</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Reemplace la segunda columna de la matriz "a1" con los elementos del vector "v1":</p><div id="pregunta144" class="calculadora" spellcheck="false"><div class="instruccion">a1.replaceCols(v1,1);<br>a1.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree el vector "v2" con 3 ceros:</p><div id="pregunta145" class="calculadora" spellcheck="false"><div class="instruccion">v2 = [].zeros(3);<br>v2</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Reemplace la cuarta fila de la matriz "a1" con los elementos del vector "v2":</p><div id="pregunta146" class="calculadora" spellcheck="false"><div class="instruccion">a1.replaceRows(v2,3);<br>a1.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree el vector "v3" con la primera fila de la matriz "a1":</p><div id="pregunta147" class="calculadora" spellcheck="false"><div class="instruccion">v3 = a1.getRows(0);<br>v3</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree el vector "v4" con la tercera columna de la matriz "a1":</p><div id="pregunta148" class="calculadora" spellcheck="false"><div class="instruccion">v4 = a1.getCols(2);<br>v4</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree el vector "v5" con la diagonal principal de la matriz "a1":</p><div id="pregunta149" class="calculadora" spellcheck="false"><div class="instruccion">v5 = a1.getDiagonal();<br>v5</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree el vector "v6" con la segunda diagonal derecha de la matriz "a1":</p><div id="pregunta150" class="calculadora" spellcheck="false"><div class="instruccion">v6 = a1.getDiagonal(2);<br>v6</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree el vector "v7" con la primera diagonal izquierda de la matriz "a1":</p><div id="pregunta151" class="calculadora" spellcheck="false"><div class="instruccion">v7 = a1.getDiagonal(-1);<br>v7</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="20" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 6 -->
+
+    <div class="ejercicio" id="ejercicio7" enunciado="1"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span>Mostrando las matrices con "show":</p></div><p class="pregunta"><span class="pregunta"></span>Cree el vector "v1" con los números impares que existen entre 1 y 8:</p><div id="pregunta183" class="calculadora" spellcheck="false"><div class="instruccion">v1 = [].range(1,8,2);<br>v1</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree el vector "v2" con los números pares que existen entre 2 y 8:</p><div id="pregunta184" class="calculadora" spellcheck="false"><div class="instruccion">v2 = [].range(2,8,2);<br>v2</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree el vector "v3" con números enteros consecutivos comprendidos entre 4 y 7:</p><div id="pregunta185" class="calculadora" spellcheck="false"><div class="instruccion">v3 = [].range(4,7);<br>v3</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree el vector "v4" con los números impares que existen entre 3 y 10:</p><div id="pregunta186" class="calculadora" spellcheck="false"><div class="instruccion">v4 = [].range(3,10,2);<br>v4</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Con los vectores "v1", "v2", "v3" y "v4", como filas, cree la matriz "a1", luego transponga "a1" y guarde el resultado en la misma variable:</p><div id="pregunta187" class="calculadora" spellcheck="false"><div class="instruccion">a1 = [v1,v2,v3,v4];<br>a1 = a1.transpose();<br>a1.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree el vector "v5" con la primera columna de la matriz "a1":</p><div id="pregunta188" class="calculadora" spellcheck="false"><div class="instruccion">v5 = a1.getCols(0);<br>v5</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree el vector "v6" con la última fila de la matriz "a1" multiplicada por 3:</p><div id="pregunta189" class="calculadora" spellcheck="false"><div class="instruccion">v6 = a1.getRows(3).mul(3);<br>v6</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Calcule el trazo de la matriz "a1" y guarde el resultado en "d1":</p><div id="pregunta190" class="calculadora" spellcheck="false"><div class="instruccion">d1 = a1.trace();<br>d1</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Intercambie la primera y tercera filas de la matriz "a1":</p><div id="pregunta191" class="calculadora" spellcheck="false"><div class="instruccion">a1.rowSwap(0,2);<br>a1.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Intercambie la segunda y última columnas de la matriz "a1":</p><div id="pregunta192" class="calculadora" spellcheck="false"><div class="instruccion">a1.colSwap(1,3);<br>a1.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree la matriz "a2" con las dos últimas columnas de las dos últimas filas de la matriz "a1":</p><div id="pregunta193" class="calculadora" spellcheck="false"><div class="instruccion">a2 = a1.getRows(2,3).getCols(2,3);<br>a2.show()</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="22" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 7 -->
+
+
+
+
+    <h2 class="text">Trabajo con matrices</h2>
+
+    <p class="text">Al igual que ocurre con vectores, al trabajar con matrices, se llevan a cabo operaciones con todos o un subconjunto de sus elementos. La estructura más adecuada para ese fin (al igual que en vectores) es la estructura <dfn class="style1">for</dfn>, sólo que con las matrices generalmente se requieren dos estructuras <dfn class="style1">for</dfn> anidadas (porque tienen dos dimensiones).</p>
+
+    <p class="text">Las expresiones matemáticas que involucran sumatorias (\(\sum\)) o productorias (\(\prod\)), pueden ser traducidas directamente a sus estructuras <dfn class="style1">for</dfn> equivalentes.</p>
+
+
+
+    <h3 class="text">Ejemplos</h3>
+
+    <h4 class="text">Sumatoria de los elementos de una matriz</h4>
+
+    <p class="text">Para calcular la sumatoria de los elementos de una matriz, se aplica la siguiente expresión matemática:</p>
+
+    <table class="ecuacionsn">
+        <tbody><tr>
+            <td>
+                \[                S = \sum_{i=1}^{n}\sum_{j=1}^{m}a_{i,j}                \]
+            </td>
+            <td></td>
+        </tr>
+    </tbody></table>
+    
+    <p class="text">Recordando que las matrices en JavaScript comienzan en 0, estas sumatorias pueden ser traducidas directamente en dos ciclos for: El primero (contador "i") desde 0 hasta n-1 y el segundo (contador "j") desde 0 hasta m-1. El código respectivo, implementado como un método getter de la clase "SM", que extiende a (hereda de) la clase Array, es:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">var SM = class extends Array{<br><br>  get suma() {<br>    const a = this;<br>    const n = a.length;<br>    const m = a[0].length;<br>    let s = 0;<br>    for (let i=0; i&lt;n; i++)<br>      for (let j=0; j&lt;m; j++)<br>        s += a[i][j];<br>    return s;    <br>  }<br><br>}</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">El número de filas "n" es el número de elementos del array (<span class="textocodigo">a.length</span>), porque en una matriz cada fila es un elemento. El número de columnas es el número de elementos en la primera fila (<span class="textocodigo">a[0].length</span>, por supuesto asumiendo que es una matriz regular).</p>
+
+    <p class="text">Llamando al método con las siguientes matrices:</p>
+
+    <table class="ecuacionsn">
+        <tbody><tr>
+            <td>
+                \[                a =                \begin{bmatrix}                2 &amp; 8 &amp; 2 &amp; 3\\                1 &amp; 6 &amp; -1 &amp; 4\\                2 &amp; -1 &amp; 2 &amp; 5\\                4 &amp; 2 &amp; 3 &amp; 5                \end{bmatrix}                \hspace{1cm}                b =                \begin{bmatrix}                1 &amp; 4 &amp; -2 &amp; 3\\                2 &amp; 2 &amp; 0 &amp; 4\\                3 &amp; 0 &amp; -1 &amp; 2\\                1 &amp; 2 &amp; 2 &amp; -3                \end{bmatrix}                \]
+            </td>
+            <td></td>
+        </tr>
+    </tbody></table>
+
+    <p class="text">Se obtiene:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">var a = new SM([2, 8, 2, 3], [1, 6, -1, 4], [2, -1, 2, 5], [4, 2, 3, 5]);<br>var b = new SM([1, 4, -2, 3], [2, 2, 0, 4], [3, 0, -1, 2], [1, 2, 2, -3]);</div>
+        <div class="resultado"></div>
+        <div class="instruccion">a.suma</div>
+        <div class="resultado"></div>
+        <div class="instruccion">b.suma</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Observe que para crear una matriz con la clase "SM", se manda (al constructor heredado de Array) las filas de las matrices, porque una matriz (en JavaScript) simplemente es un vector, donde cada uno de sus elementos es a su vez otro vector.</p>
+
+    <p class="text">Para determinar si una matriz es regular (es decir determinar si todas las filas tienen el mismo número de elementos) se puede llamar al método <i class="style1">isMatrixr</i>, que devuelve <dfn class="style1">true</dfn> (verdadero) si la matriz es regular y <dfn class="style1">false</dfn> (falso) en caso contrario.</p>
+
+    <p class="text">En lugar de la estructura <dfn class="style1">for</dfn>, el problema puede ser resuelto también empleando la estructura <dfn class="style1">for-of</dfn>:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">Object.defineProperty(SM.prototype, "suma_a", {<br>    <br>  get() {<br>    const a = this;<br>    let s = 0;<br>    for (let f of a) for (let e of f) s+=e;<br>    return s;  <br>  },<br>  <br>  configurable: true<br>    <br>});</div>
+        <div class="resultado"></div>
+        <div class="instruccion">a.suma_a</div>
+        <div class="resultado"></div>
+        <div class="instruccion">b.suma_a</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">En este caso, en el ciclo externo se obtiene en "f", una por una las filas de la matriz "a", mientras que en el interno se obtienen y suman, uno por uno, los elementos "e" de cada fila "f".</p>
+
+    <p class="text">Igualmente, el problema puede ser resulto con el método <dfn class="style1">forEach</dfn>:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">Object.defineProperty(SM.prototype, "suma_b", {<br>    <br>  get() {<br>    const a = this;<br>    let s = 0;<br>    a.forEach(f=&gt;f.forEach(e=&gt;s+=e));<br>    return s;<br>  },<br>  <br>  configurable: true<br>    <br>});</div>
+        <div class="resultado"></div>
+        <div class="instruccion">a.suma_b</div>
+        <div class="resultado"></div>
+        <div class="instruccion">b.suma_b</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Donde, al igual que en la estructura <dfn class="style1">for-of</dfn>, en la llamada externa se obtiene en "f", una por una, las filas de la matriz "a", mientras que en la llamada interna se obtienen y suman, uno por uno, los elementos "e" de cada fila "f".</p>
+
+    <p class="text">Igualmente, el problema puede ser resulto con el método <dfn class="style1">map</dfn>:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">Object.defineProperty(SM.prototype, "suma_c", {<br>    <br>  get() {<br>    const a = this;<br>    let s = 0;<br>    a.map(f=&gt;f.map(e=&gt;s+=e));<br>    return s;<br>  },<br>  <br>  configurable: true<br>    <br>});</div>
+        <div class="resultado"></div>
+        <div class="instruccion">a.suma_c</div>
+        <div class="resultado"></div>
+        <div class="instruccion">b.suma_c</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Donde, al igual que en el método anterior, en la llamada externa se obtiene en "f", una por una las filas de la matriz "a", mientras que en la llamada interna se obtienen y suman, uno por uno, los elementos "e" de cada fila "f", sin embargo, como ya se hizo notar en el capítulo anterior, el uso de <dfn class="style1">map</dfn>, para resolver este tipo de problemas, no es eficiente, porque <dfn class="style1">map</dfn> genera una nueva matriz (con los resultados intermedios de la sumatoria) y no es ni lógico, ni eficiente, crear una matriz que al final no es empleada.</p>
+
+    <p class="text">Empleando el método <dfn class="style1">reduce</dfn>, el problema se resuelve de la siguiente manera:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">Object.defineProperty(SM.prototype, "suma_d", {<br>    <br>  get() {<br>    const a = this;<br>    return a.reduce((s,f)=&gt;s+f.reduce((s,e)=&gt;s+e), 0);<br>  },<br>  <br>  configurable: true<br>    <br>});</div>
+        <div class="resultado"></div>
+        <div class="instruccion">a.suma_d</div>
+        <div class="resultado"></div>
+        <div class="instruccion">b.suma_d</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">En este caso, el primer <dfn class="style1">reduce</dfn> itera para cada una de las filas "f" de la matriz, mientras que el segundo (que es llamado desde cada una de las filas "f") itera para cada uno de los elementos "e" de cada fila. Para que el primer <dfn class="style1">reduce</dfn> itere desde la primera fila de la matriz (y no directamente desde la segunda) se le manda un valor inicial "0" (que es guardado en el acumulador "s"). Para cada una de las iteraciones del <dfn class="style1">reduce</dfn> externo, el interno devuelve la sumatoria de los elementos "e" de la fila respectiva y ese resultado es añadido a la sumatoria de las filas de la matriz.</p>
+    
+    <p class="text">Es importante tomar en cuanta que, aunque se ha dado el mismo nombre ("s") tanto al acumulador interno, como al externo, son dos acumuladores diferentes (el interno devuelve la sumatoria de los elementos "e" de la fila "f", mientras que el externo devuelve la sumatoria de las filas "f" de la matriz "a").</p>
+
+    <p class="text">El problema, resuelto con el método <dfn class="style1">every</dfn>, es:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">Object.defineProperty(SM.prototype, "suma_e", {<br>    <br>  get() {<br>    const a = this;<br>    let s = 0;<br>    a.every(f=&gt;(f.every(e=&gt;(s+=e,1)),1));<br>    return s;<br>  },<br>  <br>  configurable: true<br>    <br>});</div>
+        <div class="resultado"></div>
+        <div class="instruccion">a.suma_e</div>
+        <div class="resultado"></div>
+        <div class="instruccion">b.suma_e</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">La lógica es la misma que con <dfn class="style1">forEach</dfn>, sólo que para que <dfn class="style1">every</dfn> itere para todas las filas y para todos los elementos de cada fila, las funciones tanto interna, como externa, devuelven <strong class="style1">1</strong>, que es uno de los valores equivalentes a <dfn class="style1">true</dfn> (por supuesto se puede devolver directamente <dfn class="style1">true</dfn> en lugar de 1).</p>
+    
+    <p class="text">De manera similar se pueden emplear los métodos <dfn class="style1">filter</dfn>, <dfn class="style1">some</dfn>, <dfn class="style1">find</dfn>, <dfn class="style1">findLast</dfn>, <dfn class="style1">findIndex</dfn>, <dfn class="style1">findLastIndex</dfn>, sin embargo, como ya se ha recalcado en el capítulo anterior, estos métodos no son adecuados para resolver este tipo de problemas. Se emplean en la asignatura, únicamente con el propósito de ayudar a comprender su lógica.</p>
+
+
+
+    <h4 class="text">Multiplicación de matrices</h4>
+
+    <p class="text">La siguiente expresión matemática, permite calcular la matriz "c" que resulta de multiplicar las matrices "a" y "b":</p>
+
+    <table class="ecuacionsn">
+        <tbody><tr>
+            <td>
+                \[                c_{i,j} = \sum_{k=1}^{nca}a_{i,k}b_{k,j}                \hspace{0.5cm}                \begin{cases}                i = 1 \rightarrow nfa\\                j = 1 \rightarrow ncb                \end{cases}                \]
+            </td>
+            <td></td>
+        </tr>
+    </tbody></table>
+
+    <p class="text">Donde "nfa" es el número de filas de la matriz "a", "ncb" es el número de columnas de la matriz "b" y "nca" es el número de columnas de la matriz "a". La condición para que dos matrices puedan ser multiplicadas es que el número de columnas de la matriz "a", sea igual al número de filas de la matriz "b".</p>
+
+    <p class="text">Esta expresión, puede ser traducida y codificada directamente en tres ciclos <dfn class="style1">for</dfn>: El primero (contador "i") que va desde 0 hasta nfa-1, el segundo (contador "j") que va desde 0 hasta ncb-1 y el tercero (contador "k") que va desde 0 hasta nca-1. El código respectivo, programado como un método estándar de la clase "MM", que hereda de la clase Array, es:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">var MM = class extends Array {<br>    <br>  mulMat(b) {<br>    const a = this;<br>    const nfa = a.length;<br>    const nfb = b.length;<br>    const nca = a[0].length;<br>    const ncb = b[0].length;<br>    if (nca!==nfb) throw new Error("matrices incompatibles");<br>    const c = [];<br>    for (let i=0; i&lt;nfa; i++) {<br>      c[i] = [];<br>      for (let j=0; j&lt;ncb; j++) {<br>        c[i][j] = 0;<br>        for (let k=0; k&lt;nca; k++) c[i][j] += a[i][k]*b[k][j];<br>      }<br>    }<br>    return c;<br>  }<br><br>};</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Observe que la matriz "c" se declara como constante, aunque en el proceso se generan y calculan los elementos de cada una de sus filas. Se procede así porque, como se recordará, las variables que almacenan un vector (y en general cualquier objeto) sólo guardan la dirección de memoria donde se encuentra el vector (u objeto), no los valores en si y esa dirección no cambia en todo el proceso (es constante).</p>
+    
+    <p class="text">Creando dos matrices de tipo MM:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">var a = new MM([1, 2, 3], [2, 3, 4], [3, 4, 5]);<br>var b = new MM([1, 2, 3, 4, 5],[2, 3, 4, 5, 6], [3, 4, 5, 6, 7]);</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Y llamando a "mulMat" desde la matria "a", se obtiene:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">a.mulMat(b).show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">El algoritmo puede ser codificado también empleando el método <dfn class="style1">push</dfn> (en lugar de una sentencia de asignación):</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">MM.prototype.mulMat_a = function(b) {<br>  const a = this;<br>  const nfa = a.length;<br>  const nfb = b.length;<br>  const nca = a[0].length;<br>  const ncb = b[0].length;<br>  if (nca!==nfb) throw new Error("matrices incompatibles");<br>  const c = [];<br>  for (let i=0; i&lt;nfa; i++) {<br>    c.push([]);<br>    for (let j=0; j&lt;ncb; j++) {<br>      c[i].push(0);<br>      for (let k=0; k&lt;nca; k++) c[i][j] += a[i][k]*b[k][j];<br>    }<br>  }<br>  return c;<br>};</div>
+        <div class="resultado"></div>
+        <div class="instruccion">a.mulMat_a(b).show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">En lugar de iniciar la matriz resultante "c", como una matriz vacía y añadir las filas y elementos en cada ciclo, puede ser iniciada como una matriz de ceros, con el número de filas de la matriz "a" y el número de columnas de la matriz "b". El código respectivo, programado como un método estándar de la clase "MM", es:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">MM.prototype.mulMat_b = function(b) {<br>  const a = this;<br>  const nfa = a.length;<br>  const nfb = b.length;<br>  const nca = a[0].length;<br>  const ncb = b[0].length;<br>  if (nca!==nfb) throw new Error("matrices incompatibles");<br>  const c = [].zeros(nfa,ncb);<br>  for (let i=0; i&lt;nfa; i++) {<br>    for (let j=0; j&lt;ncb; j++) {<br>      for (let k=0; k&lt;nca; k++) c[i][j] += a[i][k]*b[k][j];<br>    }<br>  }<br>  return c;<br>};</div>
+        <div class="resultado"></div>
+        <div class="instruccion">a.mulMat_b(b).show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Aunque no es la estructura más adecuada para este caso, el problema puede ser resuelto, también, con la estructura <dfn class="style1">for-of</dfn>.</p>
+
+    <p class="text">Para resolver el problema con otras estructuras iterativas, es importante recordar que al multiplicar dos matrices, se multiplica cada una de las filas de la matriz "a" por cada una de las columnas de la matriz "b". Con ese propósito, el primer ciclo (el más externo) recorre cada una de las filas de la matriz "a", el segundo recorre cada una de las columnas de la matriz "b" y el tercero (el más interno) simplemente multiplica los elementos de la fila "a" por los elementos de la columa "b".</p>
+
+    <p class="text">Por ejemplo, para obtener el tercer elemento de la segunda fila (el elemento c[1][2]), se multiplica la segunda fila de la matriz "a" ([2, 3, 4l) por la tercera columna de la matriz "b" ([3, 4, 5]), es decir:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">2*3+3*4+4*5</div>
+        <div class="resultado"></div>
+    </div>
+    
+    <p class="text">Siendo esas las operaciones que se llevan a cabo en el tercer ciclo.:</p>
+
+    <p class="text">Entonces, si "fa" es la fila de la matriz "a" y "cb" es la columna de la matriz "b", el elemento resultante, puede ser calculado en un ciclo:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">var fa = [2, 3, 4];<br>var cb = [3, 4, 5];<br>var s = 0;<br>for (let k=0; k&lt;fa.length; k++) s += fa[k]*cb[k]; s</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">En consecuencia, para obtener la primera fila de la matriz resultante, se debe multiplicar la primera fila de la matriz "a", por cada una de las columnas de la matriz "b", luego, para la segunda fila, se multiplica la segunda fila de la matriz "a" por cada una de las columnas de la matriz "b" y así sucesivamente.</p>
+ 
+    <p class="text">Como al multiplicar las matrices se trabaja con las columnas de la matriz "b", pero los métodos iteran a través de las filas (no las columnas), para resolver el problema, empleando los métodos iterativos, se debe trabajar con la transpuesta de la matriz "b".</p>
+
+    <p class="text">Una vez comprendido el procedimiento, se puede resolver el problema con la estructura <dfn class="style1">for-of</dfn>:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">MM.prototype.mulMat_c = function(b) {<br>  const a = this;<br>  b = b.transpose();<br>  if (a[0].length!==b[0].length) throw new Error("matrices incompatibles");<br>  const c = [];<br>  for (const fa of a) {<br>    let fc = [];<br>    for (const cb of b) {<br>      let ec = 0, k = 0;<br>      for(const ea of fa) ec += ea*cb[k++];<br>      fc.push(ec);<br>    }<br>    c.push(fc);<br>  }<br>  return c;<br>};</div>
+        <div class="resultado"></div>
+        <div class="instruccion">a.mulMat_c(b).show()</div>
+        <div class="resultado"></div>
+    </div>
+    
+    <p class="text">En esta solución, en el primer ciclo (el ciclo externo) se itera para cada una de las filas "fa" de la matriz "a". En el segundo ciclo (el primer ciclo anidado) se itera para cada una de las columnas "cb" de la matriz "b" (porque se está trabajando con la matriz transpuesta) y en el tercer ciclo (el ciclo más interno) se itera para cada uno de los elementos "ea" de cada una de las filas "fa" de la matriz "a".</p>
+
+    <p class="text">Antes del primer ciclo se crea la matriz (vacía) resultante "c", en el priner ciclo se crea (en cada iteración) cada una de las filas (vacías) "fc" de la matriz resultante. En el segundo ciclo, se inicia en 0 cada uno de los elementos "ec" de la fila "fc" y se inicia en 0 el contador "k" de la columna "cb". En el tercer ciclo se calcula el valor del elemento "ec" (multiplicando los elementos "ea" de la fila "fa" por los elementos cb[k] de la columna "cb"). En este ciclo, se emplea el operador <b class="style1">++</b>, para incrementar el valor del contador, inmediatamente después de recuperar el valor del elemento "b[k]".</p>
+    
+    <p class="text">Se pueden lograr soluciones más compactas, si en el ciclo más interno, se emplea otra estructura iterativa. Por ejemplo, con "reduce" se tiene la siguiente solución:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">MM.prototype.mulMat_d = function(b) {<br>  const a = this;<br>  b = b.transpose();<br>  if (a[0].length!==b[0].length) throw new Error("matrices incompatibles");<br>  const c = [];<br>  for (const fa of a) {<br>    let fc = [];<br>    for (const cb of b) {<br>      fc.push(fa.reduce((ec,ea,k)=&gt;ec+=ea*cb[k],0));<br>    }<br>    c.push(fc);<br>  }<br>  return c;<br>};</div>
+        <div class="resultado"></div>
+        <div class="instruccion">a.mulMat_d(b).show()</div>
+        <div class="resultado"></div>
+    </div>
+    
+    <p class="text">En este caso no es necesario incrementar el contador "k" (pues la estructura "reduce" lo hace automáticamente).</p>
+
+    <p class="text">Siguiendo un razonamiento similar, el problema puede ser resuelto, igualmente, con los métodos iterativos disponibles para arrays. Así, empleando el método <dfn class="style1">forEach</dfn>, el problema se resuelve con:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">MM.prototype.mulMat_e = function(b) {<br>  const a = this;<br>  b = b.transpose();<br>  if (a[0].length!==b[0].length) throw new Error("matrices incompatibles");<br>  const c = [].zeros(a.length, b.length);<br>  a.forEach((fa,i)=&gt;{<br>    b.forEach((cb,j)=&gt;{<br>      fa.forEach((ea,k)=&gt;c[i][j]+=ea*cb[k]);<br>    });<br>  });<br>  return c;<br>};</div>
+        <div class="resultado"></div>
+        <div class="instruccion">a.mulMat_e(b).show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">En este caso, como la función <dfn class="style1">forEach</dfn> puede recibir también el contador (el índice de cada elemento) no es necesario declarar, iniciar, incrementar ni reiniciar los contadores.</p>
+    
+    <p class="text">De manera similar, se pueden emplear los otros métodos, por ejemplo, con el método <dfn class="style1">some</dfn>, el código, es:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">MM.prototype.mulMat_f = function(b) {<br>  const a = this;<br>  b = b.transpose();<br>  if (a[0].length!==b[0].length) throw new Error("matrices incompatibles");<br>  const c = [].zeros(a.length, b.length);<br>  a.some((fa,i)=&gt;(<br>    b.some((cb,j)=&gt;(<br>      fa.some((ea,k)=&gt;(c[i][j]+=ea*cb[k], 0)), 0)),<br>    0));<br>  return c;<br>};</div>
+        <div class="resultado"></div>
+        <div class="instruccion">a.mulMat_f(b).show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Donde las funciones de "some" devuelven un valor falso (en este caso 0) para garantizar que se itere con todos los elementos del array. Además, para evitar escribir el comando <dfn class="style1">return</dfn>, las instrucciones de las funciones se escriben entre paréntesis y se separan con comas, de manera que sean ejecutadas como si se tratara de una sola instrucción (tal como se explicó en el capítulo previo).</p>
+
+
+
+
+    <h3 class="text">Rotar las columnas de una matriz</h3>
+
+    <p class="text">En este ejemplo se elabora un método que rota, hacia la derecha, las columnas de la matriz desde la cual es llamado.</p>
+
+    <p class="text">Para rotar las columnas de una matriz hacia la derecha, dado que las matrices están conformadas por vectores fila (no vectores columna) se deben recorrer los elementos de cada fila (desde la primera hasta la última fila) una posición hacia la derecha. Para ello simplemente el último elemento toma el valor del penúltimo, el penúltimo del antepenúltimo y así sucesivamente hasta que el segundo elemento toma el valor del primero.</p>
+
+    <p class="text">Sin embargo, en este proceso se pierde el valor del último elemento (porque es reemplazado por el penúltimo). Por esta razón, es necesario guardar ese elemento en una variable auxiliar y una vez rotados los elementos, asignar ese valor al primer elemento.</p>
+
+    <p class="text">El código respectivo, implementado como un método getter de la clase "RC", que hereda de (extiende a) la clase Array:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">var RC = class extends Array {<br>    <br>  get rotarcd() {<br>    const a = this;<br>    const n = a.length;<br>    const m = a[0].length;<br>    for (let i=0; i&lt;n; i++) {<br>      const aux = a[i][m-1];<br>      for (let j=m-1; j&gt;0; j--) a[i][j] = a[i][j-1];<br>      a[i][0] = aux;<br>    }<br>    return a;<br>  };<br><br>};</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Que puede ser probada, por ejemplo, rotando 2 veces una matriz pseudoaleatoria (semilla = 1) de 5 filas y 7 columnas de números enteros comprendidos entre 10 y 30:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">randseed = 1;<br>var a = new RC(...[].rand(5, 7, 20, 30).round());<br>a.show()</div>
+        <div class="resultado"></div>
+        <div class="instruccion">a.rotarcd.show()</div>
+        <div class="resultado"></div>
+        <div class="instruccion">a.rotarcd.show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">El problema puede ser resuelto, igualmente, empleando la estructura <dfn class="style1">for-of</dfn></p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">Object.defineProperty(RC.prototype, "rotarcd_a", {<br>    <br>  get() {<br>    const a = this;<br>    const m = a[0].length-1;<br>    let aux, k;<br>    for(const f of a) {<br>      aux = f[m]; k = m;<br>      for(let _ of f) f[k] = k===0 ? aux : f[--k];<br>    }<br>    return a;<br>  },<br><br>  configurable: true<br>    <br>});</div>
+        <div class="resultado"></div>
+        <div class="instruccion">randseed = 1;<br>var a = new RC(...[].rand(3, 4, 1, 9).round());<br>a.show()</div>
+        <div class="resultado"></div>
+        <div class="instruccion">a.rotarcd_a.show()</div>
+        <div class="resultado"></div>
+        <div class="instruccion">a.rotarcd_a.show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">En este caso, el ciclo externo itera para cada una de las filas "f" de la matriz "a". Dentro del ciclo se guarda (en "aux") el último elemento de la fila ("f[m]") y en "k" el índice del último elemento (m). En el ciclo interno, se itera para cada uno de los elementos "_" de la fila "f", los elementos "_" en realidad no son utilizados en la función (siendo esa la razón por la se les da ese nombre). La estructura "for-of" se emplea únicamente para iterar un número de veces igual al número de elementos de cada fila (razón por la cual no es la estructura más adecuada para resolver este problema).</p>
+    
+    <p class="text">En cada iteración del ciclo interno, se recorre un elmeento hacia la derecha, hasta que se llega al primer elemento (k===0), donde se le asigna el valor del último elemento.</p>
+
+    <p class="text">Con un razonamiento similar, se pueden emplear también otros métodos iterativos. Por ejemplo con el método <dfn class="style1">every</dfn>, el código que resuelve el problema, es:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">Object.defineProperty(RC.prototype, "rotarcd_b", {<br><br>  get() {<br>    const a = this;<br>    const m = a[0].length-1;<br>    let aux;<br>    a.every(f=&gt;(<br>      aux = f[m],<br>      f.every((_,k)=&gt;(f[m-k] = k===m ? aux : f[m-k-1], 1)), 1)<br>    );<br>    return a;<br>  },<br><br>  configurable: true<br><br>});</div>
+        <div class="resultado"></div>
+        <div class="instruccion">randseed = 1;<br>var a = new RC(...[].rand(3, 4, 1, 9).round());<br>a.show()</div>
+        <div class="resultado"></div>
+        <div class="instruccion">a.rotarcd_a.show()</div>
+        <div class="resultado"></div>
+        <div class="instruccion">a.rotarcd_a.show()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Donde, al igual que con <dfn class="style1">some</dfn> y por la misma razón, las funciones se escriben entre paréntesis, sólo que ahora se devuelve un valor equivalente a <dfn class="style1">true</dfn> (1).</p>
+
+    <p class="text">En el ciclo interno, como el contador "k" inicia en 0 y se requiere al último elemento (no al primero), los índices se calculan con <b>m-k</b>, para que en la primera iteración sea el último elemento: m-0 = m, en la siguiente el penúltimo: m-1 y así sucesivamente. Pero, cuando se llega al primer elemento (cuando "k" es igual a "m": m-m = 0), se asigna el valor del último elemento (guardado en la variable auxiliar), por eso en la función se pregunta si "m" es igual a "k" y de ser así, se le asigna el valor de "aux".</p>
+
+    <p class="text">Cuando lo que se quiere se rotar las filas de la matriz, no las columnas, solo es neceario un ciclo (no dos) porque en una matriz, las filas son simplemente elementos de la matriz, en consecuencia, el problema se reduce a rotar esos elementos.</p>
+
+
+    <div class="ejercicio" id="ejercicio8" enunciado="0"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Elabore el método "rotarci", que rote las "m" columnas de la matriz "a", que tiene "n" filas, una posición hacia la izquierda (la segunda columna pasa a ser la primera, la tercera la segunda, etc., y la primera pasa a ser la última). Codifique el método (estructura: for, operadores compuestos), como un método getter de la clase "RC2" que extiende a la clase Array.</p><div id="pregunta205" class="calculadora" spellcheck="false"><div class="instruccion">RC2 = class extends Array{<br><br>  get rotarci() {<br>    const a = this;<br>    const n = a.length;<br>    const m = a[0].length;<br>    for(let i=0; i&lt;n; i++) {<br>      let aux = a[i][0];<br>      for(let j=0;j&lt;m-1 ;j++ ) a[i][j] = a[i][j+1];<br>      a[i][m-1] = aux;<br>    }<br>    return a;<br>  }<br><br>};</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree la matriz "a", de tipo "RC2", con 4 filas y 5 columnas de números enteros pseudoaleatorios (semilla=1) comprendidos entre 1 y 9</p><div id="pregunta206" class="calculadora" spellcheck="false"><div class="instruccion">randseed = 1;<br>a = new RC2(...[].rand(4,5,1,9).round());<br>a.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Rote las columnas de la matriz "a" una posición a la izquierda.</p><div id="pregunta207" class="calculadora" spellcheck="false"><div class="instruccion">a.rotarci.show()</div><div class="resultado"></div></div><p class="pregunta" id="pregunta208"><span class="pregunta"></span>a.length, es igual al número de <span class="campo_literal correcta" tabindex="0" contenteditable="true">filas</span> "n", porque, en una matriz, cada <span class="campo_literal correcta" tabindex="0" contenteditable="true">fila</span> es un e<span class="campo_literal correcta" tabindex="0" contenteditable="true">lemento</span><br>a[0].length, es igual al número de <span class="campo_literal correcta" tabindex="0" contenteditable="true">columnas</span> "m", porque, en una matriz regular, el número de e<span class="campo_literal correcta" tabindex="0" contenteditable="true">lementos</span> de una fila es igual al número de <span class="campo_literal correcta" tabindex="0" contenteditable="true">columnas</span> de la matriz.<br>Al finalizar el ciclo interno, para i=0, la primera fila de la matriz "a" es: [<span class="campo_literal correcta" tabindex="0" contenteditable="true">5, 4, 9, 7, 7</span>].<br>El valor de la variable "aux", para i=1, es: <span class="campo_literal correcta" tabindex="0" contenteditable="true">2</span>.<br>En las 3 primeras iteraciones del ciclo externo se rotan los elementos de las <span class="campo_literal correcta" tabindex="0" contenteditable="true">3</span> primeras <span class="campo_literal correcta" tabindex="0" contenteditable="true">filas</span> de la matriz.</p><p class="pregunta"><span class="pregunta"></span>Resuelva el problema empleando la estructura for-of, en el método getter "rotarci_a" añadido a la clase "RC2" ("m": índice de la última columna; "f": filas de la matriz "a"; "k": índice de los elementos "_" de la fila "f"; variables "aux" y "k" declaradas antes del primer ciclo). Pista: En el ciclo interno, si "k" es el último índice (si "k" es igual a "m"), se asigna a "f[k]" el valor de la variable auxiliar, caso contrario se le asigna el valor del elemento ubicado a su derecha (el valor del elemento "k+1").</p><div id="pregunta209" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(RC2.prototype, "rotarci_a", {<br><br>  get() {<br>    const a = this;<br>    const m = a[0].length-1;<br>    let aux, k;<br>    for(const f of a) {<br>      aux = f[0]; k = 0;<br>      for(const _ of f) f[k] = k === m? aux : f[++k];<br>    }<br>    return a;<br>  },<br><br>  configurable:true <br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree la matriz "a", de tipo RC2, con 3 filas y 5 columnas de números enteros pseudoaleatorios (semilla=3) comprendidos entre 1 y 9</p><div id="pregunta210" class="calculadora" spellcheck="false"><div class="instruccion">randseed = 3;<br>a = new RC2(...[].rand(3,5,1,9).round());<br>a.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Rote las columnas de la matriz "a" una posición a la izquierda.</p><div id="pregunta211" class="calculadora" spellcheck="false"><div class="instruccion">a.rotarci_a.show()</div><div class="resultado"></div></div><p class="pregunta" id="pregunta212"><span class="pregunta"></span>En cada iteración del ciclo externo se obtiene una <span class="campo_literal correcta" tabindex="0" contenteditable="true">fila</span> ("f") de la matriz "a".<br>En el ciclo interno, el contador "k" va desde <span class="campo_literal correcta" tabindex="0" contenteditable="true">0</span> hasta <span class="campo_literal correcta" tabindex="0" contenteditable="true">m</span>.<br>Al finalizar el ciclo interno, para la segunda iteración del ciclo externo, la fila "f" es: [<span class="campo_literal correcta" tabindex="0" contenteditable="true">9, 4, 4, 5, 3</span>].<br>Al finalizar la segunda iteración del ciclo externo, los elementos de la fila "f" son: [<span class="campo_literal correcta" tabindex="0" contenteditable="true">9, 4, 4, 5, 3</span>].<br>En la tercera iteración del ciclo externo, el valor de la variable "aux" es: <span class="campo_literal correcta" tabindex="0" contenteditable="true">9</span>.</p><p class="pregunta"><span class="pregunta"></span>Resuelva el problema empleando el método forEach (función creada con llaves, variable auxiliar declarada antes del primer ciclo), en el método getter "rotarci_b" añadido a la clase "RC2" ("m": índice de la última columna; "f": filas de la matriz; "k": índice de los elementos "_" de "f").</p><div id="pregunta213" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(RC2.prototype, "rotarci_b", {<br><br>  get() {<br>    const a = this;<br>    const m = a[0].length-1;<br>    let aux;<br>    a.forEach(f=&gt;{<br>      aux = f[0];<br>      f.forEach((_,k)=&gt;f[k] = k === m ? aux : f[k+1]);<br>    });<br>    return a;<br>  },<br><br>  configurable:true <br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree la matriz "a", de tipo "RC2", con 3 filas y 5 columnas de números enteros pseudoaleatorios (semilla=2) comprendidos entre 1 y 9</p><div id="pregunta214" class="calculadora" spellcheck="false"><div class="instruccion">randseed = 2;<br>a = new RC2(...[].rand(3,5,1,9).round());<br>a.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Rote las columnas de la matriz "a" una posición a la izquierda.</p><div id="pregunta215" class="calculadora" spellcheck="false"><div class="instruccion">a.rotarci_b.show()</div><div class="resultado"></div></div><p class="pregunta" id="pregunta216"><span class="pregunta"></span>En cada iteración del ciclo externo se obtiene una <span class="campo_literal correcta" tabindex="0" contenteditable="true">fila</span> ("f") de la matriz "a".<br>En el ciclo interno, el contador "k" va desde <span class="campo_literal correcta" tabindex="0" contenteditable="true">0</span> hasta <span class="campo_literal correcta" tabindex="0" contenteditable="true">m</span>.<br>Al finalizar el ciclo interno, para la tercera iteración del ciclo externo, los elementos de la fila "f" son: [<span class="campo_literal correcta" tabindex="0" contenteditable="true">7, 7, 5, 9, 4</span>].<br>Al finalizar la tercera iteración del ciclo externo, los elementos de la fila "f" son: [<span class="campo_literal correcta" tabindex="0" contenteditable="true">7, 7, 5, 9, 4</span>].<br>En la primera iteración del ciclo externo, el valor de la variable "aux" es: <span class="campo_literal correcta" tabindex="0" contenteditable="true">3</span>.</p><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="54" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 8 -->
+
+    <div class="ejercicio" id="ejercicio9" enunciado="0"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Elabore el método "interCols", que reciba dos números enteros positivos: "k" y "l" e intercambie las columnas de la matriz "a" correspondientes a dichos números. Se debe verifica que los números recibidos correspondan a dos columnas existentes. Pista: para intercambiar dos columnas se deben intercambiar, fila por fila, los elementos correspondientes a las columnas a intercambiar. Codifique el método con la estructura for, como un método de la clase "IC" que extiende a la clase Array.</p><div id="pregunta217" class="calculadora" spellcheck="false"><div class="instruccion">IC = class extends Array{<br><br>  interCols(k,l) {<br>    const a = this;<br>    const n = a.length;<br>    const m = a[0].length;<br>    if (k&lt;0 || k&gt;=m) throw new Error("1ra columna inválida");<br>    if (l&lt;0 || l&gt;=m) throw new Error("2da columna inválida");<br>    for(let i=0; i&lt;n; i++) {<br>      let aux=a[i][k];<br>      a[i][k]=a[i][l];<br>      a[i][l]=aux;<br>    }<br>    return a;<br>  }<br><br>};</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree la matriz "a", de tipo "IC", con 5 filas y 5 columnas de números enteros pseudoaleatorios (randseed=1) comprendidos entre 1 y 9.</p><div id="pregunta218" class="calculadora" spellcheck="false"><div class="instruccion">randseed = 1;<br>a = new IC(...[].rand(5,5,1,9).round());<br>a.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Intercambie la segunda y cuarta columna.</p><div id="pregunta219" class="calculadora" spellcheck="false"><div class="instruccion">a.interCols(1,3).show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Intercambie la primera y última columnas.</p><div id="pregunta220" class="calculadora" spellcheck="false"><div class="instruccion">a.interCols(0,4).show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Intercambie la tercera y sexta columnas.</p><div id="pregunta221" class="calculadora" spellcheck="false"><div class="instruccion">a.interCols(2,5).show()</div><div class="resultado"></div></div><p class="pregunta" id="pregunta222"><span class="pregunta"></span>Las columnas a intercambiar ("k" y "l") tienen que ser mayores o iguales a <span class="campo_literal correcta" tabindex="0" contenteditable="true">0</span> y menores a <span class="campo_literal correcta" tabindex="0" contenteditable="true">m</span>, porque no existen <span class="campo_literal correcta" tabindex="0" contenteditable="true">columnas</span> negativas ni mayores al número de <span class="campo_literal correcta" tabindex="0" contenteditable="true">columnas</span> de la matriz.<br>En cada repetición del ciclo se intercambian los elementos "k" y "l" de la fila <span class="campo_literal correcta" tabindex="0" contenteditable="true">i</span>.<br>En la variable "aux" se guarda el elemento <span class="campo_literal correcta" tabindex="0" contenteditable="true">k</span> de la fila <span class="campo_literal correcta" tabindex="0" contenteditable="true">i</span>.</p><p class="pregunta"><span class="pregunta"></span>Resuelva el problema empleando la estructura for-of, en el método "interCols_a" de la clase "IC" (m: índice de la última columna; f: filas de la matriz; aux: variable auxiliar declarada antes del primer ciclo).</p><div id="pregunta223" class="calculadora" spellcheck="false"><div class="instruccion">IC.prototype.interCols_a = function(k,l) {<br>  const a = this;<br>  const m = a[0].length-1;<br>  if (k&lt;0 || k&gt;m) throw new Error("1ra columna inválida");<br>  if (l&lt;0 || l&gt;m) throw new Error("2da columna inválida");<br>  let aux;<br>  for(const f of a) {<br>    aux=f[k];<br>    f[k]=f[l];<br>    f[l]=aux;<br>  }<br>  return a;<br>};</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Intercambie la segunda y tercera columnas de la matriz "a".</p><div id="pregunta224" class="calculadora" spellcheck="false"><div class="instruccion">a.interCols_a(1,2).show()</div><div class="resultado"></div></div><p class="pregunta" id="pregunta225"><span class="pregunta"></span>En cada repetición del ciclo se obtiene una <span class="campo_literal correcta" tabindex="0" contenteditable="true">fila</span> "f" de la matriz.<br>En cada repetición del ciclo se intercambian los elementos "k" y "l" de la fila <span class="campo_literal correcta" tabindex="0" contenteditable="true">f</span>.<br>La variable "aux" guarda el elemento <span class="campo_literal correcta" tabindex="0" contenteditable="true">k</span> de la fila <span class="campo_literal correcta" tabindex="0" contenteditable="true">f</span>.</p><p class="pregunta"><span class="pregunta"></span>Resuelva el problema empleando el método some (función declarada con llaves, variable auxiliar declarada antes del primer ciclo), en el método "interCols_b" de la clase "IC" ("m": índice de la última columna; "f": filas de la matriz; "e": elementos de la fila "f"; "aux": variable auxiliar).</p><div id="pregunta226" class="calculadora" spellcheck="false"><div class="instruccion">IC.prototype.interCols_b = function(k,l) {<br>  const a = this;<br>  const m = a[0].length-1;<br>  if (k&lt;0 || k&gt;m) throw new Error("1ra columna inválida");<br>  if (l&lt;0 || l&gt;m) throw new Error("2da columna inválida");<br>  let aux;<br>  a.some(f=&gt;{aux=f[k]; f[k]=f[l]; f[l]=aux; return false ;});<br>  return a ;<br>};</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Intercambie la primera y cuarta columnas de la matriz "a".</p><div id="pregunta227" class="calculadora" spellcheck="false"><div class="instruccion">a.interCols_b(0,3).show()</div><div class="resultado"></div></div><p class="pregunta" id="pregunta228"><span class="pregunta"></span>La función del método some, devuelve <span class="campo_literal correcta" tabindex="0" contenteditable="true">false</span> para garantizar que el ciclo se repita para cada una de las <span class="campo_literal correcta" tabindex="0" contenteditable="true">filas</span> de la matriz.</p><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="46" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 9 -->
+
+    <div class="ejercicio" id="ejercicio10" enunciado="0"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Elabore el método "swapCols", que intercambie todas las columnas de la matriz "a", de "n" filas por "m" columnas, de manera que la primera columna pase a ser la última y la última la primera, que la segunda pase a ser la penúltima y la penúltima la segunda y así sucesivamente. Pista: Para intercambiar las columnas, se deben intercambiar los elementos respectivos de cada fila (fila por fila) y para ese fin se requieren dos contadores, uno "k" que comience en 0 e incremente de uno en uno y otro "l" que comience en el último elemento y disminuya, de uno en uno, hasta la mitad del número de columnas. Codifique el método empleando la estructura for (variables "k" y "l" declaradas e incrementadas en el ciclo interno), como un método getter de la clase "SC" que extiende a la clase Array.</p><div id="pregunta229" class="calculadora" spellcheck="false"><div class="instruccion">SC = class extends Array{<br><br>  get swapCols() {<br>    const a = this;<br>    const n = a.length;<br>    const m = a[0].length;<br>    let aux;<br>    for(let i=0; i&lt;n; i++) {<br>      for(let k=0, l=m-1; l&gt;k; k++, l--) {<br>        aux=a[i][k];<br>        a[i][k]=a[i][l];<br>        a[i][l]=aux;<br>      }<br>    }<br>    return a;<br>  }<br><br>};</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree la matriz "a", de tipo "SC", con 4 filas y 5 columnas de números enteros pseudoaleatorios (randseed=1) comprendidos entre 1 y 9.</p><div id="pregunta230" class="calculadora" spellcheck="false"><div class="instruccion">randseed = 1;<br>a = new SC(...[].rand(4,5,1,9).round());<br>a.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Intercambie las columnas de la matriz "a" y muestre la matriz resultante.</p><div id="pregunta231" class="calculadora" spellcheck="false"><div class="instruccion">a.swapCols.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree la matriz "b", de tipo "SC", con 4 filas y 6 columnas de números enteros pseudoaleatorios (randseed=1), comprendidos entre 1 y 9.</p><div id="pregunta232" class="calculadora" spellcheck="false"><div class="instruccion">randseed = 1;<br>b = new SC(...[].rand(4,6,1,9).round());<br>b.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Intercambie las columnas de la matriz "b" y muestre la matriz resultante.</p><div id="pregunta233" class="calculadora" spellcheck="false"><div class="instruccion">b.swapCols.show()</div><div class="resultado"></div></div><p class="pregunta" id="pregunta234"><span class="pregunta"></span>En cada repetición del ciclo externo se intercambian los elementos de la f<span class="campo_literal correcta" tabindex="0" contenteditable="true">ila</span> <span class="campo_literal correcta" tabindex="0" contenteditable="true">i</span> de la matriz.<br>Para la primera fila de la matriz "b", después de la segunda iteración del ciclo interno, la fila queda con los elementos: [<span class="campo_literal correcta" tabindex="0" contenteditable="true">2, 7, 4, 9, 5, 3</span>].<br>Para la tercera fila de la matriz "b", después de la tercera iteración del ciclo interno, la fila quedan con los elementos: [<span class="campo_literal correcta" tabindex="0" contenteditable="true">1, 1, 4, 3, 4, 3</span>].</p><p class="pregunta"><span class="pregunta"></span>Resuelva el problema empleando el método every (función declarada con llaves, variables auxiliares "aux" y "l" declaradas antes del primer ciclo), en el método getter "swapCols_a" de la clase "SC" ("m": índice de la última columna; ciclo externo: "f" - filas de la matriz; ciclo interno: "k" - índice izquierdo de los elementos "_" de las filas "f"; "l": índice derecho de los elementos de la fila "f"). Pista: En el ciclo interno, si "l" es mayor a "k", se intercambian los elementos "l" y "k", se disminuye el valor de "l" y se devuelve "true".</p><div id="pregunta235" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(SC.prototype, "swapCols_a", {<br><br>  get() {<br>    const a = this;<br>    const m = a[0].length-1;<br>    let aux, l;<br>    a.every(f =&gt; {<br>      l=m;<br>      f.every((_,k) =&gt; {<br>        if (l&gt;k) {<br>          aux=f[k];<br>          f[k]=f[l];<br>          f[l]=aux;<br>          l--;<br>          return true;<br>        }<br>      });<br>      return true;<br>    });<br>    return a;<br>  },<br><br>  configurable:true<br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree la matriz "c", de tipo "SC", con 4 filas y 6 columnas de números enteros pseudoaleatorios (randseed=2), comprendidos entre 1 y 9.</p><div id="pregunta236" class="calculadora" spellcheck="false"><div class="instruccion">randseed = 2;<br>c = new SC(...[].rand(4,6,1,9).round());<br>c.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Intercambie las columnas de la matriz "c" y muestre la matriz resultante.</p><div id="pregunta237" class="calculadora" spellcheck="false"><div class="instruccion">c.swapCols_a.show()</div><div class="resultado"></div></div><p class="pregunta" id="pregunta238"><span class="pregunta"></span>Para cada iteración del ciclo externo "f" es una de las <span class="campo_literal correcta" tabindex="0" contenteditable="true">filas</span> de la matriz.<br>Para la segunda fila de la matriz "c", después de la segunda iteración del ciclo interno, la fila "f" queda con los elementos: [<span class="campo_literal correcta" tabindex="0" contenteditable="true">7, 4, 6, 5, 6, 4</span>].<br>Para la cuarta fila de la matriz "c", después de la primera iteración del ciclo interno, la fila "f" quedan con los elementos: [<span class="campo_literal correcta" tabindex="0" contenteditable="true">1, 6, 7, 2, 4, 7</span>].</p><p class="pregunta"><span class="pregunta"></span>Resuelva el problema empleando la estructura for-of (variable auxiliar "aux" y contadores "k" y "l" declarados antes del primer ciclo), en el método getter "swapCols_b" de la clase "SC" ("m": índice de la última columna; ciclo externo: "f": filas de la matriz; ciclo interno: "k": índice izquierdo de los elementos de la fila "f"; "l": índice derecho de los elementos de la fila "f"). Pista: En el ciclo interno, si "l" es mayor a "k", se intercambian los elementos "k" y "l", se decrementa "l" y se incrementa "k", caso contrario, termina el ciclo interno.</p><div id="pregunta239" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(SC.prototype, "swapCols_b", {<br><br>  get() {<br>    const a =this;<br>    const m = a[0].length-1;<br>    let aux, k, l;<br>    for(const f of a) {<br>      k=0; l=m;<br>      for(const _ of f) {<br>        if(l&gt;k) {<br>          aux=f[k];<br>          f[k]=f[l];<br>          f[l]=aux;<br>          l--;<br>          k++;<br>        } else<br>          break;<br>      }<br>    }<br>    return a;<br>  },<br><br>  configurable:true<br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree la matriz "d", de la clase "SC", con 4 filas y 5 columnas de números enteros pseudoaleatorios (randseed=3), comprendidos entre 1 y 9.</p><div id="pregunta240" class="calculadora" spellcheck="false"><div class="instruccion">randseed = 3;<br>d = new SC(...[].rand(4,5,1,9).round());<br>d.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Intercambie las columnas de la matriz "d" y muestre la matriz resultante.</p><div id="pregunta241" class="calculadora" spellcheck="false"><div class="instruccion">d.swapCols_b.show()</div><div class="resultado"></div></div><p class="pregunta" id="pregunta242"><span class="pregunta"></span>En la segunda iteración del ciclo externo, "f" es la s<span class="campo_literal correcta" tabindex="0" contenteditable="true">egunda</span> fila de la matriz.<br>Para la primera fila de la matriz "d", después de la segunda iteración del ciclo interno, la fila queda con los elementos: [<span class="campo_literal correcta" tabindex="0" contenteditable="true">6, 4, 8, 3, 4</span>].<br>Para la tercera fila de la matriz "d", después de la primera iteración del ciclo interno, la fila queda con los elementos: [<span class="campo_literal correcta" tabindex="0" contenteditable="true">7, 7, 4, 6, 9</span>].</p><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="55" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 10 -->
+
+    <div class="ejercicio" id="ejercicio11" enunciado="1"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Elabore el método "unshiftCol", que recibe un vector "v" y añade, como una columna, al principio de la matriz "a", los elementos del vector "v". Se debe verificar que el número de elementos "m" del vector "v", sea igual al número de filas "n" de la matriz "a"  (error "vector incompatible"). Pista: para añadir una columna a una matriz, simplemente se añade, a cada fila, uno a uno los elementos del vector. Codifique el método empleando la estructura for, como un método de la clase "UC" que extiende a (hereda de) la clase Array.</p><div id="pregunta251" class="calculadora" spellcheck="false"><div class="instruccion">UC = class extends Array {<br><br>  unshiftCol(v) {<br>    const a = this;<br>    const n = a.length;<br>    const m = v.length;<br>    if (n!==m) throw new Error("vector incompatible");<br>    for (let i=0; i&lt;n; i++) a[i].unshift(v[i]);<br>    return a;<br>  }<br><br>};</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree la matriz "a", de tipo "UC", con 4 filas y 6 columnas de números enteros pseudoaleatorios (randseed=0) comprendidos entre 1 y 9.</p><div id="pregunta252" class="calculadora" spellcheck="false"><div class="instruccion">randseed = 0;<br>a = new UC(...[].rand(4,6,1,9).round());<br>a.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree el vector "v" con 4 números enteros aleatorios comprendidos entre 1 y 9.</p><div id="pregunta253" class="calculadora" spellcheck="false"><div class="instruccion">v = [].rand(4,1,9).round();<br>v</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Añada el vector "v" como primera columna de la matriz "a".</p><div id="pregunta254" class="calculadora" spellcheck="false"><div class="instruccion">a.unshiftCol(v).show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree el vector "r" con 6 números enteros aleatorios comprendidos entre 1 y 9.</p><div id="pregunta255" class="calculadora" spellcheck="false"><div class="instruccion">r = [].rand(6,1,9).round();<br>r</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Añada el vector "r" como primera columna de la matriz "a".</p><div id="pregunta256" class="calculadora" spellcheck="false"><div class="instruccion">a.unshiftCol(r).show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Resuelva el problema empleando el método forEach ("f": fila; "i": índice), en el método "unshiftCol_a" de la clase "UC".</p><div id="pregunta257" class="calculadora" spellcheck="false"><div class="instruccion">UC.prototype.unshiftCol_a = function(v) {<br>  const a = this;<br>  const n = a.length;<br>  const m = v.length;<br>  if (n!==m) throw new Error("vector incompatible");<br>  a.forEach((f,i) =&gt; f.unshift(v[i]));<br>  return a;<br>};</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Añada el vector [4, 3, 2, 1] como primera columna de la matriz "a".</p><div id="pregunta258" class="calculadora" spellcheck="false"><div class="instruccion">a.unshiftCol_a( [4, 3, 2, 1] ).show()</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="28" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 11 -->
+
+    <div class="ejercicio" id="ejercicio12" enunciado="1"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Elabore el método "shiftCol", que extraiga y devuelva la primera columna "v" de la matriz "a". Pista: para extraer la primera columna de una matriz, se extrae el primer elemento de cada fila (fila por fila) y se añade al vector "v", inicialmente vacío. Codifique el método empleando la estructura for, en un método getter de la clase "SHC".</p><div id="pregunta266" class="calculadora" spellcheck="false"><div class="instruccion">SHC = class extends Array{<br><br>  get shiftCol() {<br>    const a = this;<br>    const n = a.length;<br>    const v = [];<br>    for (let i=0; i&lt;n; i++) {<br>      v.push(a[i].shift());<br>    }<br>    return v;<br>  }<br><br>};</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree la matriz "a", de tipo "SHC", con 3 filas y 4 columnas de números enteros pseudoaleatorios (randseed=0) comprendidos entre 1 y 9.</p><div id="pregunta267" class="calculadora" spellcheck="false"><div class="instruccion">randseed = 0;<br>a = new SHC(...[].rand(3,4,1,9).round());<br>a.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Extraiga la primera columna de la matriz "a".</p><div id="pregunta268" class="calculadora" spellcheck="false"><div class="instruccion">a.shiftCol</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Muestre la matriz residual (a).</p><div id="pregunta269" class="calculadora" spellcheck="false"><div class="instruccion">a.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Resuelva el problema empleando el método some ("f": filas; cuerpo de la función entre paréntesis), en el método getter "shiftCol_a" de la clase "SHC".</p><div id="pregunta270" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(SHC.prototype, "shiftCol_a", {<br><br>  get() {<br>    const a = this;<br>    const n = a.length;<br>    const v = [];<br>    a.some(f=&gt;(v.push(f.shift()), false));<br>    return v;<br>  },<br><br>  configurable:true<br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Extraiga la primera columna de la matriz residual (a).</p><div id="pregunta271" class="calculadora" spellcheck="false"><div class="instruccion">a.shiftCol_a</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Muestre la matriz residual (a).</p><div id="pregunta272" class="calculadora" spellcheck="false"><div class="instruccion">a.show()</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="26" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 12 -->
+
+    <div class="ejercicio" id="ejercicio13" enunciado="0"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Elabore el método "transpuesta",que devuelva, una nueva matriz "b", con la transpuesta de las "n" filas y "m" columnas de la matriz "a". Pista: Para obtener la transpuesta de una matriz, los primeros elementos, de cada una de las filas de la matriz "a" (es decir la primera columna de la matriz "a"), deben ser asignados a la primera fila de la matriz "b", los segundos a la segunda fila y así sucesivamente. Codifique el método empleando la estructura for, en un método getter de la clase "TR" que extiende a (hereda de) la clase Array.</p><div id="pregunta273" class="calculadora" spellcheck="false"><div class="instruccion">TR = class extends Array {<br><br>  get transpuesta() {<br>    const a = this;<br>    const n = a.length;<br>    const m = a[0].length;<br>    const b = [];<br>    for (let j=0; j&lt;m; j++) {<br>      b.push([]);<br>      for (let i=0; i&lt;n; i++) {<br>        b[j].push(a[i][j]);<br>      }<br>    }<br>    return b;<br>  }<br><br>};</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree la matriz "a", de tipo "TR", con 4 filas y 6 columnas de números enteros pseudoaleatorios (semilla=2) comprendidos entre 1 y 9.</p><div id="pregunta274" class="calculadora" spellcheck="false"><div class="instruccion">randseed = 2;<br>a = new TR(...[].rand(4,6,1,9).round());<br>a.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Transponga la matriz "a".</p><div id="pregunta275" class="calculadora" spellcheck="false"><div class="instruccion">a.transpuesta.show()</div><div class="resultado"></div></div><p class="pregunta" id="pregunta276"><span class="pregunta"></span>Al finalizar la segunda iteración del ciclo externo, los elementos de la matriz "b" son: [[<span class="campo_literal correcta" tabindex="0" contenteditable="true">3,4,7,7],[4,6,5,6</span>]].</p><p class="pregunta"><span class="pregunta"></span>Resuelva el problema empleando el método map, en el método getter "transpuesta_a" de la clase "TR". Pista: Como la matriz resultante tiene un número de filas igual al número de columnas de la matriz original, se genera a partir de la primera fila de la matriz original "a[0]" (elemento "_", columna "j"), luego, en su interior, cada una de las filas de la matriz transpuesta se generan a partir los elementos "j" de cada una de las filas "fa" de la matriz original "a" (es decir a partir de cada una de las columnas de la matriz original).</p><div id="pregunta277" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(TR.prototype, "transpuesta_a", {<br><br>  get() {<br>    const a = this;<br>    return a[0].map((_,j)=&gt;a.map(fa=&gt;fa[j]));<br>  },<br><br>  configurable:true<br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Transponga la matriz "a".</p><div id="pregunta278" class="calculadora" spellcheck="false"><div class="instruccion">a.transpuesta_a.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Resuelva el problema empleando el método forEach (cuerpo de las funciones encerradas entre paréntesis) en el método getter "transpuesta_b" de la clase "TR". Pista: Comenzando con la matriz resultante vacía "b", las filas (inicialmente vacías) de la matriz resultante, se generan (push) a partir del número de columnas de la matriz "a", es decir a partir de los elementos de su primera fila "a[0]" (elemento "_", columna "j"), luego, en su interior, cada uno de los elementos de la matriz resultante, se generan y añaden (push) a la matriz transpuesta, a partir de los elementos "j" de cada una de las filas "fa" de la matriz original (es decir a partir de cada una de las columnas "j" de la matriz original).</p><div id="pregunta279" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(TR.prototype, "transpuesta_b", {<br><br>  get() {<br>    const a = this;<br>    const b = [];<br>    a[0].forEach((_,j)=&gt;(b.push([]), a.forEach(fa=&gt;b[j].push(fa[j]))));<br>    return b;<br>  },<br><br>  configurable:true<br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Transponga la matriz "a".</p><div id="pregunta280" class="calculadora" spellcheck="false"><div class="instruccion">a.transpuesta_b.show()</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="36" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 13 -->
+
+    <div class="ejercicio" id="ejercicio14" enunciado="0"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Elabore el método "mrAleatoria", que reciba dos números enteros positivos "n" y "m" y devuelva una nueva matriz "a", con "n" filas y "m" columnas de números enteros aleatorios comprendidos entre 1 y 9. Codifique el método empleando la estructura for, como un método de la clase "MA" que extiende a (hereda de) la clase Array.</p><div id="pregunta281" class="calculadora" spellcheck="false"><div class="instruccion">MA = class extends Array {<br><br>  mrAleatoria(n,m) {<br>    const a = [];<br>    for(let i=0; i&lt;n; i++) {<br>      a.push([]);<br>      for (let j=0; j&lt;m; j++) {<br>        a[i].push((Math.random()*8+1).round());<br>      }<br>    }<br>    return a;<br>  }<br><br>};</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Inicie la semilla de números aleatorios en 0 y genere una matriz, de tipo "MA", con 4 filas y 5 columnas</p><div id="pregunta282" class="calculadora" spellcheck="false"><div class="instruccion">randseed=0;<br>new MA().mrAleatoria(4,5).show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Resuelva el problema, en el método "mrAleatoria_a" de la clase "MA", empleando "zeros" para generar la matriz base (devolviendo directamente la matriz resultante) y "map" para generar los números aleatorios (parámetro del ciclo externo "f", parámetro del ciclo interno "_").</p><div id="pregunta283" class="calculadora" spellcheck="false"><div class="instruccion">MA.prototype.mrAleatoria_a = function(n,m) {<br>    return [].zeros(n,m).<br>      map(f=&gt;f.map(_=&gt;(Math.random()*8+1).round()));<br>};</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Inicie la semilla de números aleatorios en 1 y genere una matriz con 4 filas y 6 columnas</p><div id="pregunta284" class="calculadora" spellcheck="false"><div class="instruccion">randseed=1;<br>new MA().mrAleatoria_a(4,6).show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Resuelva el problema, en el método "mrAleatoria_b" de la clase "MA", empleando el método estático Array.from, para generar (y devolver directamente) las "n" filas (ciclo externo, length=n) de la matriz resultante y otro Array.from (ciclo interno, length=m) para generar y asignar, a los elementos de cada fila, los "m" números aleatorios (parámetros de los ciclos externo e interno "f" y "_").</p><div id="pregunta285" class="calculadora" spellcheck="false"><div class="instruccion">MA.prototype.mrAleatoria_b = function(n,m) {<br>  return Array.from({length:n},<br>    f=&gt;Array.from({length:m},_=&gt;(Math.random()*8+1).round()));<br>};</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Inicie la semilla de números aleatorios en 2 y genere una matriz con 3 filas y 5 columnas</p><div id="pregunta286" class="calculadora" spellcheck="false"><div class="instruccion">randseed = 2;<br>new MA().mrAleatoria_b(3,5).show()</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="30" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 14 -->
+
+    <div class="ejercicio" id="ejercicio15" enunciado="0"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Elabore el método "prodMat" que multiplique los elementos de la matriz "a":\[P = \prod_{i=0}^{n-1}\prod_{j=0}^{m-1}a_{i,j}\]Codifique el método, como un método getter de la clase "PM", que extiende la clase Array, empleando la estructura for.</p><div id="pregunta287" class="calculadora" spellcheck="false"><div class="instruccion">PM = class extends Array{<br><br>  get prodMat() {<br>    const a = this;<br>    const n = a.length;<br>    const m = a[0].length;<br>    let p = 1;<br>    for (let i=0; i&lt;n; i++) {<br>      for (let j=0; j&lt;m; j++) {<br>        p *= a[i][j];<br>      }<br>    }<br>    return p;<br>  }<br><br>};</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree la matriz "a", de tipo "PM", con 3 filas y 4 columnas de números enteros pseudoaleatorios (randseed=1) comprendidos entre 1 y 9.</p><div id="pregunta288" class="calculadora" spellcheck="false"><div class="instruccion">randseed = 1;<br>a = new PM(...[].rand(3,4,1,9).round());<br>a.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Multiplique los elementos de la matriz "a"</p><div id="pregunta289" class="calculadora" spellcheck="false"><div class="instruccion">a.prodMat</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Resuelva el problema, en el método getter "prodMat_a" de la clase "PM", empleando el método reduce. Pista: En el ciclo externo (acumulador "p", valor inicial 1) se multiplican las filas ("f") y en el interno (acumulador "p") los elementos ("e") de cada fila.</p><div id="pregunta290" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(PM.prototype, "prodMat_a", {<br><br>  get() {<br>    const a = this;<br>    return a.reduce((p,f)=&gt;p*f.reduce((p,e)=&gt;p*e), 1);<br>	},<br><br>  configurable:true <br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Multiplique los elementos de la matriz "a"</p><div id="pregunta291" class="calculadora" spellcheck="false"><div class="instruccion">a.prodMat_a</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Resuelva el problema (acumulador "p") empleando el método forEach (cuerpo de las funciones entre paréntesis), en el método "prodMat_b" de la clase "PM". Pista: En el ciclo externo se itera para cada una de las filas (f) y en el interno para cada uno de los elementos (e) de cada fila, multiplicando y guardando en "p" sus elementos.</p><div id="pregunta292" class="calculadora" spellcheck="false"><div class="instruccion">Object.defineProperty(PM.prototype, "prodMat_b", {<br><br>  get() {<br>    const a = this;<br>    let p = 1;<br>    a.forEach(f=&gt;f.forEach(e=&gt;p*=e));<br>    return p;<br>	},<br><br>  configurable:true<br><br>});</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Multiplique los elementos de la matriz "a"</p><div id="pregunta293" class="calculadora" spellcheck="false"><div class="instruccion">a.prodMat_b</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="32" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 15 -->
+
+    <div class="ejercicio" id="ejercicio16" enunciado="0"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>La multiplicación de dos matrices es el resultado de evaluar la siguiente expresión:\[c_{i,j} = \sum_{k=0}^{nca-1}a_{i,k}b_{k,j} \hspace{0.5cm} \begin{cases} i = 0 \rightarrow nfa-1\\ j = 0 \rightarrow ncb-1 \end{cases}\]Lo que en la práctica implica multiplicar, cada uno de los elementos de las filas de la matriz "a", por cada uno de los elementos de las columnas de la matriz "b".<br>Trabajando con la transpuesta de la matriz "b", programe, como un método de la clase "MM" (que extiende la clase Array), el método "mulMat_g" que, empleando el método "map" (parámetro "fa", cuerpo de la función entre llaves) para el ciclo externo (donde se declara e inician las filas "fc" vacías de la matriz resultante), el método "for-of" para el ciclo interno (parámetro "fb") donde, con "reduce" se itera en las filas "fa" (parámetros "s", "_" y "k") se multiplican los vectores "fa" y "fb" y se añaden (con push) a "fc". Si el número de columnas de la matriz "a" no es igual al número de columnas de la matriz transpuesta "b", se debe lanzar el error "matrices incompatibles"</p><div id="pregunta294" class="calculadora" spellcheck="false"><div class="instruccion">MM = class extends Array{<br><br>  mulMat_g(b) {<br>    const a = this;<br>    b = b.transpose();<br>    if (a[0].length !==b[0].length) throw new Error("matrices incompatibles");<br>    return a.map(fa=&gt;{<br>      const fc = [];<br>      for (const fb of b) fc.push(fa.reduce((s,_,k)=&gt;s+fa[k]*fb[k],0 ));<br>      return fc;<br>    });<br>  }<br><br>};</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree la matriz "a", de tipo "MM", con 3 filas y 5 columnas de números enteros pseudoaleatorios (randseed=1) comprendidos entre 1 y 9.</p><div id="pregunta295" class="calculadora" spellcheck="false"><div class="instruccion">randseed = 1;<br>a = new MM(...[].rand(3,5,1,9).round());<br>a.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Cree la matriz "b" con 5 filas y 3 columnas de números enteros pseudoaleatorios (randseed=3) comprendidos entre 1 y 9.</p><div id="pregunta296" class="calculadora" spellcheck="false"><div class="instruccion">randseed=3;<br>b = [].rand(5,3,1,9).round();<br>b.show()</div><div class="resultado"></div></div><p class="pregunta"><span class="pregunta"></span>Multiplique las matrices a y b.</p><div id="pregunta297" class="calculadora" spellcheck="false"><div class="instruccion">a.mulMat_g(b).show()</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="26" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 16 -->
+
+
+
+
+
+    <div id="generarPrueba" data-scroll-y="46122"><br><hr><label class="lnotacapitulo">Nota del capítulo: </label><input type="text" id="notaCapitulo" disabled="disabled" class="itnotacapitulo"><br><br><button id="btGenerarPrueba" style="visibility: visible;" onclick="capitulo.registrarCapitulo()">Iniciar defensa</button><button id="btEmplearBono" style="margin-left:1.1rem;width:9.686rem;display:none;" onclick="capitulo.emplearBono()">Emplear Bono</button><br><br></div>
+
+
+<d id="dAutor" style="font-size: 0.9rem;text-align:center;color: #0808f24f;font-weight:bolder;position:fixed;top: 5px;right: 5px;user-select:none;display:inline-block;z-index:15;">Hernan G. Peñaranda V.</d></div><!-- Cierre del div capítulo -->
+
+<div id="dato" style="display:none;">KqbJCKyn938lCZ0oDYGpDIqsDJKq93apE30aD3Ov93GsEIGnC30aC2HjH4n6Qm00</div>
+<div id="reg" style="display:none;">Cp0mCJinCJ0mEp4nC30xCZ0nC3ioC34mEp4nC30xCZ0nC3inCJinCJinCJioC34xCZ0nEp4nEp4nEp4nEp4n</div>
+
+
+
+
+<div id="divDialogo" style="display: none;"><div onfocus="document.querySelector('#divDialogo input').focus();"><div>Carnet universitario</div><div>Escriba el número de su carnet universitario, verificando que el guión haya sido correctamente insertado.</div><input type="text" onkeydown="return Capitulo.divDialogo.funKeydown(event)" onkeyup="Capitulo.divDialogo.funKeyup(event)"><div><button onclick="Capitulo.divDialogo.funClick('aceptar');">Aceptar</button><button style="margin-left:35px;" onclick="Capitulo.divDialogo.funClick('cancelar');">Cancelar</button></div></div></div></body>

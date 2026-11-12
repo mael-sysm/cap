@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<head>
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Language" content="es">
+
+  <title>35-6620 capítulo 4</title>
+
+    <!-- Librería y hoja de estilos KATEX  -->
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/katex/katex.min.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/katex/katex.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/katex/contrib/auto-render.min.js"></script>
+
+    <!-- Librerías y hojas de estilo CodeMirror -->
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/lib/codemirror.min.css">
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/theme/mdn-like.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/lib/codemirror.min.js"></script>
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/fold/foldgutter.min.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/fold/foldcode.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/fold/brace-fold.min.js"></script>
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/dialog/dialog.min.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/dialog/dialog.min.js"></script>
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/hint/show-hint.min.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/hint/show-hint.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/hint/javascript-hint.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/search/searchcursor.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/search/search.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/edit/matchbrackets.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/edit/closebrackets.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/comment/comment.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/wrap/hardwrap.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/javascript/javascript.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/css/css.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/xml/xml.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/markdown/markdown.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/htmlmixed/htmlmixed.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/keymap/sublime.min.js"></script>
+
+    <!-- Librería Plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script><style id="plotly.js-style-global"></style><style id="plotly.js-style-global"></style><style id="plotly.js-style-global"></style>
+
+    <!-- Librerías y hojas de estilo function-plot -->
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/function-plot/site/js/vendor/d3.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/function-plot/dist/function-plot.js"></script>
+    
+    <!-- Librería quantities -->
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/quantities/quantities.min.js"></script>
+
+    <!-- Librería GoJs para la creación de diagramas de flujo -->
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/gojs/release/go.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/flowchart_gojs.js"></script>
+
+    <!-- Librerías matemáticas propias -->
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/math.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/number.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/array.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/string.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/cplx.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/function.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/object.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/prq.js"></script>
+
+    <!-- Librería y hoja de estilos propias para la creación y manejo de la calculadora  -->
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/src/cjs.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/cjs.js"></script>
+
+    <!-- Librería y hoja de estilos propias para la creación y manejo de los capítulos -->
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/src/texto.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/texto.js"></script>
+
+   <!-- Librería del capítulo actual -->
+    <script src="https://cursosabiertos.usfx.bo/materias/progoo/capitulos/capitulo4/files/capitulo4.js"></script>
+
+    <!-- Fuentes empleadas en el capítulo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300;400;500;600;700;800&amp;family=Roboto+Mono&amp;display=swap" rel="stylesheet">
+
+    <script>
+        function katexRender() {
+            renderMathInElement(document.getElementById("capitulo"));
+        }
+        document.addEventListener("DOMContentLoaded", katexRender);
+        window.onerror = function(msg, url, lineNo, columnNo, error) {
+            __error__ = msg;
+        };
+        window.onload = function(){
+            capitulo.iniciar();
+        };
+    </script>
+
+<style></style><style></style><style></style></head>
+
+<body class="text">  
+
+
+<div id="capitulo">
+
+  <button id="btGuardar" style="z-index:15;" onclick="savePage()">Guardar</button>
+
+  <h1 class="text" onclick="alerta(capitulo.idPagina,'')" style="cursor: pointer;">Iteración</h1>
+
+  <p class="text">En este capítulo se repasa la tercera estructura de la programación estructurada: la <i class="style1">Iteración</i>.</p>
+
+
+  <h2 class="text">La estructura "while" (mientras)</h2>
+
+  <p class="text">La estructura <i class="style1">while</i>, es la estructura iterativa por excelencia. Esta estructura repite la ejecución de una o más intrucciones <i class="style1">mientras</i> la condición del ciclo es verdadera.</p>
+  
+  <p class="text">El algoritmo de esta estructura, es:</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">gojsGraph({divi, modelo: { "class": "go.GraphLinksModel",  "linkFromPortIdProperty": "fromPort",  "linkToPortIdProperty": "toPort",  "nodeDataArray": [ {"category":"Conditional", "text":"condición", "key":-5, "loc":"-46.00000000000003 -297.00000000000006"},{"category":"Process", "text":"instrucciones", "key":-2, "loc":"-46.000000000000085 -216.79999995231634"},{"category":"Connector", "text":"...", "key":-8, "loc":"-46 -358"},{"category":"Connector", "text":"...", "key":-4, "loc":"-46.409035948064144 -148.63614379225646"} ],  "linkDataArray": [ {"from":-5, "to":-2, "fromPort":"B", "toPort":"T", "visible":true, "points":[-46.00000000000003,-276.96664276123056,-46.00000000000003,-266.96664276123056,-46.00000000000003,-255.51666066646584,-46.000000000000085,-255.51666066646584,-46.000000000000085,-244.06667857170112,-46.000000000000085,-234.06667857170112], "text":"Si"},{"from":-8, "to":-5, "fromPort":"B", "toPort":"T", "points":[-46,-343.3042461927547,-46,-333.3042461927547,-46,-330.16880171576213,-46.00000000000003,-330.16880171576213,-46.00000000000003,-327.0333572387696,-46.00000000000003,-317.0333572387696]},{"from":-2, "to":-5, "fromPort":"L", "toPort":"L", "points":[-97.29248046875009,-216.79999995231634,-107.29248046875009,-216.79999995231634,-144,-216.79999995231634,-144,-297.00000000000006,-120.49705505371097,-297.00000000000006,-110.49705505371097,-297.00000000000006]},{"from":-5, "to":-4, "fromPort":"R", "toPort":"T", "visible":true, "points":[18.49705505371091,-297.00000000000006,28.49705505371091,-297.00000000000006,59,-297.00000000000006,59,-189,-46.409035948064144,-189,-46.409035948064144,-173.33189759950176,-46.409035948064144,-163.33189759950176], "text":"No"} ]}})</div>
+  </div>
+
+  <p class="text">Es decir que si la condición es verdadera (Si) se ejecutan las instrucciones del ciclo, luego se vuelve a preguntar si la condición es verdadera y de ser así, se vuelven a ejecutar las instrucciones del ciclo, continuando así <strong class="style1">mientras</strong> la condición es verdadera (Si). Cuando la condición es falsa (No), el programa sale del ciclo y continúa con el resto de las instrucciones existentes.</p>
+
+  <p class="text">La sintaxis de esta estructura en Javascript es:</p>
+
+  <div class="codigo">while (condición) {<br>  instrucciones del ciclo;<br>}</div>
+
+  <p class="text">Por ejemplo, para generar y mostrar los números enteros comprendidos entre 3 y 9, se inicia una variable "i" (el contador) en 3 y <dfn class="style1">mientras</dfn> su valor es menor o igual a 9, se muestra e incrementa su valor en 1:</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">i = 3;<br>while (i&lt;=9) {<br>  print("i = "+i);<br>  i++;<br>};</div>
+      <div class="resultado"></div>
+  </div>
+
+  <p class="text">Es importante notar que si no se incrementa el valor de la variable dentro de la estructura, el ciclo se repite indefinidamente, porque "i" siempre es menor a 9 y en consecuencia la condición es siempre verdadera, dando lugar a lo que se conoce como un <strong class="style1">ciclo infinito</strong>.</p>
+
+  <p class="text">Los <i class="style1">ciclos infinitos</i> normalmente son un error de programación y hacen que la página se congele, porque el procesador está ocupado repitiendo el ciclo. En esos casos <b><i>no queda otra alternativa que cerrar la página</i></b>.</p>
+
+  <p class="text">Como se sabe, en programación siempre existe más de una forma de resolver el mismo problema, así si la variable inicia en 2 y en el ciclo se incrementa su valor antes de ser mostrado (cambiando la condición del ciclo a i&lt;=8), se obtiene el mismo resultado:</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">i = 2;<br>while (i&lt;=8) {<br>  i++;<br>  print("i = "+i);<br>};</div>
+      <div class="resultado"></div>
+  </div>
+
+  <p class="text">Y, por supuesto (a pesar de ser un problema muy sencillo) se puede pensar en otras formas más de resolverlo.</p>
+
+  <p class="text">El operador compuesto <strong class="style1">++</strong> (al igual que en C++) incrementa el valor de la variable en uno (en este caso es equivalente a <span class="textocodigo">i = i=1</span>). Además de este operador, en JavaScript se pueden emplear los siguientes operadores compuestos:</p>
+  
+  <div class="table borderAll">
+      <table align="center" style="width:360px;">
+          <caption>Operadores Compuestos</caption>
+          <tbody><tr><th style="width:85px;">Operador</th><th>Definición</th></tr>
+          <tr><td class="center"><dfn>++</dfn></td><td>Incremento<br>\((x\text{+}\text{+}\iffx=x+1)\)</td></tr>
+          <tr><td class="center"><dfn>−−</dfn></td><td>Decremento<br>\((x--\iffx=x-1)\)</td></tr>
+          <tr><td class="center"><dfn>+=</dfn></td><td>Suma compuesta<br>\((x\text{+=}5\iffx=x+5\))</td></tr>
+          <tr><td class="center"><dfn>−=</dfn></td><td>Resta compuesta<br>\((x-=5\iffx=x-5)\)</td></tr>
+          <tr><td class="center"><dfn>*=</dfn></td><td>Multiplicación compuesta<br>\((x\text{*=}5\iffx=x*5)\)</td></tr>
+          <tr><td class="center">/=</td><td>División compuesta<br>\((x\text{/=}5\iffx=x/5)\)</td></tr>
+          <tr><td class="center"><dfn>%=</dfn></td><td>Residuo compuesto<br>\((x\%=5\iffx=x\%5)\)</td></tr>
+          <tr><td class="center"><dfn>**=</dfn></td><td>Potencia compuesta<br>\((x**=5\iffx=x**5)\)</td></tr>
+      </tbody></table>
+  </div>
+
+  <p class="text">Así, para generar y mostrar los números impares comprendidos entre 5 y 17, donde el incremento aritmético es 2 (9-7=2, 7-5=2), se puede emplear el operador <b class="style1">+=</b>:</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">i = 5;<br>while (i&lt;=17) {<br>  print("i = "+i);<br>  i += 2;<br>};</div>
+      <div class="resultado"></div>
+  </div>
+  
+  <p class="text">Igualmente, para generar y mostrar la serie 6, 10, 14, ..., 34, donde el incremento aritmético es 4 (10-6=4, 14-10=4), se escribe:</p>
+  
+  <div class="calculadora" spellcheck="false">
+    <div class="instruccion">i = 6;<br>while (i&lt;=34) {<br>  print("i = "+i);<br>  i += 4;<br>};</div>
+    <div class="resultado"></div>
+  </div>
+  
+  <p class="text">Y para generar y mostrar la serie 2187, 729, ..., 27, 9, 3, donde el decremento geométrico es 3 (27/9=3, 9/3=3), se escribe:</p>
+  
+  <div class="calculadora" spellcheck="false">
+    <div class="instruccion">i = 2187;<br>while (i&gt;=3) {<br>  print("i = "+i);<br>  i /= 3;<br>};</div>
+    <div class="resultado"></div>
+  </div>
+
+  <p class="text">A partir de este capítulo, <b><i>se deben emplear los operadores compuestos</i></b> en todos los casos en los que sea posible.</p>
+
+
+
+  <h2 class="text">La estructura do-while (hacer-mientras)</h2>
+
+  <p class="text">La estructura <i class="style1">do-while</i> es similar a la estructura <i class="style1">while</i>, sólo que la condición se encuentra al final del ciclo, por esa razón, en esta estructura <i class="style1">las instrucciones se ejecutan por lo menos una vez</i>.</p>
+
+  <p class="text">El algoritmo, es:</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">gojsGraph({divi, modelo: { "class": "go.GraphLinksModel",  "linkFromPortIdProperty": "fromPort",  "linkToPortIdProperty": "toPort",  "nodeDataArray": [ {"category":"Conditional", "text":"condición", "key":-5, "loc":"-46.00000000000003 -233.00000000000006"},{"category":"Process", "text":"instrucciones", "key":-2, "loc":"-46.000000000000085 -298.79999995231634"},{"category":"Connector", "text":"...", "key":-8, "loc":"-46 -358"},{"category":"Connector", "text":"...", "key":-4, "loc":"-46.409035948064144 -157.63614379225646"} ],  "linkDataArray": [ {"from":-8, "to":-2, "fromPort":"B", "toPort":"T", "points":[-46,-343.3042461927547,-46,-333.3042461927547,-46,-329.6854623822279,-46.000000000000085,-329.6854623822279,-46.000000000000085,-326.0666785717011,-46.000000000000085,-316.0666785717011]},{"from":-2, "to":-5, "fromPort":"B", "toPort":"T", "points":[-46.000000000000085,-281.53332133293156,-46.000000000000085,-271.53332133293156,-46.000000000000085,-267.2833392858506,-46.00000000000003,-267.2833392858506,-46.00000000000003,-263.0333572387696,-46.00000000000003,-253.0333572387696]},{"from":-5, "to":-2, "fromPort":"L", "toPort":"L", "visible":true, "points":[-110.49705505371097,-233.00000000000009,-120.49705505371097,-233.00000000000009,-144,-233.00000000000009,-144,-298.79999995231634,-107.29248046875009,-298.79999995231634,-97.29248046875009,-298.79999995231634], "text":"Si"},{"from":-5, "to":-4, "fromPort":"B", "toPort":"T", "visible":true, "points":[-46.00000000000003,-212.96664276123056,-46.00000000000003,-202.96664276123056,-46.00000000000003,-192.64927018036616,-46.409035948064144,-192.64927018036616,-46.409035948064144,-182.33189759950176,-46.409035948064144,-172.33189759950176], "text":"No"} ]}})</div>
+  </div>
+
+  <p class="text">Su sintaxis, en Javascript, es:</p>
+
+  <div class="codigo">do {<br>  instrucciones del ciclo;<br>} while (condición);</div>
+
+  <p class="text">Con frecuencia se pueden emplear las estructuras <dfn class="style1">while</dfn> y <dfn class="style1">do-while</dfn> indistintamente. Por ejemplo, se pueden generar los números impares del 5 al 17, pero incrementando el contador antes de que sea mostrado:</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">i = 3;<br>do {<br>  i += 2;<br>  print("i = "+i);<br>} while (i&lt;17);</div>
+      <div class="resultado"></div>
+  </div>
+<br>
+  
+  <p class="text">De la misma forma, para generar y mostrar la serie 6, 10, 14, ..., 34, donde el incremento aritmético es 4 (10-6=4, 14-10=4), se escribe:</p>
+  
+  <div class="calculadora" spellcheck="false">
+    <div class="instruccion">i = 2;<br>do {<br>  i += 4;<br>  print("i = "+i);<br>} while(i&lt;34);</div>
+    <div class="resultado"></div>
+  </div>
+  
+  <p class="text">Y para generar y mostrar la serie 2187, 729, ..., 27, 9, 3, donde el decremento geométrico es 3 (27/9=3, 9/3=3), se escribe:</p>
+  
+  <div class="calculadora" spellcheck="false">
+    <div class="instruccion">i = 3*2187;<br>do {<br>  i /= 3;<br>  print("i = "+i);<br>} while(i&gt;3);</div>
+    <div class="resultado"></div>
+  </div>
+
+
+
+  <h2 class="text">Estructura "for"</h2>
+
+  <p class="text">El algoritmo de esta estructura es el siguiente:</p>
+  
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">gojsGraph({divi, modelo: { "class": "go.GraphLinksModel",  "linkFromPortIdProperty": "fromPort",  "linkToPortIdProperty": "toPort",  "nodeDataArray": [ {"category":"For", "text":"condición", "key":-7, "loc":"-331 -366"},{"category":"Connector", "text":"...", "key":-9, "loc":"-330.66128284365425 -481.8306414218272"},{"category":"Connector", "text":"...", "key":-11, "loc":"-330.48113427607365 -227.26482979932814"},{"category":"Process", "text":"instrucciones", "key":-12, "loc":"-330.51030195035906 -292.8850396771728"},{"category":"Process", "text":"inicialización", "key":-5, "loc":"-330.94564206155894 -424.44777113776695"},{"category":"Process", "text":"incremento", "key":-6, "loc":"-447.20083360517805 -366.1182833922996"} ],  "linkDataArray": [ {"from":-9, "to":-5, "fromPort":"B", "toPort":"T", "points":[-330.66128284365425,-467.1348876145819,-330.66128284365425,-457.1348876145819,-330.66128284365425,-454.4246686858668,-330.94564206155894,-454.4246686858668,-330.94564206155894,-451.7144497571517,-330.94564206155894,-441.7144497571517]},{"from":-5, "to":-7, "fromPort":"B", "toPort":"T", "points":[-330.94564206155894,-407.1810925183822,-330.94564206155894,-397.1810925183822,-330.94564206155894,-393.8822203963066,-331,-393.8822203963066,-331,-390.58334827423096,-331,-380.58334827423096]},{"from":-7, "to":-12, "fromPort":"B", "toPort":"T", "visible":true, "points":[-331,-348.91665172576904,-331,-338.91665172576904,-331,-329.53418501116334,-330.5103019503591,-329.53418501116334,-330.5103019503591,-320.15171829655765,-330.5103019503591,-310.15171829655765], "text":"Si"},{"from":-12, "to":-6, "fromPort":"L", "toPort":"B", "points":[-381.8027824191091,-292.88503967717287,-391.8027824191091,-292.88503967717287,-447.20083360517805,-292.88503967717287,-447.20083360517805,-315.8683222250438,-447.20083360517805,-338.8516047729148,-447.20083360517805,-348.8516047729148]},{"from":-6, "to":-7, "fromPort":"R", "toPort":"L", "points":[-401.7869847282249,-366.1182833922996,-391.7869847282249,-366.1182833922996,-389.6427561275402,-366.1182833922996,-389.6427561275402,-366,-387.49852752685547,-366,-377.49852752685547,-366]},{"from":-7, "to":-11, "fromPort":"R", "toPort":"T", "visible":true, "points":[-284.50147247314453,-366,-274.50147247314453,-365.4496644776554,-244.75865009681382,-365.4496644776554,-244.75865009681382,-263.4140350127294,-330.4811342760736,-263.4140350127294,-330.4811342760736,-251.9605836065734,-330.4811342760736,-241.9605836065734], "text":"No"} ]}})</div>
+  </div>
+
+  <p class="text">Es decir que primero se ejecuta el sector de <dfn class="style1">inicialización</dfn> (donde normalmente se asignan valores a las variables) luego, si la <dfn class="style1">condición</dfn> es verdadera (Si), se ejecutan las <dfn class="style1">instrucciones</dfn> del ciclo, después se ejecuta el sector de <dfn class="style1">incremento</dfn> (donde normalmente se incrementan las variables) y el ciclo se repite mientras la <dfn class="style1">condición</dfn> es verdadera. El ciclo concluye cuando la condición es falsa.</p>
+
+  <p class="text">Su sintaxis en Javascript, es:</p>
+
+  <div class="codigo">for (inicialización; condición; incremento) {<br>  instrucciones;<br>}</div>
+
+  <p class="text">De manera similar al operador ternario, cuando el sector de <dfn class="style1">inicialización</dfn> o de <dfn class="style1">incremento</dfn> (o inclusive el de <dfn class="style1">condición</dfn>) constan de dos o más instrucciones, dichas instrucciones deben ser separadas con comas (no con puntos y comas).</p>
+
+  <p class="text">Se prefiere <dfn class="style1">for</dfn> cuando se conoce el número de veces que el ciclo debe ser repetido o los límites están claramente establecidos. Por ejemplo los números impares comprendidos entre 5 y 17 pueden ser generados (y mostrados) de manera más clara y sencilla con esta estructura:</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">for (let i=5; i&lt;=17; i+=2) print("i = "+i);</div>
+      <div class="resultado"></div>
+  </div>
+ 
+  <p class="text">Igualmente, para generar y mostrar la serie 6, 10, 14, ..., 34, se escribe:</p>
+  
+  <div class="calculadora" spellcheck="false">
+    <div class="instruccion">for (let i=6; i&lt;=34; i+=4) {<br>  print("i = "+i);<br>};</div>
+    <div class="resultado"></div>
+  </div>
+  
+  <p class="text">Y para generar y mostrar la serie 2187, 729, ..., 27, 9, 3, se escribe:</p>
+  
+  <div class="calculadora" spellcheck="false">
+    <div class="instruccion">for (let i=2187; i&gt;=3; i/=3) {<br>  print("i = "+i);<br>};</div>
+    <div class="resultado"></div>
+  </div>
+
+  <p class="text">Note que con la estructura for, el contador se declara con <i class="style1">let</i> en los 3 ejemplos, sin embargo, JavaScript no lanza el error informando que la variable ya fue declarada.</p>
+
+  <p class="text">Sucede así, porque el sector de <dfn class="style1">inicialización</dfn> es parte de la estructura <dfn class="style1">for</dfn>, por lo tanto el contador pertenece a la estructura <dfn class="style1">for</dfn> y toda variable que se declara dentro de una estructura (cualquier esctructura) sólo es válida dentro de esa estructura (y en las estructuras que están dentro de esa estructura). Cuando la estructura finaliza, las variables declaradas dentro de la misma son eliminadas (el contador "i" deja de existir). En consecuencia, los 3 contadores "i" declarados en los ejemplos, son 3 contadores diferentes (a pesar de tener el mismo nombre) y al final ninguno de ellos existe.</p>
+
+
+  <div class="ejercicio" id="ejercicio1" enunciado="0"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span>Considerando que se emplea la estructura "while" (incrementando/modificando el contador después de ser mostrado).</p></div><p class="pregunta" id="pregunta1"><span class="pregunta"></span>Para generar la serie 1, 4, 7, ..., 22, el contador "i" debe ser iniciado con: <span class="campo_literal correcta" tabindex="0" contenteditable="true">i=1</span>, en cada repetición del ciclo, el valor del contador debe ser modificado con:  <span class="campo_literal correcta" tabindex="0" contenteditable="true">i+=3</span> y la condición del ciclo debe ser: <span class="campo_literal correcta" tabindex="0" contenteditable="true">i&lt;=22</span>.<br><br>Para generar la serie 3, 7, 11, ..., 31, el contador "i" debe ser iniciado con: <span class="campo_literal correcta" tabindex="0" contenteditable="true">i=3</span>, en cada repetición del ciclo, el valor del contador debe ser modificado con:  <span class="campo_literal correcta" tabindex="0" contenteditable="true">i+=4</span> y la condición del ciclo debe ser: <span class="campo_literal correcta" tabindex="0" contenteditable="true">i&lt;=31</span>.<br><br>Para generar la serie 35, 33, ..., 25, 23, 21, el contador "i" debe ser iniciado con: <span class="campo_literal correcta" tabindex="0" contenteditable="true">i=35</span>, en cada repetición del ciclo, el valor del contador debe ser modificado con:  <span class="campo_literal correcta" tabindex="0" contenteditable="true">i-=2</span> y la condición del ciclo debe ser: <span class="campo_literal correcta" tabindex="0" contenteditable="true">i&gt;=21</span>.<br><br>Para generar la serie 42, 39, ..., 30, 27, 24, el contador "i" debe ser iniciado con: <span class="campo_literal correcta" tabindex="0" contenteditable="true">i=42</span>, en cada repetición del ciclo, el valor del contador debe ser modificado con:  <span class="campo_literal correcta" tabindex="0" contenteditable="true">i-=3</span> y la condición del ciclo debe ser: <span class="campo_literal correcta" tabindex="0" contenteditable="true">i&gt;=24</span>.</p><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="12" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 1 -->
+  <div class="ejercicio" id="ejercicio2" enunciado="0"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span>Con la estructura "do-while", incrementando/modificando el contador antes de ser mostrado.</p></div><p class="pregunta" id="pregunta2"><span class="pregunta"></span>Para generar la serie 2, 4, 8, ..., 64, el contador "i" debe ser iniciado con: i=<span class="campo_literal correcta" tabindex="0" contenteditable="true">2</span>/2, en cada repetición del ciclo, el valor del contador debe ser modificado con:  <span class="campo_literal correcta" tabindex="0" contenteditable="true">i*=2</span> y la condición del ciclo debe ser: <span class="campo_literal correcta" tabindex="0" contenteditable="true">i&lt;64</span>.<br><br>Para generar la serie 12, 36, 108, ..., 2916, el contador "i" debe ser iniciado con: i=<span class="campo_literal correcta" tabindex="0" contenteditable="true">12</span>/3, en cada repetición del ciclo, el valor del contador debe ser modificado con:  <span class="campo_literal correcta" tabindex="0" contenteditable="true">i*=3</span> y la condición del ciclo debe ser: <span class="campo_literal correcta" tabindex="0" contenteditable="true">i&lt;2916</span>.<br><br>Para generar la serie 768, 384, ..., 24, 12, 6, el contador "i" debe ser iniciado con: i=2*<span class="campo_literal correcta" tabindex="0" contenteditable="true">768</span>, en cada repetición del ciclo, el valor del contador debe ser modificado con:  <span class="campo_literal correcta" tabindex="0" contenteditable="true">i/=2</span> y la condición del ciclo debe ser: <span class="campo_literal correcta" tabindex="0" contenteditable="true">i&gt;6</span>.<br><br>Para generar la serie 6250, 1250, ..., 50, 10, 2, el contador "i" debe ser iniciado con: i=2*<span class="campo_literal correcta" tabindex="0" contenteditable="true">6250</span>, en cada repetición del ciclo, el valor del contador debe ser modificado con:  <span class="campo_literal correcta" tabindex="0" contenteditable="true">i/=5</span> y la condición del ciclo debe ser: <span class="campo_literal correcta" tabindex="0" contenteditable="true">i&gt;2</span>.</p><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="12" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 2 -->
+  <div class="ejercicio" id="ejercicio3" enunciado="0"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span>Considerando que se emplea la estructura "for" (en consecuencia el contador se incrementa/modifica después de ser mostrado).</p></div><p class="pregunta" id="pregunta3"><span class="pregunta"></span>Para generar la serie 1, 2, 4, ..., 64, el contador "i" debe ser iniciado con: le<span class="campo_literal correcta" tabindex="0" contenteditable="true">t i=1</span>, en cada repetición del ciclo, el valor del contador debe ser modificado con:  <span class="campo_literal correcta" tabindex="0" contenteditable="true">i*=2</span> y la condición del ciclo debe ser: <span class="campo_literal correcta" tabindex="0" contenteditable="true">i&lt;=64</span>.<br><br>Para generar la serie 3, 7, 11, ..., 31, el contador "i" debe ser iniciado con: le<span class="campo_literal correcta" tabindex="0" contenteditable="true">t i=3</span>, en cada repetición del ciclo, el valor del contador debe ser modificado con:  <span class="campo_literal correcta" tabindex="0" contenteditable="true">i+=4</span> y la condición del ciclo debe ser: <span class="campo_literal correcta" tabindex="0" contenteditable="true">i&lt;=31</span>.<br><br>Para generar la serie 768, 384, ..., 48, 24, 12, el contador "i" debe ser iniciado con: le<span class="campo_literal correcta" tabindex="0" contenteditable="true">t i=768</span>, en cada repetición del ciclo, el valor del contador debe ser modificado con:  <span class="campo_literal correcta" tabindex="0" contenteditable="true">i/=2</span> y la condición del ciclo debe ser: <span class="campo_literal correcta" tabindex="0" contenteditable="true">i&gt;=12</span>.<br><br>Para generar la serie 42, 39, ..., 30, 27, 24, el contador "i" debe ser iniciado con: le<span class="campo_literal correcta" tabindex="0" contenteditable="true">t i=42</span>, en cada repetición del ciclo, el valor del contador debe ser modificado con:  <span class="campo_literal correcta" tabindex="0" contenteditable="true">i-=3</span> y la condición del ciclo debe ser: <span class="campo_literal correcta" tabindex="0" contenteditable="true">i&gt;=24</span>.</p><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="12" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 3 -->
+  <div class="ejercicio" id="ejercicio4" enunciado="1"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Empleando la estructura "do-while", escriba el código que genera y muestra los números comprendidos entre 4 y 10.</p><div id="pregunta7" class="calculadora" spellcheck="false"><div class="instruccion">i = 4;<br>do {<br>  print("i = "+i);<br>  i++;<br>} while(i&lt;=10);</div><div class="resultado"></div></div><p class="pregunta" id="pregunta8"><span class="pregunta"></span>Si la condición del ciclo cambia a "i!==10", el ciclo imprimiría los números: 4, 5, 6, 7, <span class="campo_literal correcta" tabindex="0" contenteditable="true">8,9</span>, porque la condición del ciclo sería falsa cuando el valor de "i" es igual a <span class="campo_literal correcta" tabindex="0" contenteditable="true">10</span>.</p><p class="pregunta" id="pregunta9"><span class="pregunta"></span>Si se cambia el orden, de manera que el contador "i" se incrementa antes de imprimir su valor, la variable "i" debería iniciar en <span class="campo_literal correcta" tabindex="0" contenteditable="true">3</span> y la condición del ciclo debería ser i&lt;=<span class="campo_literal correcta" tabindex="0" contenteditable="true">9</span>.</p><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="13" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 4 -->
+  <div class="ejercicio" id="ejercicio5" enunciado="2"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Empleando la estructura "while" escriba el código que genera y muestra los números impares comprendidos entre 7 y 19.</p><div id="pregunta21" class="calculadora" spellcheck="false"><div class="instruccion">i = 7;<br>while (i&lt;=19) {<br>  print("i = "+i);<br>  i+=2;<br>};</div><div class="resultado"></div></div><p class="pregunta" id="pregunta22"><span class="pregunta"></span>Si la condición del ciclo cambia a "i!==19", el ciclo imprimiría los números: 7, 9, 11, 13, <span class="campo_literal correcta" tabindex="0" contenteditable="true">15,17</span>, porque la condición del ciclo sería falsa cuando el valor de "i" es igual a <span class="campo_literal correcta" tabindex="0" contenteditable="true">19</span>.</p><p class="pregunta" id="pregunta23"><span class="pregunta"></span>Si se cambia el orden, de manera que el contador "i" se incrementa antes de imprimir su valor, la variable "i" debería iniciar en <span class="campo_literal correcta" tabindex="0" contenteditable="true">5</span> y la condición del ciclo debería ser i&lt;<span class="campo_literal correcta" tabindex="0" contenteditable="true">19</span>.</p><p class="pregunta" id="pregunta24"><span class="pregunta"></span>El contador incrementa en <span class="campo_literal correcta" tabindex="0" contenteditable="true">2</span>, porque la diferencia entre dos números impares consecutivos es <span class="campo_literal correcta" tabindex="0" contenteditable="true">2</span>, así, si en una iteración el contador es igual a 45, en la siguiente será igual a <span class="campo_literal correcta" tabindex="0" contenteditable="true">47</span>.</p><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="16" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 5 -->
+  <div class="ejercicio" id="ejercicio6" enunciado="0"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Empleando la estructura "for" escriba el código que genera y muestra los números 1, 4, 7, ..., 19.</p><div id="pregunta25" class="calculadora" spellcheck="false"><div class="instruccion">for (let i=1; i&lt;=19;i+=3){<br>  print("i = "+i);<br>  <br>};</div><div class="resultado"></div></div><p class="pregunta" id="pregunta26"><span class="pregunta"></span>El contador incrementa en <span class="campo_literal correcta" tabindex="0" contenteditable="true">3</span>, porque la diferencia entre dos números consecutivos es <span class="campo_literal correcta" tabindex="0" contenteditable="true">3</span>, así, si en una iteración el contador es igual a 25, en la siguiente será igual a <span class="campo_literal correcta" tabindex="0" contenteditable="true">28</span>.</p><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="10" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 6 -->
+  <div class="ejercicio" id="ejercicio7" enunciado="0"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Empleando la estructura "while" escriba el código que genera y muestra los números 2, 8, 32, ..., 8192.</p><div id="pregunta31" class="calculadora" spellcheck="false"><div class="instruccion">i =2;<br>while(i&lt;=8192) {<br>  print("i = "+i);<br>  i*=4;<br>};</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="7" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 7 -->
+
+
+
+  <h2 class="text">Modificación de las estructuras iterativas</h2>
+
+  <p class="text">Cuando la lógica que resuelve el problema no corresponde al flujo estándar de una estructura iterativa, es posible modificarla.</p>
+
+  <p class="text">Los modificadores disponibles en JavaScript (y en la mayoría de los lenguajes) son <b class="style1">break</b> y <b class="style1">continue</b>. El comando <i class="style1">break</i> interrumpe la ejecución del ciclo y sale de la estructura iterativa (sale del ciclo). El comando <i class="style1">continue</i> interrumpe la ejecución del ciclo actual y pasa a ejecutar el siguiente ciclo.</p>
+
+  <p class="text">Por ejemplo, el siguiente código sólo muestra los números del 7 al 19 (en lugar del 7 al 31) porque cuando el contador es mayor a 19 (cuando se cumple el <i class="style1">if</i>) el comando <i class="style1">break</i> hace que el ciclo termine:</p>
+
+  <div class="calculadora" spellcheck="false">
+    <div class="instruccion">for (let i=7; i&lt;=31; i+=3) {<br>  if (i&gt;19) break;<br>  print(i);<br>};</div>
+    <div class="resultado"></div>
+  </div>
+
+  <p class="text">El código implementado con la estructura <dfn class="style1">while</dfn> es:</p>
+
+  <div class="calculadora" spellcheck="false">
+    <div class="instruccion">i = 7;<br>while (i&lt;=31) {<br>  if (i&gt;19) break;<br>  print("i = "+i);<br>  i+=3;<br>};</div>
+    <div class="resultado"></div>
+  </div>
+
+  <p class="text">Y con la estructura <dfn class="style1">do-while</dfn>:</p>
+
+  <div class="calculadora" spellcheck="false">
+    <div class="instruccion">i = 7;<br>do {<br>  if (i&gt;19) break;<br>  print("i = "+i);<br>  i+=3;<br>} while (i&lt;3);</div>
+    <div class="resultado"></div>
+  </div>
+
+  <p class="text">Por otra parte, el siguiente código sólo imprime los números impares del 3 al 13 (no todos los enteros del 3 al 13) porque cuando el contador es par (cuando se cumple el <i class="style1">if</i>) el comando <i class="style1">continue</i> hace que el programa salte al siguiente ciclo, con lo que el contador no se imprime y e incrementa su valor en 1 (al siguiente número impar).</p>
+
+  <div class="calculadora" spellcheck="false">
+    <div class="instruccion">for (let i=3; i&lt;=13; i++) {<br>  if (i%2===0) continue;<br>  print("i = "+i);<br>};</div>
+    <div class="resultado"></div>
+  </div>
+
+  <p class="text">El código implementado con la estructura <dfn class="style1">while</dfn>, es:</p>
+
+  <div class="calculadora" spellcheck="false">
+    <div class="instruccion">i = 2;<br>while (i&lt;=13) {<br>  i++;<br>  if (i%2===0) continue;<br>  print("i = "+i);<br>};</div>
+    <div class="resultado"></div>
+  </div>
+
+  <p class="text">En este caso el contador debe ser incrementado al principio del ciclo, para que también incremente cuando se salta al siguiente ciclo. Por esa razón el contador debe ser iniciado en el número anterior al primer valor a ser generado.</p>
+
+  <p class="text">De manera similar, el código implementado con la estructura <i class="style1">do-while</i> es:</p>
+
+  <div class="calculadora" spellcheck="false">
+    <div class="instruccion">i = 2;<br>do {<br>  i++;<br>  if (i%2===0) continue;<br>  print("i = "+i);<br>} while (i&lt;=13);</div>
+    <div class="resultado"></div>
+  </div>
+  <br>
+
+  <div class="ejercicio" id="ejercicio8" enunciado="0"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Escriba el código que, empleando la estructura "while", genera y muestra los números 1, 4, 16, ..., 4096, pero que con el comando "break" muestra únicamente hasta el número 64</p><div id="pregunta34" class="calculadora" spellcheck="false"><div class="instruccion">i = 1;<br>while(i&lt;=4096) {<br>  if (i&gt;64) break;<br>  print("i = "+i);<br>  i*=4;<br>};</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="7" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 8 -->
+  <div class="ejercicio" id="ejercicio9" enunciado="2"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Empleando la estructura "while" y el comando "continue" escriba el código que genera y muestra los números impares comprendidos entre 11 y 23.</p><div id="pregunta39" class="calculadora" spellcheck="false"><div class="instruccion">i = 10;<br>while (i&lt;=23) {<br>  i++;<br>  if (i%2===0) continue;<br>  print("i = "+i);<br>};</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="7" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 9 -->
+
+
+
+  <p class="text">Por otra parte, aunque no son modificadores propiamente, los comandos <b class="style1">return</b> y <b class="style1">throw</b>, interrumpen la ejecución de las estructuras iterativas (y de cualquier otra estructura): <dfn class="style1">return</dfn> interrumpen la ejecución y sale de la función (devolviendo el resultado), mientras que <dfn class="style1">throw</dfn> interrumpe la ejecución de la estructura y lanza un error que puede ser atrapado con <i class="style1">catch</i>, en la misma estructura, fuera de la estructura o fuera de la función.</p>
+
+  <p class="text">La modificación más frecuente corresponde a la siguiente lógica:</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">gojsGraph({divi, modelo: { "class": "go.GraphLinksModel",  "linkFromPortIdProperty": "fromPort",  "linkToPortIdProperty": "toPort",  "nodeDataArray": [ {"category":"Conditional", "text":"condición", "key":-5, "loc":"60.00000000000001 -272.7375317152156"},{"category":"Process", "text":"instrucciones a", "key":-2, "loc":"60.00000000000001 -335.0375675733699"},{"category":"Connector", "text":"...", "key":-8, "loc":"60 -392"},{"category":"Connector", "text":"...", "key":-4, "loc":"59.99999999999999 -118.4083489528922"},{"category":"Process", "text":"instrucciones b", "key":-6, "loc":"60.00000000000001 -195.37078137952224"} ],  "linkDataArray": [ {"from":-8, "to":-2, "fromPort":"B", "toPort":"T", "points":[60,-377.3042461927547,60,-367.3042461927547,60,-364.8042461927547,60,-364.8042461927547,60,-362.3042461927547,60,-352.3042461927547]},{"from":-2, "to":-5, "fromPort":"B", "toPort":"T", "points":[60,-317.77088895398515,60,-307.77088895398515,60,-305.27088895398515,60,-305.27088895398515,60,-302.77088895398515,60,-292.77088895398515]},{"from":-5, "to":-6, "fromPort":"B", "toPort":"T", "visible":true, "points":[60,-252.7041744764461,60,-242.7041744764461,60,-232.67081723767654,60,-232.67081723767654,60,-222.63745999890702,60,-212.63745999890702], "text":"No"},{"from":-5, "to":-4, "fromPort":"R", "toPort":"T", "visible":true, "points":[124.49705505371094,-272.7375317152156,134.49705505371094,-272.7375317152156,163,-272.7375317152156,163,-157.79999923706055,60,-157.79999923706055,60,-143.1041027601375,60,-133.1041027601375], "text":"Si"},{"from":-6, "to":-2, "fromPort":"L", "toPort":"L", "points":[3.1953659057617188,-195.37078137952224,-6.804634094238281,-196.58539030829138,-49,-196.58539030829138,-49,-335.0375675733699,-6.4234771728515625,-335.0375675733699,3.5765228271484375,-335.0375675733699]} ]}})</div>
+  </div>
+
+  <p class="text">Es decir que las "instrucciones a" y las instrucciones "b" se repiten mientras la condición es falsa (No), pero la condición de finalización no está ni al principio (<dfn class="style1">while</dfn>) ni al final (<dfn class="style1">do-while</dfn>), sino al medio de las instrucciones.</p>
+
+  <p class="text">Para implementar esta modificación, se crea un <i class="style1">ciclo infinito</i> y en su interior se escribe la condición de finalización, donde se emplea uno de los modificadores: <dfn class="style1">break</dfn>, <dfn class="style1">return</dfn> o <dfn class="style1">throw</dfn>, para salir del ciclo. Un ciclo infinito se crea simplemente escribiendo <dfn class="style1">true</dfn> en su condición (de esa manera la condición es siempre verdadera y en consecuencia, el ciclo se repite siempre):</p>
+
+  <div class="codigo">while(true) {<br>    instrucciones a<br>    if (condición) [break|return|throw]<br>    instrucciones b<br>}</div>
+
+  <div class="codigo">do {<br>    instrucciones a<br>    if (condición) [break|return|throw]<br>    instrucciones b<br>} while(true);</div>
+      
+  <p class="text">La estructura <i class="style1">for</i> cuenta con una sintaxis abreviada para crear un ciclo infinito:</p>
+
+  <div class="codigo">for(;;) {<br>    instrucciones a<br>    if (condición) [break|return|throw]<br>    instrucciones b<br>}</div>
+
+
+  <h2 class="text">Tratamiento de errores</h2>
+
+  <p class="text">Hasta ahora los errores han sido atrapados y mostrados por la calculadora JavaScript. En la práctica, esos errores son atrapados en la función donde se generan o más frecuentemente, en las funciones que llaman a la función donde se generan (donde se lanzan con <dfn class="style1">throw</dfn>).</p>
+
+  <p class="text">Los errores lanzados con <dfn class="style1">throw</dfn> son atrapado con <dfn class="style1">catch</dfn>, empleando la estructura <i class="style1">try-catch-finally</i>, que tiene la siguiente sintaxis:</p>
+
+  <div class="codigo">try {<br>  instrucciones 1;<br>} catch(e) {<br>  instrucciones 2;<br>} finally {<br>  instrucciones 3;<br>}</div>
+  
+  <p class="text">Donde <dfn class="style1">instrucciones 1</dfn> son las instrucciones con las que se resuelve el problema; <i class="style1">catch</i> inicia el bloque donde se atrapa el error, siendo <dfn class="style1">"e"</dfn> el nombre de la variable temporal que guarda el error generado, <dfn class="style1">instrucciones 2</dfn> son las instrucciones que se ejecutan cuando se atrapa el error y donde se puede emplear la variable temporal <dfn class="style1">"e"</dfn>; <i class="style1">finally</i> inicia el bloque de instrucciones (<dfn class="style1">instrucciones 3</dfn>) que se ejecutan siempre, sin importar si se ha lanzado o no un error.</p>
+  
+  <p class="text">La forma en que opera esta estructura es la siguiente: Si ocurre un error al ejecutar las <dfn class="style1">instrucciones 1</dfn> o se lanza un error con <dfn class="style1">throw</dfn>, la ejecución se detiene y el programa salta al bloque <i class="style1">catch</i>, donde el error es atrapado y guardado en la variable <dfn class="style1">"e"</dfn>, entonces se ejecutan las <dfn class="style1">instrucciones 2</dfn>.
+
+  </p><p class="text">Si no se produce ningún error al ejecutar las <dfn class="style1">instrucciones 1</dfn>, el bloque <dfn class="style1">catch</dfn> (las instrucciones 2) es ignorado.</p>
+
+  <p class="text">Finalmente, <b><i>sin importar si se ha producido o no un error</i></b>, el programa salta al bloque <i class="style1">finally</i> y ejecuta las <dfn class="style1">instrucciones 3</dfn>.</p>
+
+  <p class="text">Es importante tomar en cuenta que en la estructura <i class="style1">try-catch-finally</i> no se requiren los tres bloques, sólo es imprescindible el bloque <dfn class="style1">try</dfn> y uno de los bloques: o <dfn class="style1">catch</dfn> o <dfn class="style1">finally</dfn>, así es válida la forma:</p>
+
+  <div class="codigo">try {<br>  instrucciones 1;<br>} catch(e) {<br>  instrucciones 2;<br>}</div>
+
+  <p class="text">Y también la forma:</p>
+
+  <div class="codigo">try {<br>  instrucciones 1;<br>} finally {<br>  instrucciones 3;<br>}</div>
+
+  <p class="text">Se recalca que si existe el bloque <dfn class="style1">finally</dfn>, las instrucciones de ese bloque se ejecutan <b><i>siempre</i></b>, sin importar si se produce o no un error en el bloque <dfn class="style1">try</dfn>, mientras que las instrucciones del bloque <dfn class="style1">catch</dfn> <b><i>sólo se ejecutan si se produce (o lanza) un error en el bloque</i></b> <dfn class="style1">try</dfn>.</p>
+
+
+  <p class="text">A continuación se resuelve algunos problemas empleando estas estructuras.</p>
+
+
+
+  <h2 class="text">Ejemplos</h2>
+
+  <h3 class="text">Sumatoria de los primeros "n" números pares</h3>
+
+  <p class="text">En este ejemplo se elabora una función que calcula la sumataria de los primeros "n" números pares, así si "n" es 5, la función devuelve el resultado de: 2+4+6+8+10.</p>
+
+  <p class="text">La lógica es simple y directa: Se inicia el acumulador "s" (la variable donde se guarda el resultado) en 0, luego en un ciclo iterativo se generan y suman los primeros "n" números impares. El límite superior del ciclo es <b class="style1">2*n</b>, porque, si por ejemplo son 5 números pares el último número par es 10 (2*5), si son 15 números pares, el último número par es 30 (2*15), etc.</p>
+
+  <p class="text">Empleando la estructura <dfn class="style1">for</dfn> (la estructura más adecuada para este tipo de problemas) la solución (como una función anónima) es:</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">sumPares = function(n) {<br>  let s = 0;<br>  for (let i=2; i&lt;=2*n; i+=2) {<br>    s += i;<br>  }<br>	return s;<br>};</div>
+      <div class="resultado"></div>
+  </div>
+
+  <p class="text">Probando la función con algunos valores, se obtiene:</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">sumPares(0)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">sumPares(5)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">sumPares(12)</div>
+      <div class="resultado"></div>
+  </div>
+
+<p class="text">Por supuesto (aunque no es la mejor alternativa) puede ser resuelto también con la estructura <dfn class="style1">while</dfn> e inclusive con la estructura <dfn class="style1">do-while</dfn>, sin embargo, con esta estructura (debido a que sus instrucciones se ejecutan por lo menos una vez) para obtener el resultado correcto cuando "n" es 0, el contador debe ser iniciado en 0, no en 2 y debido a ello, la estructura se ejecuta una vez más:</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">sumPares2 = function(n) {<br>  let s = 0, i = 0;<br>  do {<br>    s += i;<br>    i += 2;<br>  } while(i&lt;=2*n);<br>	return s;<br>};</div>
+      <div class="resultado"></div>
+  </div>
+
+  <p class="text">Con la cual se obtienen los mismos resltados que con la versión anterior.</p>
+  
+
+
+  <h3 class="text">Invertir los dígitos de un número</h3>
+
+  <p class="text">En este ejemplo se elabora una función que devuelve el número que se le manda con sus dígitos invertidos. Así, si el método es 12345 la función debe devolver 54321.</p>
+
+  <p class="text">El problema se resuelve notando que en la división de un número entero entre 10, el resídulo es el último dígito del número, mientras que el cociente es el número sin ese último dígito, así para 12345, la división es:</p>
+
+  <table class="ecuacionsn">
+      <tbody><tr>
+      <td>
+          \[          \begin{array}{c}          12345\\          (5)          \end{array}          \begin{array}{|c}          \phantom{12}10\phantom{12} \\ \hline          1234          \end{array}          \]
+      </td>
+      <td></td>
+      </tr>
+  </tbody></table>
+
+  <p class="text">Si el cociente se vuelve a dividir entre 10, se obtiene el penúltio dígito dígito y el cociente disminuye en un dígito. Repitiendo el procedimiento hasta que el cociente es 0, se obtienen (uno a uno) todos los dígitos del número a invertir y en el orden en que deben estar en el número invertido:</p>
+  
+  <table class="ecuacionsn">
+    <tbody><tr>
+      <td>
+        \[        \def\arraystretch{1}        \begin{array}{c}        \begin{array}{c}        1234\\        (4)        \end{array}\\  \\  \\  \\  \end{array}  \begin{array}{c}  \begin{array}{|c}  \phantom{12}10\phantom{12} \\ \hline  123  \end{array}\\  (3)\\  \\  \\  \end{array}  \begin{array}{c}  \\  \begin{array}{|c}  \phantom{12}10\phantom{12} \\ \hline  12  \end{array}\\  (2)\\  \\  \end{array}  \begin{array}{c}  \\  \\  \begin{array}{|c}  \phantom{12}10\phantom{12} \\ \hline  1  \end{array}\\  (1)\\  \end{array}  \begin{array}{c}  \\  \\  \\  \begin{array}{|c}  \phantom{12}10\phantom{12} \\ \hline  0  \end{array}\\  \end{array}  \]
+</td>
+<td></td>
+</tr>
+</tbody></table>
+
+  <p class="text">Entonces, para obtener el número con los dígitos invertidos, simplemente se deben añadir los residuos (uno a uno) a un acumulador. Sin embargo, antes de añadir los residuos, es necesario multiplicar el acumulador por 10, para añadir un 0 al final del número, de manera que el residuo añadido reemplace a ese 0. Así, para 12345, siendo "ni" el acumulador (inicialmente igual a 0) en la primera iteración se obtiene: ni = ni*10+5 = 0*10+5 = 0+5 = 5; en la segunda: ni = ni*10+4 = 5*10+4 = 50+4 = 54; en la tercera: ni = ni*10+3 = 54*10+3 = 540+3 = 543; en la cuarta: ni = ni*10+2 = 543*10+2 = 5430+2 = 5432 y en la quinta: ni = ni*10+1 = 5432*10+1 = 54320+1 = 54321 (que es el número con los dígitos invertidos).</p>
+  
+  <p class="text">El proceso concluye cuando el cociente es igual a 0. El cociente se calcula restando al número el residuo y dividiendo el resultado entre 10. Así el cociente de 12345 entre 10 es: (12345-5)/10 = 1234 </p>
+
+  <p class="text">Con las anteriores consideraciones, el código que resuelve el problema es:</p>
+  
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">invertirDigitos = n =&gt; {<br>  if (n%1!==0) throw "El número debe ser entero";<br>  let ni = 0;<br>  while (n!==0) {<br>    ni= ni*10+n%10;<br>    n = (n-n%10)/10;<br>  }<br>  return ni;<br>};</div>
+      <div class="resultado"></div>
+  </div>
+
+  <p class="text">Con el cual se obtienen los resultados esperados:</p>
+  
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">invertirDigitos(12345)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">invertirDigitos(-65432)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">invertirDigitos(8)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">invertirDigitos(23.456)</div>
+      <div class="resultado"></div>
+  </div>
+
+
+
+  <h3 class="text">Número sin su primer dígito</h3>
+
+  <p class="text">En este ejemplo se programa una función que devuelve el número desde el cual es llamado, sin su primer dígito. Así si el número es 12345, la función debe devolver 2345.</p>
+
+  <p class="text">Si el número es 56, sin su primer dígito es 6 y ese resulado se obtiene calculando su cociente entre 10 (56%10 = 6). Si el número es 784, sin su primer dígito es 84 y ese resultado se obtiene calculando su cocientre entre 100 (784%100 = 84). Entonces, el número sin su primer dígito es el residuo del número entre el múltiplo de 10 que tiene el mismo número de dígitos que el número.</p>
+  
+  <p class="text">Por lo tanto el problema se reduce a calcular ese múltiplo. El múltiplo se obtiene en un ciclo iterativo que se repite una vez menos que el número de dígitos del número y en cada repetición se multiplica el acumulador "m" (que se inicia en 1) por 10.</p>
+      
+  <p class="text">Para que el ciclo se repita una vez menos que el número de dígitos del número, debe ser repetido mientras que el valor absoluto de su división entre el múltiplo "m" sea mayor o igual a 10, es decir mientras tenga más de un dígito. Se debe trabajar con el valor absoluto porque si el número es negativo, la condición sería falsa desde la primera iteración.</p>
+
+  <p class="text">La función que resuelve el problema, tomando en cuenta el anterior razonamiento, es: </p>
+  
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">function spd(n) {<br>&nbsp; if (n%1!==0) throw "El número debe ser entero";<br>&nbsp; let m = 1;<br>&nbsp; while (Math.abs(n/m)&gt;=10) m *= 10;<br>&nbsp; return n%m;<br>};</div>
+      <div class="resultado"></div>
+  </div>
+  
+  <p class="text">Con el cual se obtienen los resultados esperados:</p>
+  
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">spd(12345)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">spd(-45678)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">spd(7)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">spd(45.67)</div>
+      <div class="resultado"></div>
+  </div>
+
+
+
+  <h3 class="text">Raíz cuadrada</h3>
+
+  <p class="text">En este ejemplo se programa una función que recibe un número "n" y devuelve la raíz cuadrada de ese número.</p>
+
+  <p class="text">Numéricamente, la raíz cuadrada se calcula con al ecuación deducida con el método de Newton - Raphson:</p>
+
+  <table class="ecuacionsn">
+      <tbody><tr>
+      <td>
+          \[          x_2 = \dfrac{\left( x_1 + \dfrac{n}{x_1}\right)}{2}          \]
+      </td>
+      <td></td>
+      </tr>
+  </tbody></table>
+
+  <p class="text">Donde <b>x<sub>1</sub></b> es un valor que se sume para la solución (para la raíz cuadrada) y <b>x<sub>2</sub></b> es el valor calculado con la ecuación para ese valor asumido. La solución de este tipo de ecuaciones es iterativa: <b><i>a)</i></b> Se asume un valor para la solución (para x<sub>1</sub>); <b><i>b)</i></b> Con x<sub>1</sub> y la ecuación de Newton-Raphson, se calcula el valor de x<sub>2</sub>; <b><i>c)</i></b> Se compara x<sub>1</sub> con x<sub>2</sub>; <b><i>d)</i></b> Si x<sub>1</sub> y x<sub>2</sub> son iguales en un determinado número de dígitos (normalmente entre 9 y 14 dígitos), el proceso concluye, siendo la solución el valor de <i class="style1">x<sub>2</sub></i>; <b><i>e)</i></b> Si no son iguales en el número de digitos establecido, x<sub>1</sub> toma el valor de x<sub>2</sub> (x<sub>1</sub>=x<sub>2</sub>) y el proceso se repite desde el paso "b".</p>
+
+  <p class="text">Para determinar si dos números: x<sub>1</sub> y x<sub>2</sub>, son iguales en "n" o más dígitos (precisión), debe ser verdadera (true) la siguiente expresión relacional:</p>
+  
+  <table class="ecuacionsn">
+      <tbody><tr>
+      <td>
+          \[          \left| \dfrac{x_1}{x_2}-1\right| &lt; 1 \times 10^{-n}          \]
+      </td>
+      <td></td>
+      </tr>
+  </tbody></table>
+  
+  <p class="text">La función programada siguiendo el algoritmo descrito, terminando las iteraciones cuando x<sub>1</sub> y x<sub>2</sub> son iguales en 12 dígitos (cuando la precisión es 12), es:</p>
+  
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">function rCuad(n, x1=1.1) {<br>  if (n&lt;0) throw "El número debe ser positivo";<br>  if (n===0 || n===1) return n;<br>  let x2;<br>  while (true) {<br>    x2 = (x1+n/x1)/2;<br>    if (Math.abs(x1/x2-1)&lt;1e-12) break;<br>    x1 = x2;<br>  }<br>  return x2;<br>};</div>
+      <div class="resultado"></div>
+  </div>
+
+  <p class="text">Con la cual se obtienen los resultados esperados:</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">rCuad(2)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">rCuad(9.34)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">rCuad(1)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">rCuad(-7.45)</div>
+      <div class="resultado"></div>
+  </div>
+
+  <p class="text">Como se puede ver, la solución se ha implementado en un ciclo infinito (creado con <dfn class="style1">while</dfn> y <dfn class="style1">break</dfn>). En la función se valida que el número sea positivo (porque los números negativos tienen soluciones complejas) y si el "n" es cero o uno, se devuelve directamente el resultado (porque la raíz de 0 es 0 y la de 1 es 1).</p>
+
+  <p class="text">El valor asumido x<sub>1</sub> es un parámetro por defecto con un valor inicial igual a 1.1. Se ha elegido ese valor, porque con el mismo, casi siempre, se encuentra la solución (la raíz). Sin embargo, como es un parámetro por defecto, se puede mandar otros valores (más cercanos a la solución) para obtener el resultado en un menor número de iteraciones.</p>
+
+  <p class="text">Al ser un ciclo infinito, puede ser programado también con <dfn class="style1">do-while</dfn> o <dfn class="style1">for</dfn> y salir del ciclo con <dfn class="style1">return</dfn> o <dfn class="style1">throw</dfn>:</p>
+
+  <p class="text">Así, con la estructura <dfn class="style1">do-while</dfn> y el comando <dfn class="style1">return</dfn>, la solución, es:</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">rCuad2 = function(n, x1=1.1) {<br> if (n&lt;0) throw "El número debe ser positivo";<br> if (n===0 || n===1) return n;<br> let x2;<br> do {<br>  x2 = (x1+n/x1)/2;<br>  if (Math.abs(x1/x2-1)&lt;1e-12) return x2;<br>  x1 = x2;<br> } while (true);<br>};</div>
+      <div class="resultado"></div>
+  </div>
+
+  <p class="text">Y con la estructura <dfn class="style1">for</dfn> y el comando <dfn class="style1">throw</dfn> (atrapando el error con <dfn class="style1">try-catch</dfn>), la solución es:</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">var rCuad = (n, x1=1.1) =&gt; {<br> 	if (n&lt;0) throw "El número debe ser positivo";<br>  if (n===0 || n===1) return n;<br>  try {<br>    let x2;<br>    for (;;) {<br>      x2 = (x1+n/x1)/2;<br>      if (Math.abs(x1/x2-1)&lt;1e-12) throw x2;<br>      x1 = x2;<br>    }<br>  } catch(e) {<br>    return e;<br>  }<br>};</div>
+      <div class="resultado"></div>
+  </div>
+
+  <p class="text">En este caso, el comando <dfn class="style1">throw</dfn> lanza como error la solución (la raíz: x<sub>2</sub>). Esa solución es atrapada con <dfn class="style1">catch</dfn> en la variable "e", por esa razón, en el bloque <dfn class="style1">catch</dfn> se devuelve como resultado de la función el valor de la variable "e".</p>
+
+  <p class="text">Si bien en los ejemplos y ejercicios de la asignatura se emplea <dfn class="style1">throw</dfn>, <dfn class="style1">try-catch</dfn> (o <dfn class="style1">try-finally</dfn> ) para romper estructuras y atrapar resultados, en la práctica se emplean para lanzar, atrapara y tratar errores. Sin embargo, el resolver este tipo de ejercicios ayuda a comprender su funcionamiento, por lo que resultan de utilidad práctica.</p>
+
+
+
+  <h3 class="text">Número primo</h3>
+
+  <p class="text">En este ejemplo se programa una función que recibe un número entero "n" y devuelve <dfn class="style1">true</dfn> si es un número primo y <dfn class="sytle1">false</dfn> en caso contrario.</p>
+
+  <p class="text">Un número es primo si sólo es divisible entre 1 y entre sí mismo, exceptuando el número 1 que por definición no es primo.</p>
+  
+  <p class="text">Para determinar si un número es o no primo, se debe comprobar que no sea divisible entre 2, 3, ..., etc., hasta la mitad del número que se está probando, porque ningún número es divisible entre un número mayor a su mitad (más precisamente mayor a su raíz cuadrada).</p>
+
+  <p class="text">Si el número es divisible entre cualquiera número menor o igual a su mitad, se sabe que no es primo (<dfn class="style1">false</dfn>), caso contrario (si se llega hasta la mitad del número) se sabe que es primo (<dfn class="style1">true</dfn>).</p>
+
+  <p class="text">Entonces el problema se resuelve generando los divisores "i" (2, 3, 4, ....) hasta la mitad de "n". Se verifica si "n" es divisible entre los divisores "i" que se van generando. Si "n" es divisible entre uno de los divisores "i", se terminan inmediatamente las iteraciones (porque ya se sabe que el número no es primo). Si terminan las iteraciones (si "i" llega a la mitad de "n") se sabe que el número es primo.</p>
+
+  <p class="text">El código que resuelve el problema, siguiendo el razonamiento del párrafo anterior, es:</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">esPrimo = n =&gt; {<br>  if (n%1!==0) throw "El número debe ser entero";<br>  if (n&lt;0) throw "El número debe ser positivo";<br>  if (n&lt;2) return false;<br>  for (let i=2; i&lt;=n/2; i++)<br>    if (n%i===0) return false;<br>  return true;<br>};</div>
+      <div class="resultado"></div>
+  </div>
+
+  <p class="text">Con el cual se obtienen los resultados esperados:</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">esPrimo(7)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">esPrimo(8)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">esPrimo(21)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">esPrimo(157)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">esPrimo(159)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">esPrimo(67.32)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">esPrimo(-121)</div>
+      <div class="resultado"></div>
+  </div>
+  <br>
+
+
+  <h3 class="text">Fibonacci de un número</h3>
+
+  <p class="text">En este ejemplo se programa una función que recibe un número entero "n" y devuelve el Fibonacci de ese número.</p>
+  
+  <p class="text">La ecuación de definición del Fibonacci, es:</p>
+  
+  <table class="ecuacionsn">
+      <tbody><tr>
+      <td>
+          \[          \begin{aligned}          F_n &amp;= F_{n-1}+F_{n-2}\\[2mm]          F_1 &amp;= 1\\[2mm]          F_2 &amp;= 1          \end{aligned}          \]
+      </td>
+      <td></td>
+      </tr>
+  </tbody></table>
+  
+  <p class="text">Como se conocen los valores del primer y segundo Fibonacci, el cálculo comienza a partir del tercero: el Fibonacci de 3 (F<sub>2</sub>+F<sub>1</sub>), luego el de 4 (F<sub>3</sub>+F<sub>2</sub>) y así sucesivamente. Por ejemplo, con las siguientes operaciones se calcula el Fibonacci de 8:</p>
+
+  <table class="ecuacionsn">
+      <tbody><tr>
+      <td>
+          \[           \begin{alignedat}{1}          F_3 &amp;= F_2+F_1 = 1+1 = 2\\          F_4 &amp;= F_3+F_2 = 2+1 = 3\\          F_5 &amp;= F_4+F_3 = 3+2 = 5\\          F_6 &amp;= F_5+F_4 = 5+3 = 8\\          F_7 &amp;= F_6+F_5 = 8+5 = 13\\          F_8 &amp;= F_7+F_6 = 13+8 = 21          \end{alignedat}          \]
+      </td>
+      <td></td>
+      </tr>
+  </tbody></table>
+  
+  <p class="text">De estas operaciones se deduce que el problema se resuelve repitiendo el proceso desde 3 hasta  "n". En cada repetición se calculan sucesivamente los Fibonacci de 3, 4, 5, ..., hasta "n". Pero como la función solo debe devolver el último Fibonacci calculado, únicamente se guarda ese valor y los dos anteriores (porque son necesarios para calcular el siguiente Fibonacci) como se muestra en las siguientes operaciones, donde se vuelve a calcular el Fibonacci de 8, pero conservando sólo los dos últimos valores:</p>
+
+  <table class="ecuacionsn">
+      <tbody><tr>
+      <td>
+          \[           \begin{array}{l | l | l}          F_3 = F_2+F_1 = 1+1 = 2 &amp; F_1=F_2=1 &amp; F_2=F_3=2\\          F_4 = F_2+F_1 = 2+1 = 3 &amp; F_1=F_2=2 &amp; F_2=F_3=3\\          F_5 = F_2+F_1 = 3+2 = 5 &amp; F_1=F_2=3 &amp; F_2=F_3=5\\          F_6 = F_2+F_1 = 5+3 = 8 &amp; F_1=F_2=5 &amp; F_2=F_3=8\\          F_7 = F_2+F_1 = 8+5 = 13 &amp; F_1=F_2=8 &amp; F_2=F_3=13\\          F_8 = F_2+F_1 = 13+8 = 21          \end{array}          \]
+      </td>
+      <td></td>
+      </tr>
+  </tbody></table>
+
+  <p class="text">La función que resuelve el problema, tomando en cuenta las consideraciones anteriores, es:</p>
+  
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">fibonacci = function(n) {<br>  if (n%1!==0 || n&lt;=0) throw "El número debe ser entero positivo";<br>  if (n&lt;3) return 1;<br>  let f3, f1=1, f2=1, i=3;<br>  while (true) {<br>    f3 = f2+f1;<br>    if (i===n) break;<br>    f1 = f2;<br>    f2 = f3;<br>    i++;<br>  }<br>  return f3;<br>};</div>
+      <div class="resultado"></div>
+  </div>
+  
+  <p class="text">Con el cual se obtienen los resultados esperados:</p>
+  
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">fibonacci(5)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">fibonacci(8)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">fibonacci(15)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">fibonacci(25)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">fibonacci(75)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">fibonacci(4.56)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">fibonacci(0)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">fibonacci(-34)</div>
+      <div class="resultado"></div>
+  </div>
+
+  <p class="text">Note que se ha empleado un ciclo infinito, porque una vez calculado el Fibonacci de "n" (cuando el contador "i" es igual a "n") se debe salir del ciclo, porque ya se tiene la solución y no es lógico continuar con un cambio de variables e incremento del contador, cuando esos valores no se emplean nunca.</p>
+
+
+
+  <h3 class="text">Legendre enésimo de un número</h3>
+
+  <p class="text">En este ejemplo se programa una función que recibe un número real "x" y un entero positivo "n" y devuelve el legendre enésimo "n" del número real "x".</p>
+  
+  <p class="text">La ecuación de definición del Legendre, es:</p>
+  
+  <table class="ecuacionsn">
+      <tbody><tr>
+      <td>
+          \[          \begin{aligned}          \text{Le}_n(x) &amp;= \left( 2-\dfrac{1}{n}\right)\cdot x\cdot \text{Le}_{n-1}(x)-\left( 1-\dfrac{1}{n}\right)\cdot\text{Le}_{n-2}(x)\\          \text{Le}_0(x) &amp;= 1\\          \text{Le}_1(x) &amp;= x          \end{aligned}          \]
+      </td>
+      <td></td>
+      </tr>
+  </tbody></table>
+  
+  <p class="text">Aunque aparentemente este es un problema muy diferente al del Fibonacci, la lógica que resuelve el problema es esencialmente la misma, sólo que ahora la ecuación es diferente, se tiene una variable adicional (el número real "x") y el orden (el número entero "n") es parte de la ecuación.</p>
+
+  <p class="text">En un ciclo que va desde 2 hasta el orden "n", se calcula en cada iteración los Legendre de 2, 3, 4, etc, hasta llegar al Legendre de "n". Al igual que en el Fibonacci, sólo es necesario conservar el último valor calculado y los dos anteriores, sin embargo, dado que "n" forma parte de la ecuación, para facilitar la programación de la ecuación y evitar confusiones, en lugar de recibir el orden en la variable "n" se recibe en la variable "m", mientras que "n" se emplea para el contador del ciclo.</p>
+
+  <p class="text">La función que resuelve el problema, tomando en cunenta las anteriores consideraciones, es:</p>
+  
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">function legendre(x, m) {<br>  if (m%1!==0 || m&lt;0) throw "El orden debe ser entero positivo";<br>  try {<br>    if (m===0) return 1;<br>    if (m===1) return x;<br>    let le2, le0=1, le1=x, n=2;<br>    while (true) {<br>      le2 = (2-1/n)*x*le1-(1-1/n)*le0;<br>      if (n===m) throw le2;<br>      le0 = le1;<br>      le1 = le2;<br>      n++;<br>    }    <br>  } catch(e) {<br>    return e;<br>  }<br>}</div>
+      <div class="resultado"></div>
+  </div>
+  
+  <p class="text">Con el cual se obtienen los resultados esperados:</p>
+  
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">legendre(1.3, 2)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">legendre(1.5, 3)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">legendre(3.9, 7)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">legendre(2.1, 0)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">legendre(13.1, 1)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">legendre(6.1, 4.5)</div>
+      <div class="resultado"></div>
+      <div class="instruccion">legendre(1.1, -3)</div>
+      <div class="resultado"></div>
+  </div>
+  <br>
+
+
+
+  <div class="ejercicio" id="ejercicio10" enunciado="1"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>`Como una función anónima, programe la función "prodEnteros" que reciba un número entero positivo "n" y devuelva la productoria de los números enteros que existen entre 1 y "n", empleando la estructura while y operadores compuestos donde sea posible, validando (con if) que el número sea entero positivo, lanzando el error "El número debe ser entero positivo" en caso de no serlo (operadors: %, !==, &lt;=). Posteriormente llame al método con los números: a) 5: b) 9; c) 12; d) 36; e) 0; f) 27.5 y g) -15.</p><div id="pregunta43" class="calculadora" spellcheck="false"><div class="instruccion">prodEnteros = function(n) {<br>  if (n%1!==0 || n&lt;=0) throw "El número debe ser entero positivo";<br>  let p = 1;<br>  let i = 1;<br>  while (i&lt;=n) {<br>    p *=i;<br>    i++;<br>  }<br>  return  p;<br>};</div><div class="resultado"></div><div class="instruccion">prodEnteros(5)</div><div class="resultado"></div><div class="instruccion">prodEnteros(9)</div><div class="resultado"></div><div class="instruccion">prodEnteros(12)</div><div class="resultado"></div><div class="instruccion">prodEnteros(36)</div><div class="resultado"></div><div class="instruccion">prodEnteros(0)</div><div class="resultado"></div><div class="instruccion">prodEnteros(27.5)</div><div class="resultado"></div><div class="instruccion">prodEnteros(-15)</div><div class="resultado"></div></div><p class="pregunta" id="pregunta44"><span class="pregunta"></span>Si el valor inicial del acumulador es 2, el valor inicial del contador debería ser <span class="campo_literal correcta" tabindex="0" contenteditable="true">3</span>.</p><p class="pregunta" id="pregunta45"><span class="pregunta"></span>Si el contador inicia en 0 y la condición de finalización es i&lt;n, el valor del contador debe incrementarse <span class="campo_literal correcta" tabindex="0" contenteditable="true">ant</span>es de sumar su valor al <span class="campo_literal correcta" tabindex="0" contenteditable="true">acumula</span>dor.</p><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="16" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 10 -->
+  <div class="ejercicio" id="ejercicio11" enunciado="1"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Como una función estándar, programe la función "prodEnteros" que, empleando la estructura "for", reciba un número "n" y devuelva la productoria de los números enteros que existen entre 1 y "n", empleando la estructura for y operadores compuestos donde sea posible, validando (con if) que el número sea entero positivo, lanzando el error "El número debe ser entero positivo" en caso de no serlo (operadores: %, !==, &lt;=). Posteriormente llame al método con los números: a) 5: b) 9; c) 12; d) 36; e) 0; f) 27.5 y g) -15.</p><div id="pregunta50" class="calculadora" spellcheck="false"><div class="instruccion">function prodEnteros(n) {<br>  if (n%1!==0 || n&lt;=0) throw "El número debe ser entero positivo";<br>  let p = 1;<br>  for(let i=1; i&lt;=n; i++) p *=i ;<br>  return p;<br>};</div><div class="resultado"></div><div class="instruccion">prodEnteros(5)</div><div class="resultado"></div><div class="instruccion">prodEnteros(9)</div><div class="resultado"></div><div class="instruccion">prodEnteros(12)</div><div class="resultado"></div><div class="instruccion">prodEnteros(36)</div><div class="resultado"></div><div class="instruccion">prodEnteros(0)</div><div class="resultado"></div><div class="instruccion">prodEnteros(27.5)</div><div class="resultado"></div><div class="instruccion">prodEnteros(-15)</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="10" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 11 -->
+  <div class="ejercicio" id="ejercicio12" enunciado="1"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Como una función flecha, programe la función "sumImpares", que reciba un número entero positivo "n" y devuelva la sumatoria de los números impares que existen entre 1 y "n", empleando la estructura while y operadores compuestos donde sea posible, validando (con if) que el número sea entero, lanzando el error "El número debe ser entero positivo" en caso de no serlo (operadores: %, !==, &lt;). Posteriormente llame al método con los números: a) 12; b) 53; c) 121; d) 220; e) 0; f) 51.2 y g) -78.</p><div id="pregunta53" class="calculadora" spellcheck="false"><div class="instruccion">sumImpares = n=&gt; {<br>  if (n%1!==0 || n&lt;0) throw "El número debe ser entero positivo";<br>  let s = 0;<br>  let i = 1 ;<br>  while (i&lt;=n) {<br>    s +=i;<br>    i +=2;<br>  }<br>  return s;<br>};</div><div class="resultado"></div><div class="instruccion">sumImpares(12)</div><div class="resultado"></div><div class="instruccion">sumImpares(53)</div><div class="resultado"></div><div class="instruccion">sumImpares(121)</div><div class="resultado"></div><div class="instruccion">sumImpares(220)</div><div class="resultado"></div><div class="instruccion">sumImpares(0)</div><div class="resultado"></div><div class="instruccion">sumImpares(51.2)</div><div class="resultado"></div><div class="instruccion">sumImpares(-78)</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="12" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 12 -->
+  <div class="ejercicio" id="ejercicio13" enunciado="0"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Como una función flecha y la estructura while, programe la función "primerDigito", que reciba un número entero "n" y devuelva su primer dígito, empleando la estructura while y operadores compuestos donde sea posible, validando (con if) que el número sea entero, lanzando el error "El número debe ser entero" en caso de no serlo (condición: % y !==). Pista: el primer dígito es el cociente de "n" entre el mútiplo de 10 "m" que tiene el mismo número de dígitos que "n" (en la condición del ciclo se debe trabajar con el valor absoluto). Posteriormente llame al método con los números: a) 78634, b) -9652, c) 6 y d) 432.323.</p><div id="pregunta55" class="calculadora" spellcheck="false"><div class="instruccion">primerDigito = n =&gt; {<br>  if (n%1!==0) throw "El número debe ser entero";<br>  let m =1;<br>  while (Math.abs(n/m)&gt;=10) m*=10;<br>  return (n-n%m)/m;<br>};</div><div class="resultado"></div><div class="instruccion">primerDigito(78634)</div><div class="resultado"></div><div class="instruccion">primerDigito(-9652)</div><div class="resultado"></div><div class="instruccion">primerDigito(6)</div><div class="resultado"></div><div class="instruccion">primerDigito(432.323)</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="11" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 13 -->
+  <div class="ejercicio" id="ejercicio14" enunciado="1"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Como una función anónima, programe la función "invertirDigitos2", que reciba un número entero "n" y devuelva el número "ni" con sus dígitos invertidos, empleando la estructura while y operadores compuestos donde sea posible, validando (con if) que el número sea entero, lanzando el error "El número debe ser entero" en caso de no serlo (condición: % y !==). Posteriormente llame al método con los números: a) 78634, b) -9652, c) 6 y d) 0 y e) 432.323.</p><div id="pregunta58" class="calculadora" spellcheck="false"><div class="instruccion">invertirDigitos2 =function(n) {<br>  if (n%1!==0) throw "El número debe ser entero";<br>  let ni =0 ;<br>  while (n&lt;0 || n&gt;0) {<br>    ni =ni*10+n%10;<br>    n = (n-n%10)/10;<br>  }<br>  return ni;<br>};</div><div class="resultado"></div><div class="instruccion">invertirDigitos2(78634)</div><div class="resultado"></div><div class="instruccion">invertirDigitos2(-9652)</div><div class="resultado"></div><div class="instruccion">invertirDigitos2(6)</div><div class="resultado"></div><div class="instruccion">invertirDigitos2(0)</div><div class="resultado"></div><div class="instruccion">invertirDigitos2(432.323)</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="11" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 14 -->
+  <div class="ejercicio" id="ejercicio15" enunciado="1"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p><p></p></div><p class="pregunta"><span class="pregunta"></span>Como una función anónima, programe la función "raizCuadrada2", que reciba un número positivo "n", un valor inicial asumido "x1", con un valor por defecto igual a 1.1 y siguiendo la lógica natural, devuelva la raíz cuadrada del número recibido, calculada, con 12 dígitos de precisión, empleando la ecuación iterativa:\[x_2 = \dfrac{\left(x_1 + \dfrac{n}{x_1}\right)}{2}\]Empleando la estructura "do-while", el comando "break", validando (con if) que el número sea positivo, lanzando el error "El número debe ser positivo" en caso de no serlo (condición: &lt;). Posteriormente llame a la función con los números: a) 0, b) 1, c) 4, d) 27, e) 33.67 y f) -15.2.</p><div id="pregunta64" class="calculadora" spellcheck="false"><div class="instruccion">raizCuadrada2 = function(n, x1=1.1) {<br>  if (n&lt;0) throw "El número debe ser positivo";<br>  if (n===0 || n===1) return n;<br>  let x2;<br>  do {<br>    x2 = (x1+n/x1)/2;<br>    if (Math.abs(x1/x2-1)&lt;1e-12) break;<br>    x1 = x2;<br>  } while(true);<br>  return x2 ;<br>};</div><div class="resultado"></div><div class="instruccion">raizCuadrada2(0)</div><div class="resultado"></div><div class="instruccion">raizCuadrada2(1)</div><div class="resultado"></div><div class="instruccion">raizCuadrada2(4)</div><div class="resultado"></div><div class="instruccion">raizCuadrada2(27)</div><div class="resultado"></div><div class="instruccion">raizCuadrada2(33.67)</div><div class="resultado"></div><div class="instruccion">raizCuadrada2(-15.2)</div><div class="resultado"></div></div><p class="pregunta" id="pregunta65"><span class="pregunta"></span>Si la condición de finalización del ciclo es: <span class="textocodigo">Math.abs(x1/x2-1)&lt;1e-9</span> y x1 es 122288.834576 y x2 es 122288.634576, la condición es <span class="campo_arrastrar correcta" tabindex="0" data-opciones="falsa&amp;@%verdadera" onclick="Pregunta.mostrarOpcionesCampo(this)" onkeydown="if (event.key=='Enter' || event.key==' ') {Pregunta.mostrarOpcionesCampo(this); event.preventDefault(); event.stopPropagation();}">falsa</span>, porque x1 y x2 son iguales en <span class="campo_arrastrar correcta" tabindex="0" data-opciones="0&amp;@%5&amp;@%8&amp;@%6&amp;@%6" onclick="Pregunta.mostrarOpcionesCampo(this)" onkeydown="if (event.key=='Enter' || event.key==' ') {Pregunta.mostrarOpcionesCampo(this); event.preventDefault(); event.stopPropagation();}">6</span> dígitos.</p><p class="pregunta" id="pregunta66"><span class="pregunta"></span>Si la asignación "x1=x2" se la hace antes de calcular x2, el valor de x2, en la primera iteración, sería <span class="campo_arrastrar correcta" tabindex="0" data-opciones="0&amp;@%Infinity&amp;@%1.1&amp;@%NaN&amp;@%null" onclick="Pregunta.mostrarOpcionesCampo(this)" onkeydown="if (event.key=='Enter' || event.key==' ') {Pregunta.mostrarOpcionesCampo(this); event.preventDefault(); event.stopPropagation();}">NaN</span> porque el resultado sería calculado con valores <span class="campo_arrastrar correcta" tabindex="0" data-opciones="ceros&amp;@%indefinidos (undefined)&amp;@%infinitos (Infinity)&amp;@%nulos (null)" onclick="Pregunta.mostrarOpcionesCampo(this)" onkeydown="if (event.key=='Enter' || event.key==' ') {Pregunta.mostrarOpcionesCampo(this); event.preventDefault(); event.stopPropagation();}">indefinidos (undefined)</span>.</p><p class="pregunta" id="pregunta67"><span class="pregunta"></span>Si el valor calculado para x2 en una iteración es 31.8490287434, el nuevo valor de prueba (x1), para la siguiente iteración, será: <span class="campo_literal correcta" tabindex="0" contenteditable="true">31.8490287434</span>.</p><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="30" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 15 -->
+  <div class="ejercicio" id="ejercicio16" enunciado="2"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p><p></p></div><p class="pregunta"><span class="pregunta"></span>Como una función anónima, programe la función "raizCubica3", que reciba un número real "n" y un valor inicial asumido "x1" con un valor por defecto igual a 1.1 y siguiendo la lógica natural, devuelva la raíz cúbica del número recibido (con 12 dígitos de precisión), con la ecuación:\[x_2 = \dfrac{ \left(2 x_1 + \dfrac{n}{x_1^2}\right)}{3}\]Empleando la estructura "for" y el comando "return". Posteriormente llame a la función con los números: a) 0, b) 1, c) 4, d) 27, e) 33.67 y f) -15.2.</p><div id="pregunta74" class="calculadora" spellcheck="false"><div class="instruccion">raizCubica3 = (n, x1=1.1) =&gt;{<br>  if (n===0 || n===1)return n;<br>  let x2;<br>  for(;;) {<br>    x2 = (2*x1+n/x1**2)/3;<br>    if (Math.abs(x1/x2-1)&lt;1e-12) return x2 ;<br>    x1 = x2 ;<br>  } <br>};</div><div class="resultado"></div><div class="instruccion">raizCubica3(0)</div><div class="resultado"></div><div class="instruccion">raizCubica3(1)</div><div class="resultado"></div><div class="instruccion">raizCubica3(4)</div><div class="resultado"></div><div class="instruccion">raizCubica3(27)</div><div class="resultado"></div><div class="instruccion">raizCubica3(33.67)</div><div class="resultado"></div><div class="instruccion">raizCubica3(-15.2)</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="15" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 16 -->
+  <div class="ejercicio" id="ejercicio17" enunciado="0"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p><p></p></div><p class="pregunta"><span class="pregunta"></span>Como una función estándar, programe la función "raizCuarta", que reciba un número positivo "n", un valor inicial asumido x1 con un valor por defecto igual a 1.1 y siguiendo la lógica natural, devuelva la raíz cuarta del número recibido (con 10 dígitos de precisión), con la ecuación:\[x_2 = \dfrac{ \left(3 x_1 + \dfrac{n}{x_1^3}\right)}{4}\]Codifique el diagrama de flujo empleando la estructura "while", la estructura "try-catch" y validando (con if) que el número sea positivo, lanzando el error "El número debe ser positivo" en caso de no serlo (condición: &lt;). Posteriormente llame a la función con los números: a) 0, b) 1, c) 4, d) 27, e) 33.67 y f) -15.2.</p><div id="pregunta75" class="calculadora" spellcheck="false"><div class="instruccion">function raizCuarta(n, x1=1.1){<br>  if(n&lt;0) throw "El número debe ser positivo";<br>  if (n===0 || n===1)return n ;<br>  try {<br>    let x2;<br>    while(true){<br>      x2 = (3*x1+n/x1**3)/4;<br>      if (Math.abs(x1/x2-1)&lt;1e-10) throw x2 ;<br>      x1 = x2 ;<br>    }<br>  } catch (e) {<br>    return e;<br>  }<br>  <br>};</div><div class="resultado"></div><div class="instruccion">raizCuarta(0)</div><div class="resultado"></div><div class="instruccion">raizCuarta(1)</div><div class="resultado"></div><div class="instruccion">raizCuarta(4)</div><div class="resultado"></div><div class="instruccion">raizCuarta(27)</div><div class="resultado"></div><div class="instruccion">raizCuarta(33.67)</div><div class="resultado"></div><div class="instruccion">raizCuarta(-15.2)</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="15" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- Ejercicio 17 -->
+  <div class="ejercicio" id="ejercicio18" enunciado="0"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span>Un número es primo si sólo es divisible entre 1 y entre sí mismo (por definición el número 1 no es primo). Se sabe que ningún número es divisible entre un número mayor a su raíz cuadrada.</p></div><p class="pregunta"><span class="pregunta"></span>Como una función estándar, programe la función "esPrimo", que reciba un número entero positivo "n" y determine si el mismo es (true) o no (false) primo, empleando la estructura "for", el comando "return" y operadores compuestos donde sea posible, validando (con if) que el número sea entero positivo, lanzando el error "El número debe ser entero positivo" en caso de no serlo (operadores: %, !==, &lt;=). Posteriormente llame a la función con los números: a) 7, b) 8, c) 21, d) 157, e) 159, f) 67.32 y g) -121.</p><div id="pregunta78" class="calculadora" spellcheck="false"><div class="instruccion">function esPrimo(n) {<br>  if (n%1!==0 || n&lt;=0) throw "El número debe ser entero positivo";<br> if (n&lt;2) return false;<br>  for(let i=2; i&lt;=Math.sqrt(n); i++)<br>    if(n%i===0) return false;<br>  return true ;<br>};</div><div class="resultado"></div><div class="instruccion">esPrimo(7)</div><div class="resultado"></div><div class="instruccion">esPrimo(8)</div><div class="resultado"></div><div class="instruccion">esPrimo(21)</div><div class="resultado"></div><div class="instruccion">esPrimo(157)</div><div class="resultado"></div><div class="instruccion">esPrimo(159)</div><div class="resultado"></div><div class="instruccion">esPrimo(67.32)</div><div class="resultado"></div><div class="instruccion">esPrimo(-121)</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="15" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 18 -->
+  <div class="ejercicio" id="ejercicio19" enunciado="1"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p><p></p></div><p class="pregunta"><span class="pregunta"></span>Como una función anónima, programe la función "fibonacci" que, siguiendo la lógica natural, reciba un número entero positivo "n" y devuelva el Fibonacci del número recibido. La ecuación de definición del Fibonacci es:\[\begin{aligned} F_n &amp;= F_{n-1}+F_{n-2}\\[2mm] F_1 &amp;= 1\\[2mm] F_2 &amp;= 1 \end{aligned}\]Emplee la estructura "do-while", el comando "return", validando (con if) que el número sea entero y positivo (%, !==, &lt;=), lanzando los errores "El número debe ser entero positivo". Posteriormente llame a la función con los números: a) 2, b) 5; c) 7; d) 15; e) 25; f) 75; g) 4.56 y h) 0.</p><div id="pregunta81" class="calculadora" spellcheck="false"><div class="instruccion">fibonacci = function (n) {<br>  if (n%1!==0 || n&lt;=0) throw "El número debe ser entero positivo";<br>  if (n&lt;3) return 1;<br>  let f3, f1=1, f2=1, i=3;<br>  do {<br>    f3 =f2+f1;<br>    if (i===n)return f3;<br>    f1= f2;<br>    f2 =f3;<br>    i++;<br>  } while(true);<br>};</div><div class="resultado"></div><div class="instruccion">fibonacci(2)</div><div class="resultado"></div><div class="instruccion">fibonacci(5)</div><div class="resultado"></div><div class="instruccion">fibonacci(7)</div><div class="resultado"></div><div class="instruccion">fibonacci(15)</div><div class="resultado"></div><div class="instruccion">fibonacci(25)</div><div class="resultado"></div><div class="instruccion">fibonacci(75)</div><div class="resultado"></div><div class="instruccion">fibonacci(4.56)</div><div class="resultado"></div><div class="instruccion">fibonacci(0)</div><div class="resultado"></div></div><p class="pregunta" id="pregunta82"><span class="pregunta"></span>Al empezar la tercera iteración (i=5), el valor de f1 es 2 y el de f2, 3, entonces, el nuevo valor del Fibonacci (f3) es <span class="campo_literal correcta" tabindex="0" contenteditable="true">5</span>, por lo tanto, al finalizar el ciclo, el nuevo valor de f1 es <span class="campo_literal correcta" tabindex="0" contenteditable="true">3</span> y el de f2 es <span class="campo_literal correcta" tabindex="0" contenteditable="true">5</span>.</p><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="25" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 19 -->
+  <div class="ejercicio" id="ejercicio20" enunciado="2"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p><p></p></div><p class="pregunta"><span class="pregunta"></span>Como una función estándar, programe la función "chebyshev", que reciba un número real "x" y un entero positivo "n" (el orden) y devuelva el Chebyshev enésimo (m) del número "x". La ecuación de definición del Chebyshev es:\[\begin{aligned} \text{Ch}_n(x) &amp;= 2\cdot x\cdot \text{Ch}_{n-1}(x) - \text{Ch}_{n-2}(x)\\ \text{Ch}_0(x) &amp;= 1\\ \text{Ch}_1(x) &amp;= x \end{aligned}\]Emplee la estructura "do-while", el comando "throw" con la estructura "try-catch", validando (con if) que el orden sea entero positivo (%, !==, &lt;), lanzando el error "El orden debe ser entero positivo". Posteriormente llame a la función con los números: a) 7.1, orden=2; b) 1.2, orden=5; c) 0.3, orden=12; d) 5.7, orden=0; e) 6.1, orden=1; f) 0.8, orden=3.22 y g) 1.5, orden=-7.</p><div id="pregunta89" class="calculadora" spellcheck="false"><div class="instruccion">chebyshev = (x, n) =&gt;{<br>  if (n%1!==0 || n&lt;0) throw "El orden debe ser entero positivo";<br>  if (n===0) return 1;<br>  if (n===1) return x;<br>  try {<br>  let ch2, ch0=1, ch1=x, i=2;<br>  do {<br>    ch2 = 2*x*ch1-ch0;<br>    if (i===n)throw ch2 ;<br>    ch0 = ch1;<br>    ch1 = ch2 ;<br>    i++;<br>   } while (true);<br>  } catch (e){ <br>    return e;<br>  } <br>};</div><div class="resultado"></div><div class="instruccion">chebyshev(7.1,2)</div><div class="resultado"></div><div class="instruccion">chebyshev(1.2,5)</div><div class="resultado"></div><div class="instruccion">chebyshev(0.3,12)</div><div class="resultado"></div><div class="instruccion">chebyshev(5.7,0)</div><div class="resultado"></div><div class="instruccion">chebyshev(6.1,1)</div><div class="resultado"></div><div class="instruccion">chebyshev(0.8,3.22)</div><div class="resultado"></div><div class="instruccion">chebyshev(1.5,-7)</div><div class="resultado"></div></div><p class="pregunta" id="pregunta90"><span class="pregunta"></span>Si el orden (n) es 9, para calcular el resultado, el ciclo se repite <span class="campo_literal correcta" tabindex="0" contenteditable="true">8</span> veces</p><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="26" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 20 -->
+  <div class="ejercicio" id="ejercicio21" enunciado="2"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Como una función flecha, programe la función "legendre", que reciba un número real "x" y un entero positivo "m" (el orden) y devuelva el legendre enésimo (m) del número "x". La ecuación de definición del legendre es:\[\begin{aligned} \text{Le}_n(x) &amp;= \left( 2-\dfrac{1}{n}\right)\cdot x\cdot \text{Le}_{n-1}(x)-\left( 1-\dfrac{1}{n}\right)\cdot\text{Le}_{n-2}(x)\\ \text{Le}_0(x) &amp;= 1\\ \text{Le}_1(x) &amp;= x \end{aligned}\]Emplee la estructura "while", el comando "return", validando (con if) que el orden sea entero positivo (%, !==, &lt;), lanzando el error "El orden debe ser entero positivo". Posteriormente llame a la función con los números: a) 2.1, orden=0; b) 13.1, orden=1; c) 1.3, orden=2; d) 1.5, orden=3; e) 3.9, orden=7; f) 6.1, orden=4.5 y g) 1.1, orden=-3.</p><div id="pregunta93" class="calculadora" spellcheck="false"><div class="instruccion">legendre = (x, m) =&gt; {<br>  if (m%1!==0 || m&lt;0) throw "El orden debe ser entero positivo";<br>  if (m===0) return 1;<br>  if (m===1) return x;<br>  let le2, le0=1, le1=x, n=2;<br>  while(true) {<br>    le2 = (2-1/n)*x*le1-(1-1/n)*le0;<br>    if (n===m) return le2 ;<br>    le0 = le1;<br>    le1 = le2;<br>    n++;<br>  }<br>};</div><div class="resultado"></div><div class="instruccion">legendre(2.1,0)</div><div class="resultado"></div><div class="instruccion">legendre(13.1,1)</div><div class="resultado"></div><div class="instruccion">legendre(1.3,2)</div><div class="resultado"></div><div class="instruccion">legendre(1.5,3)</div><div class="resultado"></div><div class="instruccion">legendre(3.9,7)</div><div class="resultado"></div><div class="instruccion">legendre(6.1,4.5)</div><div class="resultado"></div><div class="instruccion">legendre(1.1,-3)</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="24" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 21 -->
+  <div class="ejercicio" id="ejercicio22" enunciado="1"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Como una función anónima, programe la función "laguerre", que reciba un número real "x" y un entero positivo "m" (el orden) y devuelva el laguerre enésimo (m) del número "x". La ecuación de definición del laguerre es:\[\begin{aligned} \text{L}_n(x) &amp;= \dfrac{(2n-1-x)\text{L}_{n-1}(x)-(n-1)\text{L}_{n-2}(x)}{n}\\[2mm] \text{L}_0(x) &amp;= 1\\[2mm] \text{L}_1(x) &amp;= 1-x \end{aligned}\]Emplee la estructura "do-while", el comando "return", validando (con if) que el orden sea entero (%, !==) y positivo (&lt;), lanzando el error "El orden debe ser entero positivo" en caso de no serlo. Posteriormente llame a la función con los números: a) 1.2, orden=0; b) 3.1, orden=1; c) 1.3, orden=3; d) 3.5, orden=5; e) 1.67, orden=7; f) 9.3, orden=7.2 y g) 6.2, orden=-5.</p><div id="pregunta95" class="calculadora" spellcheck="false"><div class="instruccion">laguerre = function(x, m) {<br>  if (m%1!==0 || m&lt;0) throw  "El orden debe ser entero positivo";<br>  if (m===0) return 1;<br>  if (m===1) return 1-x;<br>    let la2, la0=1, la1=1-x, n=2;<br>    do {<br>      la2 = ((2*n-1-x)*la1-(n-1)*la0)/n ;<br>      if (n===m) return la2 ;<br>      la0 =la1 ;<br>      la1 =la2 ;<br>      n++;<br>  } while(true) ;<br>};</div><div class="resultado"></div><div class="instruccion">laguerre(1.2,0)</div><div class="resultado"></div><div class="instruccion">laguerre(3.1,1)</div><div class="resultado"></div><div class="instruccion">laguerre(1.3,3)</div><div class="resultado"></div><div class="instruccion">laguerre(3.5,5)</div><div class="resultado"></div><div class="instruccion">laguerre(1.67,7)</div><div class="resultado"></div><div class="instruccion">laguerre(9.3,7.2)</div><div class="resultado"></div><div class="instruccion">laguerre(6.2,-5)</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="24" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 22 -->
+
+
+
+
+  <div id="generarPrueba" data-scroll-y="31443"><br><hr><label class="lnotacapitulo">Nota del capítulo: </label><input type="text" id="notaCapitulo" disabled="disabled" class="itnotacapitulo"><br><br><button id="btGenerarPrueba" style="visibility: visible;" onclick="capitulo.registrarCapitulo()">Iniciar defensa</button><button id="btEmplearBono" style="margin-left:1.1rem;width:9.686rem;display:none;" onclick="capitulo.emplearBono()">Emplear Bono</button><br><br></div>
+
+
+<d id="dAutor" style="font-size: 0.9rem;text-align:center;color: #0808f24f;font-weight:bolder;position:fixed;top: 5px;right: 5px;user-select:none;display:inline-block;z-index:15;">Hernan G. Peñaranda V.</d></div><!-- Cierre del div capítulo -->
+
+          
+<div id="dato" style="display:none;">KqbJCKyn938lCZ0oDYGpDIqsDZ8m93OrCZ0aCpCm93CpC2GnC30aC2GvCarQPm00</div>
+<div id="reg" style="display:none;">CJ4xCJ4xCJ4xCZ0nC3ipC30nEp4nC30xCJ4mC3inCJ0mEpCmC34xCZ0nC3ioC34mEp8mCJ0xCJ4mEp8mCJ0xCZ0nC3ipC30nEp4nC30xCJ4xCZ0nC3ipC30nEpCmC34xCZ0nC000</div>
+
+
+
+
+<div style="top: 0px; z-index: 10002; position: fixed; display: none; text-align: center; left: 25%; width: 50%; background-color: rgb(245, 245, 245); padding: 16px; border: 16px solid rgb(68, 68, 68); border-radius: 10px; margin-top: 10px;"></div><div style="z-index: 10001; position: fixed; display: none; top: 0px; left: 0px; width: 100%; height: 100%; background-color: black; opacity: 0.8;"></div><div id="divDialogo" style="display: none;"><div onfocus="document.querySelector('#divDialogo input').focus();"><div>Carnet universitario</div><div>Escriba el número de su carnet universitario, verificando que el guión haya sido correctamente insertado.</div><input type="text" onkeydown="return Capitulo.divDialogo.funKeydown(event)" onkeyup="Capitulo.divDialogo.funKeyup(event)"><div><button onclick="Capitulo.divDialogo.funClick('aceptar');">Aceptar</button><button style="margin-left:35px;" onclick="Capitulo.divDialogo.funClick('cancelar');">Cancelar</button></div></div></div><div style="top: 0px; z-index: 10002; position: fixed; display: none; text-align: center; left: 25%; width: 50%; background-color: rgb(245, 245, 245); padding: 16px; border: 16px solid rgb(68, 68, 68); border-radius: 10px; margin-top: 10px;"></div><div style="z-index: 10001; position: fixed; display: none; top: 0px; left: 0px; width: 100%; height: 100%; background-color: black; opacity: 0.8;"></div><div style="top: 0px; z-index: 10002; position: fixed; display: none; text-align: center; left: 25%; width: 50%; background-color: rgb(245, 245, 245); padding: 16px; border: 16px solid rgb(68, 68, 68); border-radius: 10px; margin-top: 10px;"></div><div style="z-index: 10001; position: fixed; display: none; top: 0px; left: 0px; width: 100%; height: 100%; background-color: black; opacity: 0.8;"></div></body>

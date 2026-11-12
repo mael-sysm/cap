@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<head>
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Language" content="es">
+
+    <title>35-6741 capítulo 7</title>
+    
+    <!-- Librería y hoja de estilos KATEX  -->
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/katex/katex.min.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/katex/katex.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/katex/contrib/auto-render.min.js"></script>
+
+    <!-- Librerías y hojas de estilo CodeMirror -->
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/lib/codemirror.min.css">
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/theme/mdn-like.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/lib/codemirror.min.js"></script>
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/fold/foldgutter.min.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/fold/foldcode.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/fold/brace-fold.min.js"></script>
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/dialog/dialog.min.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/dialog/dialog.min.js"></script>
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/hint/show-hint.min.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/hint/show-hint.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/hint/javascript-hint.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/search/searchcursor.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/search/search.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/edit/matchbrackets.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/edit/closebrackets.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/comment/comment.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/wrap/hardwrap.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/javascript/javascript.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/css/css.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/xml/xml.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/markdown/markdown.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/htmlmixed/htmlmixed.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/keymap/sublime.min.js"></script>
+
+    <!-- Librería Plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script><style id="plotly.js-style-global"></style>
+
+    <!-- Librerías y hojas de estilo function-plot -->
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/function-plot/site/js/vendor/d3.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/function-plot/dist/function-plot.js"></script>
+    
+    <!-- Librería quantities -->
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/quantities/quantities.min.js"></script>
+
+    <!-- Librería GoJs para la creación de diagramas de flujo -->
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/gojs/release/go.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/flowchart_gojs.js"></script>
+
+    <!-- Librerías matemáticas propias -->
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/math.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/number.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/array.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/string.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/cplx.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/function.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/object.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/prq.js"></script>
+
+    <!-- Librería y hoja de estilos propias para la creación y manejo de la calculadora  -->
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/src/cjs.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/cjs.js"></script>
+
+    <!-- Librería y hoja de estilos propias para la creación y manejo de los capítulos -->
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/src/texto.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/texto.js"></script>
+
+   <!-- Librería del capítulo actual -->
+    <script src="https://cursosabiertos.usfx.bo/materias/progoo/capitulos/capitulo7/files/capitulo7.js"></script>
+
+    <!-- Fuentes empleadas en el capítulo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300;400;500;600;700;800&amp;family=Roboto+Mono&amp;display=swap" rel="stylesheet">
+
+    <script>
+        function katexRender() {
+            renderMathInElement(document.getElementById("capitulo"));
+        }
+        document.addEventListener("DOMContentLoaded", katexRender);
+        window.onerror = function(msg, url, lineNo, columnNo, error) {
+            __error__ = msg;
+        };
+        window.onload = function(){
+            capitulo.iniciar();
+        };
+    </script>
+
+</head>
+
+<body class="text">  
+
+
+<div id="capitulo">
+
+  <button id="btGuardar" style="z-index:15;" onclick="savePage()">Guardar</button>
+
+    <h1 class="text" onclick="alerta(capitulo.idPagina,'')" style="cursor: pointer;">Programación Orientada a Objetos (POO)</h1>
+
+    <p class="text">Hasta el anterior capítulo se ha hecho un repaso y se ha profundizado en algunos de los principios y herramientas de la Programación Estructurada, con esa base, a partir de este capítulo inicia el estudio de la <strong class="style1">Programación Orientada a Objetos (POO)</strong>.</p>
+
+    <p class="text">La programación orientada a objetos es un paradigma de programación, donde la solución de los problemas se concibe como conjuntos de objetos que cooperan entre sí para solucionar los problemas. Un <dfn class="style1">paradigma de programación</dfn> es un estilo, un enfoque, una forma de ver y modelar el mundo real dentro del código.</p>
+
+    <p class="text">Un <strong class="style1">objeto</strong> en la POO <strong class="style1">es la representación simplificada de una "cosa" (algo o alguien)</strong>. Esa "cosa" puede ser un objeto de la vida real (un auto, una casa, una persona, etc.), o un concepto simple o complejo (una venta, un préstamo, una hipoteca, etc.).</p>
+
+    <p class="text">En analogía con los objetos de la vida real, como un auto, por ejemplo, que tiene un conjunto de características como marca, modelo, color, cilindrada, potencia, etc., y algunas funcionalidades como encender, acelerar, frenar, girar, apagar, etc., un objeto de la POO tienen también un conjunto de datos, denominadps <strong class="style1">atributos</strong> (o <strong class="style1">propiedades</strong>) y algunas funciones, denominadas <strong class="style1">métodos</strong>.</p>
+
+    <p class="text">El conjunto de valores que tienen los atributos de un objeto en cualquier momento se conoce como <strong class="style1">el estado del objeto</strong>.</p>
+
+    <p class="text">La diferencia fundamental entre la Programación Estructurada (PE) y la Orientada a Objetos (POO) es que en la PE los datos y las funciones están separadas, mientras que, en la POO, los datos (los atributos) y las funciones (los métodos) están dentro de una misma estructura: El objeto. Los atributos de un objeto son el equivalente a las variables de la PE y los métodos de un objeto son el equivalente a las funciones de la PE.</p>
+    
+    <p class="text">En resumen, en la POO, los datos y las funciones están dentro de una misma estructura: <strong class="style1">El objeto</strong>. En la POO los datos se conocen como <strong class="style1">atributos</strong> y las funciones como <strong class="style1">métodos</strong> y <strong class="style1">el estado del objeto</strong> es el conjunto de valores que tienen esos atributos en un momento dado.</p>
+
+
+    <h2 class="text">Programación Estructurada y Orientada a Objetos</h2>
+
+    <p class="text">Tanto la Programación Estructurada, como la Programación Orientada a Objetos, son <i class="style1">paradigmas</i>, es decir <i class="style1">formas de ver y modelar el mundo real dentro del código</i>.</p>
+
+    <p class="text">En la PE se modela el mundo identificando las funciones que se requieren para resolver el problema, así como los datos que necesitan esas funciones para realizar sus tareas. En la POO se modela el mundo identificando el conjunto de objetos con los que se resuelve el problema, así como los métodos y atributos de esos objetos.</p>
+
+    <p class="text">Debido a la diferencia de enfoques, en la PE la solución consta de un conjunto de funciones y un conjunto de datos/estructuras de datos, mientras que, en la POO, la solución consta de un conjunto de objetos, cada uno con sus propios atributos y métodos.</p>
+
+    <p class="text">En consecuencia, al resolver un problema con el enfoque estructurado se piensa en las funciones que se requieren para resolver el problema y en los datos que requieren esas funciones. En el enfoque orientado a objetos, se piensa en los objetos con los que se puede resolver el problema y en los atributos y métodos de esos objetos.</p>
+
+
+    <h2 class="text">Clases y objetos</h2>
+
+    <p class="text">En el paradigma de la Programación Orientada a Objetos, se emplean los términos <dfn class="style1">clase</dfn> y <dfn class="style1">objeto</dfn> y frecuentemente se emplean como sinónimos, sin embargo, son dos conceptos diferentes.</p>
+
+    <p class="text">Como se dijo un <dfn class="style1">objeto</dfn> es la estructura que contiene tanto los datos (atributos) como las funciones (métodos), en consecuencia, si se crea una estructura que contiene tanto los datos como las funciones, se ha crea un objeto.</p>
+
+    <p class="text">Las <dfn class="style1">clases</dfn> son un tipo especial de objetos que permiten crear objetos de un determinado tipo. Son como fábricas que producen, cada una de ellas, un determinado tipo de objeto. Por esa razón son conocidas también como <dfn class="style1">Objetos Constructores</dfn>.</p>
+
+    <p class="text">En la <dfn class="style1">clase</dfn> se declaran todos los métodos y atributos que tendrán los objetos creados a partir de la misma, pero no se asignan los valores a los atributos (aunque sí es posible asignar valores por defecto). Los verdaderos valores de los atributos se asignan recién cuando se crea un objeto a partir de una clase.</p>
+    
+    <p class="text">La razón principal por la que se emplean <dfn class="style1">clases</dfn> en la POO es porque los objetos creados a partir de una clase pueden utilizar los métodos de esa clase. Todos los objetos de una clase (y pueden ser cientos o miles de objetos) emplean directamente los métodos de la clase, no se crean copias para cada objeto.</p>
+
+    <p class="text">Si no se emplearían clases (u objetos constructores), se tendrían que volver a declarar los métodos en cada uno de los objetos del mismo tipo, lo que por una parte implicaría la duplicación irracional de código (con el consiguiente consumo de memoria y tiempo) y por otra, haría al sistema vulnerable a errores, porque cuando se corrija o modifique un método (algo que casi siempre ocurre) esa modificación/corrección tendría que ser replicada (manualmente) en cada uno de los objetos.</p>
+
+    <p class="text">Los métodos de una clase trabajan exclusivamente con los atributos del objeto desde el cual son llamados, por lo que deben tener acceso al objeto. En el caso de JavaScript, los métodos tienen acceso al objeto mediante la variable <b class="style1">this</b>. Esta variable, que es creada automáticamente, es el nombre que le da JavaScript al objeto desde el cual ha sido llamado el método.</p>
+
+    <p class="text">En conclusión, <dfn class="style1">una clase</dfn> es un objeto especializado en la creación de objetos de un determinado tipo. En una clase se declaran los métodos y los atributos del objeto, pero no se asignan los valores finales. Un <dfn class="style1">objeto de una clase</dfn>, por otra parte, es el resultado de crear un objeto a partir de una <dfn class="style1">clase</dfn>. El <dfn class="style1">objeto</dfn>, conocido como <strong class="style1">instancia de la clase</strong>, tiene sus atributos con los valores asignados (tiene un estado) y puede llamar directamente a los métodos de la <dfn class="style1">clase</dfn>, aunque esos métodos no le pertenecen (pertenecen a la <dfn class="style1">clase</dfn>).</p>
+
+
+
+    <h2 class="text">Fundamentos de la POO</h2>
+
+    <p class="text">La Programación Orientada a Objetos se rige por 4 fundamentos, 4 pilares que guían el diseño de software cuando se aplica este paradigma.</p>
+
+    <h3 class="text">Abstracción</h3>
+
+    <p class="text">Este principio dice que al identificar un objeto el mismo debe ser representado de manera simplificada, mostrando únicamente los aspectos esenciales para el problema, pero ocultando los aspectos irrelevantes, así como los detalles de su implementación. Se debe pensar en <dfn class="style1">"que hace el objeto"</dfn> en lugar del <dfn class="style1">"cómo lo hace"</dfn>.</p>
+
+    <h3 class="text">Encapsulación</h3>
+
+    <p class="text">Este principio dice que sólo debe ser posible acceder/modificar los atributos de un objeto mediante los métodos del objeto, protegiendo así su estado.</p>
+
+    <h3 class="text">Herencia</h3>
+
+    <p class="text">Este principio dice que una clase (la clase hija) puede heredar los atributos y métodos de otra (la clase padre) evitando así la duplicación de código, extendiendo y especializando su comportamiento a través de nuevos métodos y atributos.</p>
+
+    <h3 class="text">Polimorfismo</h3>
+
+    <p class="text">Este principio dice que cuando un método es llamado desde un objeto, debe responder de diferentes formas en función a la clase a la que pertenece el objeto. El principio instruye implementar los métodos (sobre todo en las clases heredadas) de manera que repondan a las características específicas de la clase.</p>
+
+        
+    <div class="ejercicio" id="ejercicio1" enunciado="0"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span>Marque únicamente las afirmaciones correctas.</p></div><p class="pregunta"><span class="pregunta"></span>Con relación a la POO:</p><p class="opcionMultiple correcta"><input type="checkbox" name="pregunta1" id="opcion14" checked=""><span class="opcionMultiple"></span><label for="opcion14">En la PE los datos y las funciones están separadas.</label></p><p class="opcionMultiple correcta"><input type="checkbox" name="pregunta1" id="opcion3" checked=""><span class="opcionMultiple"></span><label for="opcion3">Un objeto es la representación simplificada de una cosa.</label></p><p class="opcionMultiple correcta"><input type="checkbox" name="pregunta1" id="opcion9"><span class="opcionMultiple"></span><label for="opcion9">Las funciones de un objeto se denominan "propiedades".</label></p><p class="opcionMultiple correcta"><input type="checkbox" name="pregunta1" id="opcion8"><span class="opcionMultiple"></span><label for="opcion8">Las funciones de un objeto se denominan "atributos".</label></p><p class="opcionMultiple correcta"><input type="checkbox" name="pregunta1" id="opcion16" checked=""><span class="opcionMultiple"></span><label for="opcion16">Los atributos de la POO son equivalentes a las variables de la PE.</label></p><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="4" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 1 -->
+
+    <div class="ejercicio" id="ejercicio2" enunciado="0"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span>Seleccione las afirmaciones correctas:</p></div><p class="pregunta"><span class="pregunta"></span>Con relación a la POO y la PE</p><p class="opcionMultiple correcta"><input type="checkbox" name="pregunta2" id="opcion30" checked=""><span class="opcionMultiple"></span><label for="opcion30">En la PE la solución consta de un conjunto de funciones y otro de datos.</label></p><p class="opcionMultiple correcta"><input type="checkbox" name="pregunta2" id="opcion28" checked=""><span class="opcionMultiple"></span><label for="opcion28">En la POO la solución consta de un conjunto de objetos.</label></p><p class="opcionMultiple correcta"><input type="checkbox" name="pregunta2" id="opcion22" checked=""><span class="opcionMultiple"></span><label for="opcion22">Para resolver un problema en la POO se identificann los objetos necesarios.</label></p><p class="opcionMultiple correcta"><input type="checkbox" name="pregunta2" id="opcion27"><span class="opcionMultiple"></span><label for="opcion27">En la POO, una vez idenficados los atributos, se definen los métodos.</label></p><p class="opcionMultiple correcta"><input type="checkbox" name="pregunta2" id="opcion26" checked=""><span class="opcionMultiple"></span><label for="opcion26">En la POO, una vez idenficados los objetos, se definenen sus métodos y atributos.</label></p><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="4" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 2 -->
+
+    <div class="ejercicio" id="ejercicio3" enunciado="0"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span>Seleccione las afirmaciones correctas:</p></div><p class="pregunta"><span class="pregunta"></span>Con relación a las clases y objetos:</p><p class="opcionMultiple correcta"><input type="checkbox" name="pregunta3" id="opcion45" checked=""><span class="opcionMultiple"></span><label for="opcion45">Los valores de los atributos de un objeto son asignados al momento de crear el objeto.</label></p><p class="opcionMultiple correcta"><input type="checkbox" name="pregunta3" id="opcion41" checked=""><span class="opcionMultiple"></span><label for="opcion41">En una clase, el objeto que hace la llamada al método se denomina "this".</label></p><p class="opcionMultiple correcta"><input type="checkbox" name="pregunta3" id="opcion44"><span class="opcionMultiple"></span><label for="opcion44">Cada objeto de una clase tiene su propio conjunto de métodos.</label></p><p class="opcionMultiple correcta"><input type="checkbox" name="pregunta3" id="opcion34" checked=""><span class="opcionMultiple"></span><label for="opcion34">Las clases son un tipo especial de objetos que permiten crear objetos.</label></p><p class="opcionMultiple correcta"><input type="checkbox" name="pregunta3" id="opcion38"><span class="opcionMultiple"></span><label for="opcion38">Las clases se conocen también como clases padre.</label></p><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="4" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 3 -->
+
+    <div class="ejercicio" id="ejercicio4" enunciado="0"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span>Seleccione las afirmaciones correctas:</p></div><p class="pregunta"><span class="pregunta"></span>Con relación a los fundamentos de la POO:</p><p class="opcionMultiple correcta"><input type="checkbox" name="pregunta4" id="opcion58"><span class="opcionMultiple"></span><label for="opcion58">El que un método responda de acuerdo al objeto desde el cual es llamado, se conoce como "abstracción".</label></p><p class="opcionMultiple correcta"><input type="checkbox" name="pregunta4" id="opcion52"><span class="opcionMultiple"></span><label for="opcion52">Conforme al principio de la "abstracción" se deben mostrar todos los detalles del objeto.</label></p><p class="opcionMultiple correcta"><input type="checkbox" name="pregunta4" id="opcion48"><span class="opcionMultiple"></span><label for="opcion48">La "abstracción" es la representación fidedigna de un objeto en el código.</label></p><p class="opcionMultiple correcta"><input type="checkbox" name="pregunta4" id="opcion49" checked=""><span class="opcionMultiple"></span><label for="opcion49">El principio de "abstracción" insta a pensar en "qué hace el objeto" en lugar de "como lo hace"</label></p><p class="opcionMultiple correcta"><input type="checkbox" name="pregunta4" id="opcion61"><span class="opcionMultiple"></span><label for="opcion61">La "herencia" permite evitar la creación de otras clases.</label></p><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="4" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 4 -->
+
+    
+
+    <h2 class="text">Objetos literales</h2>
+
+    <p class="text">En JavaScript es posible declara un objeto sin que sea creado explícitamente a partir de una clase. Los objetos creados de esta manera se conocen como <i class="style1">objetos literales</i> y sen de utilidad práctica en aquellos casos donde sólo se requiere un objeto de un determinado tipo, es decir cuando sólo se necesita una instancia del objeto y en consecuencia, no se justifica crear una clase que será empleada una sola vez.</p>
+
+    <p class="text">Para crear un <i class="style1">objeto literal</i> simplemente se escribe, entre llaves y separados con comas, los atributos y métodos del objeto. Con frecuencia, los <i class="style1">objetos literales</i> constan únicamente o de atribustos (datos) o de métodos (funciones) y pueden ser inclusive objetos vacíos.</p>
+
+    <p class="text">Un objeto literal vacío se crea simplemente escribiendo llaves sin nada en su interior:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">persona = {}; persona</div>
+        <div class="resultado"></div>
+    </div>
+    
+    <p class="text">Una vez creado el objeto vacío, es posible añadir atributos y métodos empleando la notación de punto. Por ejemplo se pueden añadir los atributos "nombres" y "apellidos", así como el método "nombreCompleto" que empleando una plantilla literal muestre el nombre completo:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">persona.nombres = "Juan Carlos";<br>persona.apellidos = "Perez Berríos";<br>persona.nombreCompleto = function() {<br>  return `${this.apellidos} ${this.nombres}`;<br>};</div>
+        <div class="resultado"></div>
+        <div class="instruccion">persona.nombreCompleto()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Note que en el método "nombreCompleto" se emplea <dfn class="style1">this</dfn> para acceder a los atributos del objeto. Como se dijo "this" es el nombre que JavaScript asigna automáticamente al objeto que llama al método (en este caso el objeto "persona").</p>
+    
+    <p class="text">Por supuesto, en lugar de crear un objeto literal vacío y luego añadirle atributos y métodos, se puede crear directamente el objeto con esos atributos y métodos, como sucede con el objeto "persona2":</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">persona2 = {<br>  nombres: "José Rodrigo",<br>  apellidos: "Torres Albornoz",<br>  nombreCompleto: function() {<br>    return `${this.apellidos} ${this.nombres}`<br>  }<br>};</div>
+        <div class="resultado"></div>
+        <div class="instruccion">persona2.nombreCompleto()</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Sin embargo, lo más frecuente en la práctica es crear objetos a partir de clases y solo ocasionalmente objetos literales. Pero incluso un objeto literal, aunque no se crea explícitamente a partir de una clase, internamente es creada por JavaScript a partir de la clase "Object" (la clase padre de todos los objetos en JavaScript).</p>
+
+    <div class="ejercicio" id="ejercicio5" enunciado="2"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Como un objeto literal, cree el objeto vacío "tv", luego añada los atributos "marca" ("Samsung"), "resolución" ("4K") y "pulgadas" (65) y muestre el objeto resultante.</p><div id="pregunta7" class="calculadora" spellcheck="false"><div class="instruccion">tv = {};</div><div class="resultado"></div><div class="instruccion">tv.marca = "Samsung";<br>tv.resolución = "4K";<br>tv.pulgadas =65 ;<br>tv</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="4" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div> <!-- Ejercicio 5 -->
+
+    <div class="ejercicio" id="ejercicio6" enunciado="4"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Como un objeto literal cree el objeto "perro" con los atributos "nombre" ("Firulais"), "raza" ("Golden retriever") y "años" (3), luego, muestre el objeto resultante. Finalmente en otra celda de código cambie los valores de los atributos a "Boby", "Rottweiler" y 4 y muestre el objeto resultante.</p><div id="pregunta14" class="calculadora" spellcheck="false"><div class="instruccion">perro = {<br>  nombre : "Firulais",<br>  raza : "Golden retriever",<br>  años : 3<br>};<br>perro</div><div class="resultado"></div><div class="instruccion">perro.nombre = "Boby";<br>perro.raza  = "Rottweiler";<br>perro.años =4 ;<br>perro</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="6" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div> <!-- Ejercicio 6 -->
+
+
+    <h2 class="text">Clases en JavaScript</h2>
+
+    <p class="text">En JavaScript las clases pueden ser creadas en diferentes formas, sin embargo, actualmente se crea principalmente con la palabra reservada <b class="style1">class</b>, de acuerdo a la siguiente sintaxis:</p>
+
+    <div class="codigo">class nombre_de_la_clase {<br>    ...<br>    constructor(...) {<br>        <br>    }<br>    ...<br>    métodos getter y setter (dinámicos y estáticos)<br>    ...<br>    propiedades y métodos dinámicos (públicos y privados)<br>    ...<br>    propiedades y métodos estáticos (públicos y privados)<br>    ...<br>    bloques de inicialización estáticos<br>    ...<br>}</div>
+
+    <p class="text">Todos los elementos de una clase (los elementos mostrados en la sintaxis) son opcionales. Así, al igual que ocurre con un objeto literal, es posible crear una clase sin ningún elemento: <dfn class="style1">una clase vacía</dfn>:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">class Vacío {<br>};</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Y, aunque es una clase vacía, se pueden crear objetos (instancias) de esa clase.</p>
+    
+    <p class="text">Para crear un objeto (una instancia) de una clase se emplea la palabra reservada <b class="style1">new</b>, de acuerdo a la siguientes sintaxis:</p>
+
+    <div class="codigo"><br>var|let|const variable_objeto = new nombre_de_la_clase(valores_iniciales);<br></div>
+
+    <p class="text">Así, para crear el objeto 'obj1' de la clase <dfn class="style1">Vacío</dfn> se escribe:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">obj1 = new Vacío();<br>obj1</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Obviamente, al ser una clase vacía, se obtiene un objeto vacío. Cada uno de los objetos que se crean a partir de una clase son únicos, aunque tengan los mismos atributos, así, por ejemplo, si se crea otro objeto vacío:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">var obj2 = new Vacío();<br>obj2</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Y se compara con el objeto creado previamente:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">obj1 == obj2</div>
+        <div class="resultado"></div>
+        <div class="instruccion">obj1 === obj2</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">El resultado es falso (con los dos operadores de igualdad) porque, aunque ambos son objetos vacíos de la misma clase, cada uno tiene su propia dirección de memoria (está guardado en su propio espacio de memoria) y cuando se comparan objetos, se comparan esas direcciones de memoria. En consecuencia dos objetos son iguales únicamente cuando en realidad se trata del mismo objeto. Por ejemplo si el objeto "obj2" se guarda en la variable "obj3" y se compara con "obj2":</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">obj3 = obj2</div>
+        <div class="resultado"></div>
+        <div class="instruccion">obj2 == obj3</div>
+        <div class="resultado"></div>
+        <div class="instruccion">obj2 === obj3</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">El resultado es verdadero (true), porque, aunque son dos variables diferentes, ambas apuntan a la misma dirección de memoria (ambas hacen referencia al mismo objeto, se trata de un objeto con dos nombres: "obj2" y "obj3").</p>
+
+    <p class="text">Al igual que ocurre con un objeto literal, una vez creado un objeto a partir de una clase, es posible (en JavaScript) añadirle propiedades y métodos. Por ejemplo en las siguientes instrucciones se añaden los atributos "r=2.3" y "s=4.1" al objeto "obj1" y los atributos "x=5.2" y "y=7.1" al objeto "obj2":</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">obj1.r = 2.3;<br>obj1.s = 4.1;<br>obj1</div>
+        <div class="resultado"></div>
+        <div class="instruccion">obj2.x = 5.2;<br>obj2.y = 7.1;<br>obj2</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Sin embargo, esa no es una buena práctica de programación. Sí es necesario añadir un atributo o método a un objeto, entonces se tienen que revisar el código para ver si ese atributo/método debería ser añadido a la clase.</p>
+
+    <p class="text">Cuando se declara <b class="style1">una clase</b> (cuando se crea una clase) <b class="style1">no puede volver a ser declarada</b>. En ese sentido, las clases se comportan de manera similar a las variables declaradas con <i class="style1">let</i> o <i class="style1">const</i>.</p>
+
+    <p class="text">Debido a que todo el código JavaScript en una página WEB corresponde a una sola sesión, todos los elementos que se declaran: variables, funciones, clases, etc., permanecen en memoria hasta que la página es cerrada o recargada, por lo tanto, todas las clases declaradas permanecen en memoria y como no pueden volver a ser declaradas, cuando se intenta modificarlas (algo que es necesario casi siempre), JavaScript lanza un error informado que la clase ya fue declarada..</p>
+        
+    <p class="text">Por esa razón, en la asignatura, las clases se declaran como funciones expresión en lugar de la forma estándar (de manera análoga a una función estándar y una función anónima):</p>
+
+    <div class="codigo">nombre_de_la_clase = class {<br>    ...<br>    constructor(...) {<br>        <br>    }<br>    ...<br>    métodos getter y setter (dinámicos y estáticos)<br>    ...<br>    propiedades y métodos dinámicos (públicos y privados)<br>    ...<br>    propiedades y métodos estáticos (públicos y privados)<br>    ...<br>    bloques de inicialización estáticos<br>    ...<br>}</div>
+
+
+  <h3 class="text">El constructor y los métodos getter y setter</h3>
+
+  <p class="text">Normalmente, cuando se crea una clase, se declara también su <dfn class="style1">constructor</dfn>. El <dfn class="style1">constructor</dfn> es un método especial (una función) que se ejecuta automáticamente cuando se crea una instancia de la clase (cuando se crea un objeto) y es empleado para asignar valores iniciales a los atributos del objeto, así como realizar algunas validaciones y ejecutar los procedimientos iniciales que sean necesarios para dejar el objeto listo para su uso.</p>
+
+  <p class="text">Así para representar a una persona en la POO, se debe crear una clase, por ejemplo, la clase "Persona" y en aplicación del principio de la <dfn class="style1">abstracción</dfn>, debe ser una representación <dfn class="style1">simplificada</dfn> de una persona, que en este caso tendrá solo los siguientes atributos: nombres, apellidos, carnet de identidad y fecha de nacimiento, el constructor de la clase se emplea para permitir asignar valores a estos atributos cuando se crea un objeto.</p>
+
+  <p class="text">Por otra parte, para aplicar correctamente el principio de la <dfn class="style1">encapsulación</dfn> los atributos deben ser privados, es decir que sólo deben poder ser leídos y modificados por los métodos de la clase. En JavaScript, para declarar un atributo como privado, el nombre del atributo debe estar precedido por el símbolo <b class="style1">#</b>.</p>
+  
+  <p class="text">Para que los atributos puedan ser leídos y modificados desde los objetos de la clase, se deben programar dos tipos de métodos especiales: los métodos <strong class="style1">getter</strong> y los métodos <strong class="style1">setter</strong>. Los métodos <dfn class="style1">getter</dfn> se declaran anteponiendo la palabra <b class="style1">get</b> al nombre del método y se caracterizan porque no tienen ningún parámetro (no reciben ningún dato) y devuelven un resultado (normalmente el valor de un atributo o el resultado de alguna operación). Los métodos <dfn class="style1">setter</dfn>, se declaran anteponiendo la palabra <b class="style1">set</b> al nombre del método y se caracterizan porque sólo tienen un parámetro (donde reciben el nuevo valor del atributo). Casi siempre, antes de asignar el nuevo valor, se debe validar que el valor recibido sea un valor válido.</p>
+ 
+  <p class="text">Además, la clase contará con dos métodos: uno para devolver el nombre completo de la persona y otro para calcular y devolver la edad de la persona.</p>
+
+  <p class="text">Finalmente, siguiendo el principio del <dfn class="style1">polimorfismo</dfn>, se sobrescriben los métodos "toString" y "valueOf" (del objeto "Object") que por defecto devuelven "[object Object]" y "{}", que no son de utilidad práctica, por lo que se sobrescriben para que devuelvan una cadena (toString) y un objeto literal (valueOf) con los datos de la persona.</p>
+
+  <p class="text">Al programar con el paradigma Orientado a Objetos, se hace uso frecuente de las clases disponibles en el lenguaje. Así, para trabajar con fechas (y tiempos) se emplea la clase <strong class="style1">Date</strong>. Si no se le manda ningún dato crea un objeto con la fecha actual, si se le manda un texto con el formato "aaaa/mm/dd" crea un objeto con la fecha actual. Los años, los meses (con base 0) y los días, se obtienen con los métodos "getFullYear", "getMonth" y "getDate" y el método "toLocaleDateString" devuelve la fecha como un texto con el formato "dd/mm/aaaa".</p>
+
+  <p class="text">Por otra parte, para que sea válida la fecha de nacimiento en formato local ("dd/mm/aaa") debe ser transformada a formato internacional ("aaaa/mm/dd"). Con ese fin se emplean los métodos "split", "reverse" y "join" de la clase String. "Split" divide la cadena en los lugares que coinciden con su cadena ("/") y devuelve un vector con las cadenas resultantes ([aaaa,mm,dd]), "reverse" invierte los elementos del vector ([dd,mm,aaaa]) y "join" vuelve a unir las cadenas del vector, intercalándolas con su cadena ("/"). Estos y otros métodos serán estudiados con más detalle en capítulos posteriores.</p>
+
+  <p class="text">También, para validar que el número sea entero se emplea el método estático <strong class="style1">Number.prototype</strong>, que devuelve verdadero si el número que recibe es entero (positivo o negativo). Los <strong class="style1">métodos estáticos</strong> se caracterizan porque sólo pertenecen a la clase, no a los objetos de la clase (como ocurre con los métodos dinámicos). Por esa razón son llamados desde la clase (en este caso la clase <dfn class="style1">Number</dfn>) y no desde el objeto (en este caso, no desde un número). Los <dfn class="style1">métodos estáticos</dfn> se comportan más como funciones estructuradas que como métodos: No tienen acceso a los atributos, reciben sus datos en forma de parámetros y devuelven los resultados igual que una función estructurada (todos los métodos de la clase <strong class="style1">Math</strong> son métodos estáticos).</p>
+
+  <p class="text"></p>
+ 
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">Persona = class {<br><br>  #nombres;<br>  #apellidos;<br>  #cIdentidad;<br>  #fNacimiento;<br><br>  constructor(nombres, apellidos, cIdentidad, fNacimiento) {<br>    this.nombres = nombres;<br>    this.apellidos = apellidos;<br>    this.cIdentidad = cIdentidad;<br>    this.fNacimiento = fNacimiento;<br>  }<br><br>	set nombres(nombres) {<br>    this.#nombres = nombres;<br>  }<br><br>	set apellidos(apellidos) {<br>    this.#apellidos = apellidos;<br>  }<br><br>	set cIdentidad(ci) {<br>    // El carnet debe ser entero positivo con 7 o más dígitos<br>    if (!(Number.isInteger(ci) &amp;&amp; ci&gt;0) || ci&lt;1e6) throw new Error("Carnet de identidad no válido");<br>    this.#cIdentidad = ci;<br>  }<br><br>	set fNacimiento(fecha) {<br>    // Cambia el formato de la fecha de "dd/mm/aaaa" a "aaaa/mm/dd"<br>    fecha = fecha.split("/").reverse().join("/");<br>    const nacimiento = new Date(fecha); // Fecha de nacimiento<br>    const hoy = new Date(); // Fecha actual<br>    // Si la fecha de nacimiento no tiene el formato válido<br>    if (!nacimiento.valueOf()) throw new Error("Formato erróneo, formato válido: aaaa/mm/dd");<br>		// Si la fecha de nacimiento es mayor o igual a la fecha actual<br>    if (nacimiento&gt;=hoy) throw new Error("La fecha de nacimiento debe ser menor a la fecha actual");<br>		// La fecha de nacimiento se guarda como un objeto de la clase Date<br>    this.#fNacimiento = nacimiento;<br>  }<br><br>	get nombres() {<br>    return this.#nombres;<br>  }<br><br>	get apellidos() {<br>    return this.#apellidos;<br>  }<br><br>	get cIdentidad() {<br>    return this.#cIdentidad;<br>  }<br><br>	get fNacimiento() {<br>    return this.#fNacimiento.toLocaleDateString();<br>  }<br><br>  get nombreCompleto() {<br>    return `${this.nombres} ${this.apellidos}`;<br>  }<br><br>	get edad() {<br>    const hoy = new Date(); // Fecha actual<br>    // Año, mes y día actual<br>    const [aa, ma, da] = [hoy.getFullYear(), hoy.getMonth(), hoy.getDate()];<br>    // Se trabaja con la fecha de nacimiento (no con el texto)<br>    const nacimiento = this.#fNacimiento;<br>    // Año, mes y día de nacimiento<br>    const [an, mn, dn] = [nacimiento.getFullYear(), nacimiento.getMonth(), nacimiento.getDate()];<br>  	// Años entre la fecha actual y de nacimiento<br>    let edad = aa-an;<br>    // Si el mes actual es menor al de nacimiento, no ha cumplido años<br>    if (ma&lt;mn) edad--;<br>    // Si es el mismo mes pero el día actual es menor al de nacimiento, no ha cumplido años<br>    else if(ma===mn &amp;&amp; da&lt;dn) edad--;<br>    return edad;<br>  }<br><br>	toString() {<br>    return `nombre: ${this.nombreCompleto}<br>carnet de identidad: ${this.cIdentidad}<br>fecha de nacimiento: ${this.fNacimiento}<br>edad: ${this.edad} años`;<br>  }<br><br>	valueOf() {<br>    return {<br>      nombre: this.nombreCompleto,<br>      cIdentidad: this.cIdentidad,<br>      fNacimiento: this.fNacimiento,<br>      edad: this.edad<br>    };<br>  }<br><br>};</div>
+      <div class="resultado"></div>
+  </div>
+
+  <p class="text">Ahora, con la clase elaborada, se pueden crear objetos de tipo "Persona". Por ejemplo, con la siguiente instrucción se crea el objeto "persona1":</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">persona1 = new Persona("Juan Carlos", "Carranza Siles", 3821245, "23/10/1998");</div>
+      <div class="resultado"></div>
+  </div>
+
+  <p class="text">Llamando desde este objeto a los métodos getter disponibles, se obtiene:</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">persona1.nombres</div>
+      <div class="resultado"></div>
+      <div class="instruccion">persona1.apellidos</div>
+      <div class="resultado"></div>
+      <div class="instruccion">persona1.cIdentidad</div>
+      <div class="resultado"></div>
+      <div class="instruccion">persona1.fNacimiento</div>
+      <div class="resultado"></div>
+      <div class="instruccion">persona1.nombreCompleto</div>
+      <div class="resultado"></div>
+      <div class="instruccion">persona1.edad</div>
+      <div class="resultado"></div>
+  </div>
+
+  <p class="text">Con el método "valueOf" se obtiene:</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">persona1.valueOf()</div>
+      <div class="resultado"></div>
+  </div>
+  
+  <p class="text">El método "toString" es llamado automáticamente por JavaScript, cuando requiere una cadena que represente al objeto. Por ejemplo cuando se quiere mostrar el objet con la función "print":</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">print(persona1)</div>
+      <div class="resultado"></div>
+  </div>
+
+  <p class="text">Los métodos setter disponibles, permiten asignar nuevos valore a los atributos del objeto. Así, las siguientes instrucciones cambian los valores del objeto:</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">persona1.nombres = "José Luis"</div>
+      <div class="resultado"></div>
+      <div class="instruccion">persona1.apellidos = "Romero Alvis"</div>
+      <div class="resultado"></div>
+      <div class="instruccion">persona1.cIdentidad = 1123453</div>
+      <div class="resultado"></div>
+      <div class="instruccion">persona1.fNacimiento = "14/08/2006"</div>
+      <div class="resultado"></div>
+      <div class="instruccion">persona1.nombreCompleto</div>
+      <div class="resultado"></div>
+      <div class="instruccion">persona1.edad</div>
+      <div class="resultado"></div>
+      <div class="instruccion">print(persona1)</div>
+      <div class="resultado"></div>
+  </div>
+
+
+
+  <h3 class="text">Extends</h3>
+ 
+  <p class="text">Como se dijo, uno de los fundamentos de la POO es la herencia. En JavaScript, para que una clase herede de otra se escribe la palabra reservada <b class="style1">extends</b>, de acuerdo a la siguiente sintaxis:</p>
+
+  <div class="codigo">class nombre_clase_extendida extends nombre_clase_base {<br>  ...<br>}</div>
+
+  <p class="text">Si la clase padre (la clase base) tiene un <strong class="style1">constructor</strong> y la clase hija (la clase extendida) tiene atributos adicionales, se debe declarar un <dfn class="style1">constructor</dfn> en la clase hija y en ese constructor se debe llamar al constructor de la clase padre empleando la palabra reservada <strong class="style1">super</strong>: Ese es el nombre que JavaScript asigna automáticamente a la clase padre  (por esa razón, <dfn class="style1">super</dfn> también permite llamar a otros métodos de la clase padre con la sintaxis: <dfn class="style1">super.método()</dfn>).</p>
+
+  <p class="text">Por ejemplo, en la siguiente instrucción se crea la clase <dfn class="style1">Estudiante</dfn>, que hereda de la clase <dfn class="style1">Persona</dfn> (extiende a la clase <dfn class="style1">Persona</dfn>) añadiendo dos nuevos atributos: "carrera" y "cUniversitario":</p>
+  
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">Estudiante = class extends Persona {<br>  <br>  #carrera;<br>  #cUniversitario;<br><br>  constructor(nombres, apellidos, cIdentidad, fNacimiento, carrera, cUniversitario) {<br>    super(nombres, apellidos, cIdentidad, fNacimiento);<br>    this.carrera = carrera;<br>    this.cUniversitario = cUniversitario;<br>  }<br><br>	set carrera(carrera) {<br>    this.#carrera = carrera;<br>  }<br><br>	set cUniversitario(cUniversitario) {<br>    this.#cUniversitario = cUniversitario;<br>  }<br><br>	get carrera() {<br>    return this.#carrera;<br>  }<br><br>	get cUniversitario() {<br>    return this.#cUniversitario;<br>  }<br><br>	toString() {<br>    // Se añaden a la cadena los nuevos atributos    <br>    return super.toString()+`<br>carrera: ${this.carrera}<br>carnet universitario: ${this.cUniversitario}`;<br>  }<br><br>	valueOf() {<br>    // Se añaden al objeto los nuevos atributos<br>    const value = super.valueOf();<br>    value.carrera = this.carrera;<br>    value.cUniversitario = this.cUniversitario;<br>    return value;<br>  }<br>	<br>};</div>
+      <div class="resultado"></div>
+  </div>
+
+  <p class="text">Con esta clase se pueden crear objetos del tipo Estudiante, como el objeto "estudiante1":</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">estudiante1 = new Estudiante("Alberto", "Sandi Carballo", 32883235, "07/03/2007", "Ingeniería de Sistemas", "35-7325");</div>
+      <div class="resultado"></div>
+  </div>
+
+  <p class="text">Ahora el método "toString" devuelve:</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">print(estudiante1);</div>
+      <div class="resultado"></div>
+  </div>
+
+  <p class="text">Y el método "valueOf":</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">estudiante1.valueOf()</div>
+      <div class="resultado"></div>
+  </div>
+
+  <p class="text">Y por supuesto, siguen funcionando correctamente los métodos de la clase padre:</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">estudiante1.nombres</div>
+      <div class="resultado"></div>
+      <div class="instruccion">estudiante1.apellidos</div>
+      <div class="resultado"></div>
+      <div class="instruccion">estudiante1.nombreCompleto</div>
+      <div class="resultado"></div>
+      <div class="instruccion">estudiante1.edad</div>
+      <div class="resultado"></div>
+      <div class="instruccion">estudiante1.fNacimiento</div>
+      <div class="resultado"></div>
+  </div>
+
+  <p class="text">Y como se han escrito los métodos setter respectivos, se puede cambiar también el valor de los nuevos atributos:</p>
+
+  <div class="calculadora" spellcheck="false">
+      <div class="instruccion">estudiante1.carrera = "Ingeniería de Software";<br>estudiante1.cUniversitario = "115-3261";</div>
+      <div class="resultado"></div>
+      <div class="instruccion">print(estudiante1);</div>
+      <div class="resultado"></div>
+      <div class="instruccion">estudiante1.valueOf()</div>
+      <div class="resultado"></div>
+  </div>
+  <br>
+
+
+    <div class="ejercicio" id="ejercicio7" enunciado="0"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Cree la clase "Círculo", con la propiedad privada "radio" y un constructor que reciba y asigne el radio ("radio") al atributo "radio". La clase debe contar con los métodos: "radio" (setter) que asigne el radio "r" al atributo privado "radio", validando que sea un número finito (método Number.isFinite) y positivo; "radio" (getter) que devuelva el valor de la propiedad privada "radio"; "perímetro", que calcule y devuelva el perímetro del círculo (2*π*r); "área" que calcule y devuelva el área del círculo (π*r**2); "toString" que devuelva un string con el radio, perímetro y área del círculo y "valueOf" que devuelva un objeto literal con el radio, perímetro y área del círculo. Luego cree el objeto "círculo1" con un radio igual a 23, luego muestre su perímetro, su área, imprima el objeto (su cadena) y muestre su valor (valueOf).</p><div id="pregunta15" class="calculadora" spellcheck="false"><div class="instruccion">Círculo = class {<br><br>  #radio;<br><br>  constructor(radio) {<br>    this.radio =radio ;<br>  };<br><br>  set radio(r) {<br>    if(!( Number.isFinite(r)&amp;&amp;r&gt;0 )) throw new Error("El radio debe ser un número positivo");<br>    this.#radio =r ;<br>  }<br><br>  get radio() {<br>    return this.#radio ;<br>  }<br><br>  get perímetro() {<br>    return 2*Math.PI*this.radio;<br>  }<br><br>  get área() {<br>    return Math.PI*this.radio**2;<br>  }<br><br>  toString() {<br>  return `radio: ${this.radio}<br>perímetro: ${this.perímetro}<br>área: ${this.área}`;<br>  }<br><br>  valueOf() {<br>    return {<br>      radio:this.radio ,<br>      perímetro:this.perímetro ,<br>      área:this.área <br>    }<br>  }<br><br>};</div><div class="resultado"></div><div class="instruccion">círculo1 = new Círculo(23);</div><div class="resultado"></div><div class="instruccion">círculo1.perímetro</div><div class="resultado"></div><div class="instruccion">círculo1.área</div><div class="resultado"></div><div class="instruccion">print(círculo1);</div><div class="resultado"></div><div class="instruccion">círculo1.valueOf()</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="20" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- Ejercicio 7 -->
+
+    <div class="ejercicio" id="ejercicio8" enunciado="3"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Cree la clase "Ciudad", con las atributos privados "nombre" (string), "departamento" (string) y "país" (string), con un constructor que reciba y asigne los valores a estos atributos empleando los métodos setter respectivos. Debe contar también con los métodos getter así como los métodos "valueOf" que devuelva un objeto literal con los atributos marca, tipo y modelo y el método "toString" que devuelva una cadena con los tres atributos. Luego cree el objeto "ciudad1" con los valores "Sucre", "Chuquisaca", "Bolivia" y llame a los métodos "valueOf" y "toString".</p><div id="pregunta23" class="calculadora" spellcheck="false"><div class="instruccion">Ciudad = class {<br>  <br>  #nombre;<br>  #departamento;<br>  #país;<br>  <br>  constructor(nombre, departamento, país) {<br>    this.nombre =nombre ;<br>    this.departamento =departamento ;<br>    this.país =país ;<br>  }<br><br>	set nombre(nombre) {<br>    this.#nombre = nombre ;<br>  }<br><br>	set departamento(departamento) {<br>    this.#departamento =departamento ;<br>  }<br><br>	set país(país) {<br>    this.#país =país ;<br>  }<br><br>	get nombre() {<br>    return this.#nombre;<br>  }<br><br>	get departamento() {<br>    return this.#departamento ;<br>  }<br><br>	get país() {<br>    return this.#país ;<br>  }<br><br>	valueOf() {<br>    return {<br>      nombre:this.nombre ,<br>      departamento:this.departamento ,<br>      país:this.país <br>    }<br>  }<br><br>	toString() {<br>    return `Nombre: ${this.nombre}<br>departamento: ${this.departamento}<br>país: ${this.país}`;<br>  }<br><br>};</div><div class="resultado"></div><div class="instruccion">ciudad1 = new Ciudad("Sucre","Chuquisaca","Bolivia");</div><div class="resultado"></div><div class="instruccion">ciudad1.valueOf()</div><div class="resultado"></div><div class="instruccion">ciudad1.toString()</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="16" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 8 -->
+
+    <div class="ejercicio" id="ejercicio9" enunciado="3"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Ejecute el código de la primer celda, que crea el objeto "TriánguloEquilátero". Luego cree la clase "PTRegular" que herede de la clase "TriánguloEquilátero" y añada la propiedad privada "altura", sobrescribiendo el constructor, programando los métodos setter/getter respectivos, programando el método "volumen" que calcule y devuelva el volumen del cilindro (área*altura) y sobrescribiendo los métodos "toString" y "valueOf" para incluir el nuvo atributo. Luego, en otra celda de código cree el objeto "ptregular1" con un lado igual a 7 y una "altura" igual a 10 y llame a los métodos "toString" y "valueOf".</p><div id="pregunta28" class="calculadora" spellcheck="false"><div class="instruccion">TriánguloEquilátero = class {<br><br>  #lado;<br><br>  constructor(lado) {<br>    this.lado = lado;<br>  }<br><br>	set lado(l) {<br>    if (!(Number.isFinite(l) &amp;&amp; l&gt;0)) throw new Error("El lado debe ser un número positivo.");<br>    this.#lado = l;<br>  }<br><br>	get lado() {<br>    return this.#lado;<br>  }<br><br>	get área() {<br>    return Math.sqrt(3)/4*this.lado**2;<br>  }<br><br>	toString() {<br>    return `lado: ${this.lado}<br>área: ${this.área}`;<br>  }<br><br>	valueOf() {<br>    return {<br>      lado: this.lado,<br>      área: this.área<br>    }<br>  }<br><br>};</div><div class="resultado"></div><div class="instruccion">PTRegular = class extends TriánguloEquilátero {<br><br>  #altura;<br><br>  constructor(lado, altura) {<br>    super(lado);<br>    this.altura =altura ;<br>  }<br><br>	set altura(a) {<br>    if (!(Number.isFinite(a) &amp;&amp; a&gt;0)) throw new Error("La altura debe ser un número positivo");<br>    this.#altura=a;<br>  }<br><br>	get altura() {<br>    return this.#altura ;<br>  }<br><br>	get volumen() {<br>    return this.área*this.altura;<br>  }<br><br>	toString() {<br>    return super.toString() +`<br>altura: ${this.altura}<br>volumen: ${this.volumen}`<br>  }<br><br>	valueOf() {<br>    const obj = super.valueOf();<br>    obj.altura =this.altura ;<br>    obj.volumen =this.volumen ;<br>    return obj ;<br>  }<br><br>};</div><div class="resultado"></div><div class="instruccion">ptregular1 = new PTRegular(7,10);</div><div class="resultado"></div><div class="instruccion">ptregular1.toString()</div><div class="resultado"></div><div class="instruccion">ptregular1.valueOf()</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="20" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- Ejercicio 9 -->
+
+    <div class="ejercicio" id="ejercicio10" enunciado="0"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span></p></div><p class="pregunta"><span class="pregunta"></span>Cree la clase "Empleado" que extiende a la clase "Persona". Añada los atributos privados "fEmpleo" (fecha en la que fue empleado) y "sBásico" (salario básico), con los métodos setter y getter respectivos, así como los métodos "antigüedad" (que calcula y devuelve la antigüedad del empleado) y "salario" (que calcula y devuelve el salario: sBásico*(1+antigüedad*035)). Debe sobreescribir los métodos "constructor", "toString", "valueOf" de manera que incluyan los nuevos atributos y los resultados de los nuevos métodos (si corresponde). Luego, en otra celda de código cree el objeto "empleado1" con el nombre: "Juán", los apellidos: "Rodas Fuentes", el carnet de identidad: 2031444, la fecha de nacimiento: "07/03/1990", la fecha de contrato: "15/06/2015", y el salario básico: 7300 y llame a los métodos "toString" y "valueOf".</p><div id="pregunta30" class="calculadora" spellcheck="false"><div class="instruccion">Empleado = class extends Persona {<br><br>  #fContrato;<br>  #sBásico;<br><br>  constructor(nombres, apellidos, cIdentidad, fNacimiento, fContrato, sBásico) {<br>    super(nombres, apellidos, cIdentidad, fNacimiento);<br>    this.fContrato = fContrato;<br>    this.sBásico = sBásico;<br>  }<br><br>	set fContrato(fecha) {<br>    // Cambia el formato de la fecha de "dd/mm/aaaa" a "aaaa/mm/dd"<br>    fecha = fecha.split("/").reverse().join("/");<br>    const contrato = new Date(fecha); // Fecha de contrato<br>    // La fecha de contrato debe tener un formato válido (dd/mm/aaaa)<br>    if (!contrato.valueOf()) throw new Error("Formato de fecha erróneo (dd/mm/aaaa)");<br>    const hoy = new Date(); // Fecha actual<br>		// La fecha de contrato debe ser menor o igual a la fecha actual<br>    if (contrato&gt;=hoy) throw new Error("La fecha de contrato debe ser menor o igual a la fecha actual");<br>		// El empleado debe tener 18 o más años<br>    if (this.edad&lt;18) throw new Error("El empleado debe tener 18 o más años.");<br>		// La fecha de nacimiento se guarda como un objeto de la clase Date<br>    this.#fContrato =contrato ;<br>  }<br><br>	set sBásico(salario) {<br>    // El salario básico debe ser un número positivo<br>    if (!(Number.isFinite(salario) &amp;&amp;salario&gt;0 )) throw new Error("El salario básico debe ser un número entero positivo");<br>    this.#sBásico = salario;<br>  }<br><br>	get fContrato() {<br>    return this.#fContrato.toLocaleDateString();<br>  }<br><br>	get sBásico() {<br>    return this.#sBásico;<br>  }<br><br>	get antigüedad() {<br>    const hoy = new Date(); // Fecha actual<br>    // Año, mes y día actual<br>    const [aa, ma, da] = [hoy.getFullYear(), hoy.getMonth(), hoy.getDate()];<br>    // Se trabaja con la fecha de contrato (no con el texto)<br>    const contrato = this.#fContrato;<br>    // Año, mes y día de contrato<br>    const [ac, mc, dc] = [contrato.getFullYear(), contrato.getMonth(), contrato.getDate()];<br>  	// Años entre la fecha actual y de contrato<br>    let antigüedad = aa-ac;<br>    // Si el mes actual es menor al de contrato tiene un año menos de antigüedad <br>    if (ma&lt;mc) antigüedad--;<br>    // Si es el mismo mes, pero el día actual es menor al de contrato tiene un año menos de antigüedad<br>    else if(ma===mc&amp;&amp;da&lt;dc) antigüedad--;<br>    return antigüedad ;<br>  }<br><br>	get salario() {<br>    return this.sBásico*(1+this.antigüedad*0.035);<br>  }<br><br>	toString() {<br>    return super.toString()+`<br>fContrato: ${this.fContrato}<br>sBásico: ${this.sBásico}<br>antigüedad: ${this.antigüedad}<br>salario: ${this.salario}`;<br>  }<br><br>	valueOf() {<br>    const obj = super.valueOf();<br>    obj.fContrato =this.fContrato ;<br>    obj.sBásico =this.sBásico ;<br>    obj.antigüedad =this.antigüedad ;<br>    obj.salario =this.salario ;<br>    return obj;<br>  }<br>};</div><div class="resultado"></div><div class="instruccion">empleado1 = new Empleado("Juán","Rodas Fuentes",2031444,"07/03/1990","15/06/2015",7300);</div><div class="resultado"></div><div class="instruccion">empleado1.toString()</div><div class="resultado"></div><div class="instruccion">empleado1.valueOf()</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="30" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div><!-- ejercicio 10 -->
+
+
+
+
+    <div id="generarPrueba" data-scroll-y="18074.666015625"><br><hr><label class="lnotacapitulo">Nota del capítulo: </label><input type="text" id="notaCapitulo" disabled="disabled" class="itnotacapitulo"><br><br><button id="btGenerarPrueba" style="visibility: visible;" onclick="capitulo.registrarCapitulo()">Iniciar defensa</button><button id="btEmplearBono" style="margin-left:1.1rem;width:9.686rem;display:none;" onclick="capitulo.emplearBono()">Emplear Bono</button><br><br></div>
+
+
+<d id="dAutor" style="font-size: 0.9rem;text-align:center;color: #0808f24f;font-weight:bolder;position:fixed;top: 5px;right: 5px;user-select:none;display:inline-block;z-index:15;">Hernan G. Peñaranda V.</d></div> <!-- Cierre del div capítulo -->
+
+<div id="dato" style="display:none;">KqbJCKyn938lCZ0oDYGpDIqsDpGn938oD30aCJ4o934nCYGnC30aC2HeUNbQQ000</div>
+<div id="reg" style="display:none;">CJ4xCJ4xCJ4xCJ4xCp0mCJ0mEpKmC30mCJinCJ0mC30xD30mC34mEpGmC30nC3inCG00</div>
+
+
+
+
+<div id="divDialogo" style="display: none;"><div onfocus="document.querySelector('#divDialogo input').focus();"><div>Carnet universitario</div><div>Escriba el número de su carnet universitario, verificando que el guión haya sido correctamente insertado.</div><input type="text" onkeydown="return Capitulo.divDialogo.funKeydown(event)" onkeyup="Capitulo.divDialogo.funKeyup(event)"><div><button onclick="Capitulo.divDialogo.funClick('aceptar');">Aceptar</button><button style="margin-left:35px;" onclick="Capitulo.divDialogo.funClick('cancelar');">Cancelar</button></div></div></div></body>
