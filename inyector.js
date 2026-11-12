@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         Inyector Maestro V33.0 (Intercepción Local de Enunciados)
+// @name         Inyector Maestro V32.13 (Iteración Segura + 4 Modos)
 // @namespace    http://tampermonkey.net/
-// @version      33.0
-// @description  Descarga desde GitHub (mael-sysm/cap). Panel rectangular, escudo anti-foco, y Motor de Intercepción Síncrona que hackea Math.random para elegir la variante al instante sin iterar.
+// @version      32.13
+// @description  Descarga desde GitHub (mael-sysm/cap) o local. Panel rectangular, botones píldora, escudo anti-foco/scroll, pestaña invisible y bucle de iteración DOM clásico.
 // @author       mercz d
 // @match        https://cursosabiertos.usfx.bo/materias/*/capitulos/*
 // @grant        none
@@ -21,13 +21,14 @@
     const GITHUB_REPO   = 'cap';
     const GITHUB_BRANCH = 'main';
 
+    const MAX_INTENTOS = 15;
     const VERIFICAR_DIAGRAMA = true;
 
     let cancelado = false;
     let cacheHTMLGitHub = null;
 
     // =========================================================================
-    // ESCUDO ANTI-ROBO DE FOCO Y SCROLL
+    // ESCUDO ANTI-ROBO DE FOCO Y SCROLL (BLOQUEA TAMBIÉN SCRIPTS DE LA PÁGINA)
     // =========================================================================
     const focusOriginal = HTMLElement.prototype.focus;
     const scrollOriginal = Element.prototype.scrollIntoView;
@@ -40,9 +41,15 @@
         const posX = window.scrollX;
         const posY = window.scrollY;
 
-        HTMLElement.prototype.focus = function () {};
-        Element.prototype.scrollIntoView = function () {};
-        window.scrollTo = function () { return windowScrollTo.call(window, posX, posY); };
+        HTMLElement.prototype.focus = function () {
+            // Ignorar cualquier intento de foco
+        };
+        Element.prototype.scrollIntoView = function () {
+            // Ignorar saltos de pantalla
+        };
+        window.scrollTo = function () {
+            return windowScrollTo.call(window, posX, posY);
+        };
     }
 
     function desactivarEscudoFoco() {
@@ -73,7 +80,9 @@
 
     function interceptarGuardar(evento) {
         const btnGuardar = evento.target.closest && evento.target.closest('#btGuardar, button[onclick*="savePage"]');
-        if (btnGuardar) limpiarRastro();
+        if (btnGuardar) {
+            limpiarRastro();
+        }
     }
     document.addEventListener('click', interceptarGuardar, true);
 
@@ -100,6 +109,7 @@
         if (!ejercicio) return;
 
         clearTimeout(timers.get(ejercicio));
+
         const id = setTimeout(() => {
             timers.delete(ejercicio);
             const corregir = ejercicio.querySelector('#btCorregir, .btCorregir');
@@ -108,71 +118,110 @@
                 corregir.disabled = false;
             }
         }, ESPERA_MS);
+
         timers.set(ejercicio, id);
     }
     document.addEventListener('click', alHacerClic, true);
 
     // =========================================================================
-    // MÓDULO 2: DETECCIÓN Y DESCARGA GITHUB
+    // MÓDULO 2: DETECCIÓN DE MATERIA Y BUSCADOR EN GITHUB
     // =========================================================================
     function obtenerMetadatosCapitulo() {
         for (const s of document.querySelectorAll('script[src]')) {
             const m = s.src.match(/materias\/([a-zA-Z0-9_-]+)\/capitulos\/(capitulo\d+)/i);
-            if (m) return { materia: m[1].toLowerCase(), capitulo: m[2].toLowerCase(), num: m[2].replace(/\D/g, '') };
+            if (m) {
+                return { materia: m[1].toLowerCase(), capitulo: m[2].toLowerCase(), num: m[2].replace(/\D/g, '') };
+            }
         }
         const mUrl = location.pathname.match(/materias\/([a-zA-Z0-9_-]+)\/capitulos\/(capitulo\d+)/i);
-        if (mUrl) return { materia: mUrl[1].toLowerCase(), capitulo: mUrl[2].toLowerCase(), num: mUrl[2].replace(/\D/g, '') };
+        if (mUrl) {
+            return { materia: mUrl[1].toLowerCase(), capitulo: mUrl[2].toLowerCase(), num: mUrl[2].replace(/\D/g, '') };
+        }
         return null;
     }
 
     async function descargarHTMLDesdeGitHub(meta) {
         if (cacheHTMLGitHub) return cacheHTMLGitHub;
+
         const baseRaw = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${meta.materia}`;
         const num = String(meta.num);
-        const candidatos = [`${baseRaw}/${num}.html`, `${baseRaw}/${meta.capitulo}.html`, `${baseRaw}/${num.padStart(2, '0')}.html`];
-        
-        for (const url of candidatos) {
+        const numPad = num.padStart(2, '0');
+
+        const candidatosDirectos = [
+            `${baseRaw}/${num}.html`,
+            `${baseRaw}/${meta.capitulo}.html`,
+            `${baseRaw}/${numPad}.html`
+        ];
+
+        for (const url of candidatosDirectos) {
             try {
                 const r = await fetch(url, { cache: 'no-store' });
-                if (r.ok) { cacheHTMLGitHub = await r.text(); return cacheHTMLGitHub; }
+                if (r.ok) {
+                    cacheHTMLGitHub = await r.text();
+                    return cacheHTMLGitHub;
+                }
             } catch (e) {}
         }
-        
+
         const apiUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${meta.materia}?ref=${GITHUB_BRANCH}`;
         const respApi = await fetch(apiUrl, { cache: 'no-store' });
-        if (!respApi.ok) throw new Error(`No se encontró la carpeta en GitHub.`);
-        
+        if (!respApi.ok) throw new Error(`No se encontró la carpeta "${meta.materia}" en el repositorio.`);
+
         const archivos = await respApi.json();
+        if (!Array.isArray(archivos)) throw new Error('Respuesta inesperada en GitHub.');
+
         const limpiar = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-        
-        const elegidos = archivos.filter(f => f.type === 'file' && (new RegExp(`^0*${num}\\.html?$`, 'i').test(f.name.trim()) || new RegExp(`cap[ií]tulo[\\s_-]*0*${num}(?!\\d).*\\.html?$`, 'i').test(limpiar(f.name))));
-        if (elegidos.length === 0) throw new Error(`No hay archivo para el capítulo ${num}.`);
-        
-        const respHtml = await fetch(elegidos[0].download_url, { cache: 'no-store' });
-        if (!respHtml.ok) throw new Error(`Error al descargar.`);
-        
+
+        const coincidencias = [
+            f => new RegExp(`^0*${num}\\.html?$`, 'i').test(f.name.trim()),
+            f => new RegExp(`cap[ií]tulo[\\s_-]*0*${num}(?!\\d).*\\.html?$`, 'i').test(limpiar(f.name)),
+            f => new RegExp(`(?:^|[^\\d])0*${num}\\.html?$`, 'i').test(f.name.trim())
+        ];
+
+        let archivoElegido = null;
+        for (const regla of coincidencias) {
+            archivoElegido = archivos.find(f => f.type === 'file' && regla(f));
+            if (archivoElegido) break;
+        }
+
+        if (!archivoElegido) throw new Error(`No hay archivo para el capítulo ${num}.`);
+
+        const urlFinal = archivoElegido.download_url || `${baseRaw}/${encodeURIComponent(archivoElegido.name)}`;
+        const respHtml = await fetch(urlFinal, { cache: 'no-store' });
+        if (!respHtml.ok) throw new Error(`Error al descargar "${archivoElegido.name}".`);
+
         cacheHTMLGitHub = await respHtml.text();
         return cacheHTMLGitHub;
     }
 
     // =========================================================================
-    // MÓDULO 3: UTILIDADES Y DOM
+    // MÓDULO 3: UTILIDADES
     // =========================================================================
     function showToast(message, type = 'info') {
         if (cancelado) return;
         const toast = document.createElement('div');
         toast.className = 'tm-inyectado';
         const colors = { info: '#3b82f6', success: '#16a34a', error: '#ef4444', warning: '#f59e0b' };
+
         toast.textContent = message;
         Object.assign(toast.style, {
             position: 'fixed', bottom: '20px', left: '50%', transform: 'translateX(-50%) translateY(100px)',
             background: colors[type] || colors.info, color: 'white', padding: '12px 24px', borderRadius: '0px',
-            fontFamily: 'system-ui', fontSize: '14px', fontWeight: '500',
-            boxShadow: '0 4px 15px rgba(0,0,0,0.2)', zIndex: '10000', opacity: '0', transition: 'all 0.3s'
+            fontFamily: 'system-ui, sans-serif', fontSize: '14px', fontWeight: '500',
+            boxShadow: '0 4px 15px rgba(0,0,0,0.2)', zIndex: '10000', opacity: '0',
+            transition: 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
         });
         document.body.appendChild(toast);
-        requestAnimationFrame(() => { toast.style.transform = 'translateX(-50%) translateY(0)'; toast.style.opacity = '1'; });
-        setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3500);
+
+        requestAnimationFrame(() => {
+            toast.style.transform = 'translateX(-50%) translateY(0)';
+            toast.style.opacity = '1';
+        });
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(-50%) translateY(20px)';
+            setTimeout(() => toast.remove(), 300);
+        }, 3500);
     }
 
     function extraerNumCapTitulo(titulo) {
@@ -207,28 +256,66 @@
     function encontrarEjercicioCorriendo() {
         const ejercicios = Array.from(document.querySelectorAll('div.ejercicio[id]'));
         for (const ej of ejercicios) {
+            const btnGen = ej.querySelector('.btGenerar');
+            const btnRep = ej.querySelector('.btRepetir');
             const btnCor = ej.querySelector('#btCorregir, .btCorregir');
-            if (btnCor && esVisible(btnCor) && !esVisible(ej.querySelector('.btGenerar')) && !esVisible(ej.querySelector('.btRepetir'))) return ej;
+            if (!esVisible(btnGen) && !esVisible(btnRep) && esVisible(btnCor)) return ej;
         }
-        return ejercicios.find(ej => ej.hasAttribute('enunciado') && !esVisible(ej.querySelector('.btGenerar')) && !esVisible(ej.querySelector('.btRepetir'))) || null;
+        for (const ej of ejercicios) {
+            const btnGen = ej.querySelector('.btGenerar');
+            const btnRep = ej.querySelector('.btRepetir');
+            if (!esVisible(btnGen) && !esVisible(btnRep) && ej.hasAttribute('enunciado')) return ej;
+        }
+        return null;
     }
 
     function textoInst(el) {
         const d = document.createElement('div');
-        d.innerHTML = el.innerHTML.replace(/<br\s*[\/]?>|<\/p>|<\/div>/gi, '\n');
+        d.innerHTML = el.innerHTML.replace(/<br\s*[\/]?>/gi, '\n').replace(/<\/p>|<\/div>/gi, '\n');
         return d.textContent.replace(/\u200B/g, '').replace(/^\n+|\n+$/g, '');
+    }
+
+    function firmaCampos(ej) {
+        const partes = Array.from(ej.querySelectorAll('p.pregunta, div.dato tr, p.opcionMultiple'))
+            .filter(n => n.matches('p.opcionMultiple') || n.querySelector(SEL_CAMPOS))
+            .map(n => {
+                const c = n.cloneNode(true);
+                c.querySelectorAll(SEL_CAMPOS).forEach(sp => {
+                    const ops = (sp.getAttribute('data-opciones') || '').split('&@%').map(norm).sort().join('|');
+                    sp.replaceWith('§' + (ops ? '{' + ops + '}' : ''));
+                });
+                return norm(c.textContent);
+            });
+        return partes.sort().join('||');
     }
 
     const conocimiento = new Map();
     try { JSON.parse(localStorage.getItem(KB_KEY) || '[]').forEach(([k, v]) => conocimiento.set(k, v)); } catch (e) {}
-    const guardarKB = () => { if (!cancelado) try { localStorage.setItem(KB_KEY, JSON.stringify([...conocimiento])); } catch (e) {} };
+    const guardarKB = () => { if (!cancelado) { try { localStorage.setItem(KB_KEY, JSON.stringify([...conocimiento])); } catch (e) {} } };
     const textoOpcion = p => norm((p.querySelector('label') || {}).textContent);
 
     function llenarOpciones(ej) {
         ej.querySelectorAll('p.opcionMultiple').forEach(p => {
             const inp = p.querySelector('input');
-            if (inp && conocimiento.get(textoOpcion(p)) === true && !inp.checked) inp.click();
+            if (!inp) return;
+            const quiere = conocimiento.get(textoOpcion(p)) === true;
+            if (inp.checked !== quiere) inp.click();
         });
+    }
+
+    function aprenderOpciones(ej, enviado) {
+        const ps = Array.from(ej.querySelectorAll('p.opcionMultiple'));
+        const marcadas = ps.filter(p => p.classList.contains('correcta')).length;
+        if (ps.length === 0 || marcadas === 0) return 0;
+        let nuevos = 0;
+        ps.forEach(p => {
+            const t = textoOpcion(p);
+            const estado = enviado.get(t);
+            const verdad = p.classList.contains('correcta') ? estado : !estado;
+            if (conocimiento.get(t) !== verdad) { conocimiento.set(t, verdad); nuevos++; }
+        });
+        guardarKB();
+        return nuevos;
     }
 
     async function elegirOpcion(campo, respuesta) {
@@ -240,11 +327,13 @@
         const antes = new Set(buscar());
         campo.click();
         await esperarHasta(() => buscar().some(el => !antes.has(el)), 1500);
+
         const nuevas = buscar().filter(el => !antes.has(el));
         if (nuevas.length) {
             ['mousedown', 'mouseup', 'click'].forEach(t => nuevas[0].dispatchEvent(new MouseEvent(t, { bubbles: true, cancelable: true })));
             await esperarHasta(() => norm(campo.textContent) === respuesta, 800);
         }
+
         if (norm(campo.textContent) !== respuesta) {
             campo.textContent = respuesta;
             campo.dispatchEvent(new Event('input', { bubbles: true }));
@@ -255,18 +344,28 @@
     async function escribirCelda(liveCalc, indice, texto) {
         if (!texto || cancelado) return;
         let liveCM = liveCalc.querySelectorAll('.CodeMirror')[indice];
-        if (!liveCM) { await esperarHasta(() => liveCalc.querySelectorAll('.CodeMirror')[indice], 2000); liveCM = liveCalc.querySelectorAll('.CodeMirror')[indice]; }
+        if (!liveCM) {
+            await esperarHasta(() => liveCalc.querySelectorAll('.CodeMirror')[indice], 2000);
+            liveCM = liveCalc.querySelectorAll('.CodeMirror')[indice];
+        }
         if (liveCM && liveCM.CodeMirror) {
-            liveCM.CodeMirror.setValue(texto);
-            liveCM.CodeMirror.getInputField().dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', code: 'Enter', keyCode: 13, which: 13, shiftKey: true, bubbles: true }));
+            const cm = liveCM.CodeMirror;
+            cm.setValue(texto);
+            cm.getInputField().dispatchEvent(new KeyboardEvent('keydown', {
+                key: 'Enter', code: 'Enter', keyCode: 13, which: 13, shiftKey: true, bubbles: true, cancelable: true
+            }));
             await sleep(120);
         }
     }
 
     // =========================================================================
-    // MÓDULO 4: DIAGRAMAS GOJS (Simplificado)
+    // MÓDULO 4: DIAGRAMAS GOJS
     // =========================================================================
-    function limpiarComodines(t) { return (typeof t !== 'string' || !t.includes('_(')) ? t : t.replace(/_\(([\s\S]*?)_\)/g, (m, inner) => inner.split('_|')[0].replace(/_/g, '')).replace(/[ \t]{2,}/g, ' ').trim(); }
+    function limpiarComodines(t) {
+        if (typeof t !== 'string' || !t.includes('_(')) return t;
+        return t.replace(/_\(([\s\S]*?)_\)/g, (m, inner) => inner.split('_|')[0].replace(/_/g, '')).replace(/[ \t]{2,}/g, ' ').trim();
+    }
+
     function extraerModeloGoJS(texto) {
         if (!texto) return null;
         const ini = texto.lastIndexOf('{"class":"go.GraphLinksModel"');
@@ -274,61 +373,138 @@
         let prof = 0, enCadena = false, escape = false;
         for (let i = ini; i < texto.length; i++) {
             const ch = texto[i];
-            if (enCadena) { escape = (ch === '\\' && !escape); if (ch === '"' && !escape) enCadena = false; continue; }
-            if (ch === '"') enCadena = true;
-            else if (ch === '{') prof++;
-            else if (ch === '}') { prof--; if (prof === 0) { try { return JSON.parse(texto.slice(ini, i + 1)); } catch (e) { return null; } } }
+            if (enCadena) {
+                if (escape) escape = false;
+                else if (ch === '\\') escape = true;
+                else if (ch === '"') enCadena = false;
+                continue;
+            }
+            if (ch === '"') { enCadena = true; continue; }
+            if (ch === '{') prof++;
+            else if (ch === '}') {
+                prof--;
+                if (prof === 0) {
+                    try { return JSON.parse(texto.slice(ini, i + 1)); } catch (e) { return null; }
+                }
+            }
         }
         return null;
     }
+
     const esDiagramaSrc  = c => /gojsGraph\s*\(/.test(c.textContent);
     const esDiagramaVivo = c => !!c.querySelector('canvas') || /gojsGraph\s*\(/.test(c.textContent);
-    function diagramaDe(calc) { const cv = calc.querySelector('canvas'); if (!cv || !window.go || !window.go.Diagram) return null; for (let el = cv; el; el = el.parentElement) { const d = window.go.Diagram.fromDiv(el); if (d) return d; } return null; }
-    function correctoEn(calc) { const c = calc.cloneNode(true); c.querySelectorAll('.CodeMirror, .instruccion, textarea, canvas, svg').forEach(e => e.remove()); const t = norm(c.textContent).toLowerCase(); return /correcto/.test(t) && !/incorrecto/.test(t); }
-    function shiftEnterEn(el) { if (el) ['keydown', 'keyup'].forEach(tipo => el.dispatchEvent(new KeyboardEvent(tipo, { key: 'Enter', code: 'Enter', keyCode: 13, which: 13, shiftKey: true, bubbles: true }))); }
+
+    function diagramaDe(calc) {
+        const cv = calc.querySelector('canvas');
+        if (!cv || !window.go || !window.go.Diagram) return null;
+        for (let el = cv; el; el = el.parentElement) {
+            const d = window.go.Diagram.fromDiv(el);
+            if (d) return d;
+        }
+        return null;
+    }
+
+    function correctoEn(calc) {
+        const c = calc.cloneNode(true);
+        c.querySelectorAll('.CodeMirror, .instruccion, textarea, canvas, svg').forEach(e => e.remove());
+        const t = norm(c.textContent).toLowerCase();
+        return /correcto/.test(t) && !/incorrecto/.test(t);
+    }
+
+    function shiftEnterEn(el) {
+        if (!el) return;
+        ['keydown', 'keyup'].forEach(tipo =>
+            el.dispatchEvent(new KeyboardEvent(tipo, { key: 'Enter', code: 'Enter', keyCode: 13, which: 13, shiftKey: true, bubbles: true, cancelable: true }))
+        );
+    }
+
+    function inyectarModelo(d, modelo) {
+        const m = d.model;
+        d.startTransaction('InyeccionModelo');
+        try {
+            const enlacesViejos = [...m.linkDataArray];
+            if (m.removeLinkDataCollection) m.removeLinkDataCollection(enlacesViejos);
+            else enlacesViejos.forEach(l => m.removeLinkData(l));
+
+            (modelo.nodeDataArray || []).forEach(src => {
+                const texto = limpiarComodines(src.text);
+                const nodo = m.findNodeDataForKey(src.key);
+                if (nodo) {
+                    if (src.text !== undefined) m.setDataProperty(nodo, 'text', texto);
+                } else {
+                    const copia = JSON.parse(JSON.stringify(src));
+                    copia.text = texto;
+                    m.addNodeData(copia);
+                }
+            });
+
+            (modelo.linkDataArray || []).forEach(l => {
+                const copia = JSON.parse(JSON.stringify(l));
+                if (typeof copia.text === 'string') copia.text = limpiarComodines(copia.text);
+                m.addLinkData(copia);
+            });
+
+            d.commitTransaction('InyeccionModelo');
+            return true;
+        } catch (e) {
+            try { d.rollbackTransaction(); } catch (e2) {}
+            return false;
+        }
+    }
 
     async function procesarDiagrama(liveCalc, srcCalc) {
         const modelo = extraerModeloGoJS(srcCalc.textContent) || extraerModeloGoJS(liveCalc.textContent);
         if (!modelo) return null;
+
         await esperarHasta(() => diagramaDe(liveCalc), 2500);
         const d = diagramaDe(liveCalc);
-        if (d) {
-            d.startTransaction('Iny');
-            try {
-                const env = [...d.model.linkDataArray];
-                if (d.model.removeLinkDataCollection) d.model.removeLinkDataCollection(env); else env.forEach(l => d.model.removeLinkData(l));
-                (modelo.nodeDataArray || []).forEach(src => { const texto = limpiarComodines(src.text); const nodo = d.model.findNodeDataForKey(src.key); if (nodo) { if (src.text !== undefined) d.model.setDataProperty(nodo, 'text', texto); } else { const copia = JSON.parse(JSON.stringify(src)); copia.text = texto; d.model.addNodeData(copia); } });
-                (modelo.linkDataArray || []).forEach(l => { const copia = JSON.parse(JSON.stringify(l)); if (typeof copia.text === 'string') copia.text = limpiarComodines(copia.text); d.model.addLinkData(copia); });
-                d.commitTransaction('Iny'); await sleep(60); shiftEnterEn(liveCalc.querySelector('canvas'));
-            } catch (e) { d.rollbackTransaction(); }
+
+        if (d && inyectarModelo(d, modelo)) {
+            await sleep(60);
+            shiftEnterEn(liveCalc.querySelector('canvas'));
         } else {
-            const textos = Array.from(srcCalc.querySelectorAll('.instruccion')).map(textoInst).map(limpiarComodines);
+            const textos = Array.from(srcCalc.querySelectorAll('.instruccion'))
+                .map(textoInst).map(limpiarComodines);
             for (let k = 0; k < textos.length; k++) await escribirCelda(liveCalc, k, textos[k]);
         }
+
         if (!VERIFICAR_DIAGRAMA) return true;
+
         let ok = await esperarHasta(() => correctoEn(liveCalc), 2500, 100);
-        if (!ok && !cancelado) { shiftEnterEn(liveCalc.querySelector('canvas')); ok = await esperarHasta(() => correctoEn(liveCalc), 3000, 100); }
+        if (!ok && !cancelado) {
+            const cv = liveCalc.querySelector('canvas');
+            shiftEnterEn(cv);
+            if (cv && cv.parentElement) shiftEnterEn(cv.parentElement);
+            ok = await esperarHasta(() => correctoEn(liveCalc), 3000, 100);
+        }
         return ok;
     }
 
     // =========================================================================
-    // FUNCIÓN DE RELLENO
+    // FUNCIÓN UNIFICADA DE RELLENO DE EJERCICIO
     // =========================================================================
     async function rellenarContenidoEjercicio(ejActual, ejResuelto) {
         const tieneCampos = ejActual.querySelector(SEL_TODO) !== null;
         const liveCalculadoras = Array.from(ejActual.querySelectorAll('.calculadora'));
         const sourceCalculadoras = Array.from(ejResuelto.querySelectorAll('.calculadora'));
-        const srcDiag = sourceCalculadoras.filter(esDiagramaSrc);
-        const srcNoDiag = sourceCalculadoras.filter(c => !esDiagramaSrc(c));
+
+        const srcDiag    = sourceCalculadoras.filter(esDiagramaSrc);
+        const srcNoDiag  = sourceCalculadoras.filter(c => !esDiagramaSrc(c));
         const liveNoDiag = liveCalculadoras.filter(c => !esDiagramaVivo(c));
 
         const planPorCalc = new Map();
         if (liveNoDiag.length === srcNoDiag.length) {
-            liveNoDiag.forEach((c, j) => planPorCalc.set(c, Array.from(srcNoDiag[j].querySelectorAll('.instruccion')).map(textoInst)));
+            liveNoDiag.forEach((c, j) =>
+                planPorCalc.set(c, Array.from(srcNoDiag[j].querySelectorAll('.instruccion')).map(textoInst)));
         } else {
-            const todas = srcNoDiag.flatMap(c => Array.from(c.querySelectorAll('.instruccion')).map(textoInst)).filter(t => t);
-            const cupo = liveNoDiag.map(c => Math.max(1, Array.from(c.querySelectorAll('.CodeMirror')).filter(cm => cm.CodeMirror && cm.CodeMirror.getValue().trim() !== '').length));
-            liveNoDiag.forEach((c, j) => planPorCalc.set(c, j === liveNoDiag.length - 1 ? todas.splice(0) : todas.splice(0, cupo[j])));
+            const todas = srcNoDiag
+                .flatMap(c => Array.from(c.querySelectorAll('.instruccion')).map(textoInst))
+                .filter(t => t);
+            const cupo = liveNoDiag.map(c => Math.max(1,
+                Array.from(c.querySelectorAll('.CodeMirror'))
+                    .filter(cm => cm.CodeMirror && cm.CodeMirror.getValue().trim() !== '').length));
+            liveNoDiag.forEach((c, j) =>
+                planPorCalc.set(c, j === liveNoDiag.length - 1 ? todas.splice(0) : todas.splice(0, cupo[j])));
         }
 
         let diagramaFallo = false;
@@ -336,12 +512,18 @@
         for (const liveCalc of liveCalculadoras) {
             if (cancelado) return { diagramaFallo: false };
             if (esDiagramaVivo(liveCalc)) {
-                if (srcDiag[idxDiag]) { if (await procesarDiagrama(liveCalc, srcDiag[idxDiag++]) === false) diagramaFallo = true; }
+                const srcCalc = srcDiag[idxDiag++];
+                if (!srcCalc) continue;
+                const res = await procesarDiagrama(liveCalc, srcCalc);
+                if (res === false) diagramaFallo = true;
             } else {
                 const textos = planPorCalc.get(liveCalc) || [];
-                for (let k = 0; k < textos.length; k++) await escribirCelda(liveCalc, k, textos[k]);
+                for (let k = 0; k < textos.length; k++) {
+                    await escribirCelda(liveCalc, k, textos[k]);
+                }
             }
         }
+
         if (diagramaFallo) return { diagramaFallo: true };
 
         if (tieneCampos && !cancelado) {
@@ -349,199 +531,427 @@
             const liveLit = ejActual.querySelectorAll('.campo_literal');
             for (let k = 0; k < liveLit.length; k++) {
                 if (!srcLit[k] || cancelado) continue;
-                liveLit[k].textContent = norm(srcLit[k].textContent);
-                ['input', 'change'].forEach(e => liveLit[k].dispatchEvent(new Event(e, { bubbles: true })));
+                const campo = liveLit[k];
+                campo.textContent = norm(srcLit[k].textContent);
+                campo.dispatchEvent(new Event('input', { bubbles: true }));
+                campo.dispatchEvent(new KeyboardEvent('keyup', { bubbles: true }));
+                campo.dispatchEvent(new Event('change', { bubbles: true }));
                 await sleep(20);
             }
+
             const SEL_SEL = '.campo_arrastrar, .campo_dato';
             const srcSel = Array.from(ejResuelto.querySelectorAll(SEL_SEL));
             const liveSel = Array.from(ejActual.querySelectorAll(SEL_SEL));
-            const claveFila = c => { const td = c.closest('tr') && c.closest('tr').firstElementChild; return td && !td.contains(c) ? norm(td.textContent) : null; };
+            const claveFila = c => {
+                const td = c.closest('tr') && c.closest('tr').firstElementChild;
+                return td && !td.contains(c) ? norm(td.textContent) : null;
+            };
             for (let k = 0; k < liveSel.length; k++) {
                 if (cancelado) return { diagramaFallo: false };
-                let origen = srcSel.find(c => claveFila(c) === claveFila(liveSel[k])) || srcSel[k];
-                if (origen) await elegirOpcion(liveSel[k], norm(origen.textContent));
+                const clave = claveFila(liveSel[k]);
+                let origen = clave ? srcSel.find(c => claveFila(c) === clave) : null;
+                if (!origen) origen = srcSel[k];
+                if (!origen) continue;
+                await elegirOpcion(liveSel[k], norm(origen.textContent));
             }
+
             ejActual.querySelectorAll('p.opcionMultiple').forEach(p => {
                 const inp = p.querySelector('input');
                 const quiere = conocimiento.get(textoOpcion(p));
                 if (inp && quiere !== undefined && inp.checked !== quiere) inp.click();
             });
         }
+
         const sourceInputs = ejResuelto.querySelectorAll('input[type="text"]:not(.notas):not(.ittiempo)');
-        ejActual.querySelectorAll('input[type="text"]:not(.notas):not(.ittiempo)').forEach((input, index) => {
+        const liveInputs = ejActual.querySelectorAll('input[type="text"]:not(.notas):not(.ittiempo)');
+        liveInputs.forEach((input, index) => {
             if (sourceInputs[index]) {
                 input.value = sourceInputs[index].value || sourceInputs[index].getAttribute('value') || '';
-                ['input', 'change'].forEach(e => input.dispatchEvent(new Event(e, { bubbles: true })));
+                input.dispatchEvent(new Event('input', { bubbles: true }));
+                input.dispatchEvent(new Event('change', { bubbles: true }));
             }
         });
+
         await sleep(100);
         return { diagramaFallo: false };
     }
 
     // =========================================================================
-    // MÓDULO 5: INTERFAZ GRÁFICA INVISIBLE
+    // MÓDULO 5: INTERFAZ GRÁFICA (PANEL RECTANGULAR + BOTONES PILDORITA)
     // =========================================================================
     const metaActual = obtenerMetadatosCapitulo();
-    const etiquetaCap = metaActual ? `${metaActual.materia.toUpperCase()} · Cap ${metaActual.num}` : 'V33.0';
+    const etiquetaCap = metaActual ? `${metaActual.materia.toUpperCase()} · Cap ${metaActual.num}` : 'V32.13';
 
     const contenedorRaiz = document.createElement('div');
     contenedorRaiz.className = 'tm-inyectado';
-    Object.assign(contenedorRaiz.style, { position: 'fixed', bottom: '28px', right: '0', zIndex: '9999', display: 'flex', alignItems: 'center', fontFamily: 'system-ui' });
+    Object.assign(contenedorRaiz.style, {
+        position: 'fixed', bottom: '28px', right: '0', zIndex: '9999',
+        display: 'flex', alignItems: 'center', fontFamily: 'system-ui, sans-serif'
+    });
 
     const panelMenu = document.createElement('div');
-    Object.assign(panelMenu.style, { display: 'none', flexDirection: 'column', gap: '8px', background: 'rgba(15, 23, 42, 0.95)', padding: '10px 12px', border: '1px solid rgba(255,255,255,0.15)', borderRight: 'none' });
+    Object.assign(panelMenu.style, {
+        display: 'none', flexDirection: 'column', gap: '8px',
+        background: 'rgba(15, 23, 42, 0.95)', backdropFilter: 'blur(6px)',
+        padding: '10px 12px', borderRadius: '0px',
+        boxShadow: '0 4px 20px rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.15)',
+        borderRight: 'none', marginRight: '0'
+    });
 
     const seccionInfo = document.createElement('div');
     seccionInfo.textContent = etiquetaCap;
-    Object.assign(seccionInfo.style, { background: '#1e293b', color: '#38bdf8', padding: '5px 8px', fontSize: '11px', fontWeight: '700', textAlign: 'center', border: '1px solid #334155' });
+    Object.assign(seccionInfo.style, {
+        background: '#1e293b', color: '#38bdf8', padding: '5px 8px',
+        fontSize: '11px', fontWeight: '700', textAlign: 'center',
+        border: '1px solid #334155', borderRadius: '0px', letterSpacing: '0.5px'
+    });
 
     const filaControles = document.createElement('div');
     Object.assign(filaControles.style, { display: 'flex', alignItems: 'center', gap: '6px' });
 
     const selectModo = document.createElement('select');
-    Object.assign(selectModo.style, { padding: '6px 12px', background: '#1e293b', color: '#e2e8f0', border: '1px solid #475569', borderRadius: '999px', fontSize: '11px', fontWeight: '500', outline: 'none' });
-    ['Solo no iniciados', 'Solo iniciados (<100)', 'Sin corregir (en curso)', 'Todos'].forEach((t, i) => { const o = document.createElement('option'); o.value = ['no_iniciados', 'iniciados', 'sin_corregir', 'todos'][i]; o.textContent = t; selectModo.appendChild(o); });
+    selectModo.title = 'Modo de inyección';
+    Object.assign(selectModo.style, {
+        padding: '6px 12px', background: '#1e293b', color: '#e2e8f0',
+        border: '1px solid #475569', borderRadius: '999px', fontSize: '11px',
+        fontWeight: '500', cursor: 'pointer', outline: 'none'
+    });
+
+    const optNoIniciados = document.createElement('option'); optNoIniciados.value = 'no_iniciados'; optNoIniciados.textContent = 'Solo no iniciados';
+    const optIniciados = document.createElement('option'); optIniciados.value = 'iniciados'; optIniciados.textContent = 'Solo iniciados (<100)';
+    const optSinCorregir = document.createElement('option'); optSinCorregir.value = 'sin_corregir'; optSinCorregir.textContent = 'Sin corregir (en curso)';
+    const optTodos = document.createElement('option'); optTodos.value = 'todos'; optTodos.textContent = 'Todos';
+
+    selectModo.appendChild(optNoIniciados);
+    selectModo.appendChild(optIniciados);
+    selectModo.appendChild(optSinCorregir);
+    selectModo.appendChild(optTodos);
 
     const btnGitHub = document.createElement('button');
     const iconoDescarga = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>`;
     btnGitHub.innerHTML = iconoDescarga;
-    Object.assign(btnGitHub.style, { width: '32px', height: '32px', background: '#2563eb', color: '#ffffff', border: 'none', borderRadius: '50%', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' });
+    btnGitHub.title = `Inyectar desde GitHub (${etiquetaCap})`;
+    Object.assign(btnGitHub.style, {
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        width: '32px', height: '32px', background: '#2563eb', color: '#ffffff',
+        border: 'none', borderRadius: '50%', cursor: 'pointer',
+        boxShadow: '0 2px 8px rgba(37, 99, 235, 0.4)', transition: 'all 0.2s ease', padding: '0'
+    });
 
     const btnLocal = document.createElement('button');
     btnLocal.textContent = 'Local';
-    Object.assign(btnLocal.style, { padding: '6px 12px', background: '#334155', color: 'white', border: 'none', borderRadius: '999px', cursor: 'pointer', fontSize: '11px', fontWeight: '600' });
+    btnLocal.title = 'Cargar archivo HTML desde PC';
+    Object.assign(btnLocal.style, {
+        padding: '6px 12px', background: '#334155', color: 'white', border: 'none',
+        borderRadius: '999px', cursor: 'pointer', fontSize: '11px', fontWeight: '600'
+    });
 
     const btnCerrar = document.createElement('button');
     btnCerrar.textContent = '✕';
-    Object.assign(btnCerrar.style, { width: '28px', height: '28px', background: '#ef4444', color: 'white', border: 'none', borderRadius: '50%', cursor: 'pointer', fontSize: '11px', fontWeight: 'bold' });
+    btnCerrar.title = 'Eliminar inyector de la página';
+    Object.assign(btnCerrar.style, {
+        width: '28px', height: '28px', background: '#ef4444', color: 'white', border: 'none',
+        borderRadius: '50%', cursor: 'pointer', fontSize: '11px', fontWeight: 'bold',
+        display: 'flex', alignItems: 'center', justifyContent: 'center'
+    });
     btnCerrar.addEventListener('click', limpiarRastro);
 
+    // Pestañita totalmente transparente
     const btnPestana = document.createElement('button');
-    Object.assign(btnPestana.style, { width: '16px', height: '36px', background: 'transparent', color: 'transparent', border: 'none', outline: 'none', cursor: 'pointer', opacity: '0' });
-    let menuAbierto = false;
-    btnPestana.addEventListener('click', () => { menuAbierto = !menuAbierto; panelMenu.style.display = menuAbierto ? 'flex' : 'none'; });
+    btnPestana.title = 'Mostrar / ocultar panel';
+    Object.assign(btnPestana.style, {
+        width: '16px', height: '36px', background: 'transparent', color: 'transparent',
+        border: 'none', outline: 'none', 
+        borderRadius: '0px', cursor: 'pointer',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        opacity: '0', 
+        padding: '0', userSelect: 'none'
+    });
 
-    filaControles.append(selectModo, btnGitHub, btnLocal, btnCerrar);
-    panelMenu.append(seccionInfo, filaControles);
-    contenedorRaiz.append(panelMenu, btnPestana);
+    let menuAbierto = false;
+    btnPestana.addEventListener('click', () => {
+        menuAbierto = !menuAbierto;
+        panelMenu.style.display = menuAbierto ? 'flex' : 'none';
+    });
+
+    filaControles.appendChild(selectModo);
+    filaControles.appendChild(btnGitHub);
+    filaControles.appendChild(btnLocal);
+    filaControles.appendChild(btnCerrar);
+
+    panelMenu.appendChild(seccionInfo);
+    panelMenu.appendChild(filaControles);
+
+    contenedorRaiz.appendChild(panelMenu);
+    contenedorRaiz.appendChild(btnPestana);
     document.body.appendChild(contenedorRaiz);
 
     const inputFile = document.createElement('input');
-    inputFile.type = 'file'; inputFile.accept = '.html,.htm'; inputFile.style.display = 'none';
+    inputFile.className = 'tm-inyectado';
+    inputFile.type = 'file';
+    inputFile.accept = '.html,.htm';
+    inputFile.style.display = 'none';
     document.body.appendChild(inputFile);
 
     function resetearBtn() {
         desactivarEscudoFoco();
         if (cancelado) return;
-        btnGitHub.disabled = btnLocal.disabled = selectModo.disabled = false;
-        btnGitHub.innerHTML = iconoDescarga; btnGitHub.style.opacity = '1';
+        btnGitHub.disabled = false;
+        btnLocal.disabled = false;
+        selectModo.disabled = false;
+        btnGitHub.innerHTML = iconoDescarga;
+        btnGitHub.style.opacity = '1';
+        btnGitHub.style.cursor = 'pointer';
     }
 
     // =========================================================================
-    // MÓDULO 6: MOTOR CENTRAL DE INYECCIÓN (INTERCEPCIÓN SÍNCRONA)
+    // MÓDULO 6: MOTOR CENTRAL DE INYECCIÓN (BUCLE DE ITERACIÓN SEGURO)
     // =========================================================================
     async function ejecutarInyeccionConHTML(htmlTexto) {
         activarEscudoFoco();
         const modo = selectModo.value;
-        let doc;
-        try { doc = new DOMParser().parseFromString(htmlTexto, 'text/html'); } catch (err) { showToast('Error: HTML inválido.', 'error'); resetearBtn(); return; }
 
-        doc.querySelectorAll('p.opcionMultiple').forEach(p => { const inp = p.querySelector('input'); if (inp) conocimiento.set(textoOpcion(p), inp.checked || inp.hasAttribute('checked')); });
+        let doc;
+        try {
+            doc = new DOMParser().parseFromString(htmlTexto, 'text/html');
+        } catch (err) {
+            showToast('Error: HTML inválido.', 'error');
+            resetearBtn(); return;
+        }
+
+        const capDoc = extraerNumCapTitulo(doc.title);
+        const capPag = extraerNumCapTitulo(document.title) || (metaActual && metaActual.num);
+        if (capDoc && capPag && capDoc !== String(capPag)) {
+            showToast(`Error: El archivo es del capítulo ${capDoc}, pero estás en el capítulo ${capPag}.`, 'error');
+            resetearBtn(); return;
+        }
+
+        doc.querySelectorAll('p.opcionMultiple').forEach(p => {
+            const inp = p.querySelector('input');
+            if (inp) conocimiento.set(textoOpcion(p), inp.hasAttribute('checked') || inp.checked);
+        });
         guardarKB();
 
         if (modo === 'sin_corregir') {
             const ejActivo = encontrarEjercicioCorriendo();
-            if (!ejActivo) { showToast('No hay ejercicio corriendo.', 'warning'); resetearBtn(); return; }
-            let ejResuelto = doc.querySelector(`div.ejercicio[id="${ejActivo.id}"][enunciado="${ejActivo.getAttribute('enunciado')}"]`);
-            if (ejResuelto) {
-                const { diagramaFallo } = await rellenarContenidoEjercicio(ejActivo, ejResuelto);
-                if (!diagramaFallo) { resetearBtn(); return; }
+            if (!ejActivo) {
+                showToast('No hay ningún ejercicio corriendo en este momento.', 'warning');
+                resetearBtn(); return;
             }
-            showToast('El ejercicio en curso no coincide con el archivo descargado.', 'warning');
+
+            const id = ejActivo.id;
+            let inyectadoExitoso = false;
+
+            for (let intento = 0; intento < MAX_INTENTOS; intento++) {
+                if (cancelado) return;
+
+                btnGitHub.innerHTML = `<span style="font-size:10px; font-weight:bold;">${intento + 1}</span>`;
+
+                const numEnunciado = ejActivo.getAttribute('enunciado');
+                let ejResuelto = doc.querySelector(`div.ejercicio[id="${id}"][enunciado="${numEnunciado}"]`);
+
+                const soloOpciones = ejActivo.querySelector('p.opcionMultiple') !== null && !ejActivo.querySelector(SEL_CAMPOS);
+                if (soloOpciones) {
+                    const todasConocidas = Array.from(ejActivo.querySelectorAll('p.opcionMultiple')).every(p => conocimiento.has(textoOpcion(p)));
+                    if (!todasConocidas) ejResuelto = null;
+                }
+
+                if (ejResuelto) {
+                    const { diagramaFallo } = await rellenarContenidoEjercicio(ejActivo, ejResuelto);
+                    if (!diagramaFallo) {
+                        inyectadoExitoso = true;
+                        break;
+                    }
+                }
+
+                if (intento < MAX_INTENTOS - 1 && !cancelado) {
+                    let enviado = null;
+                    if (soloOpciones) {
+                        llenarOpciones(ejActivo);
+                        enviado = new Map(Array.from(ejActivo.querySelectorAll('p.opcionMultiple')).map(p => [textoOpcion(p), p.querySelector('input').checked]));
+                    }
+
+                    const btnCorregir = ejActivo.querySelector('#btCorregir, .btCorregir');
+                    if (btnCorregir) {
+                        btnCorregir.removeAttribute('disabled');
+                        btnCorregir.disabled = false;
+                        btnCorregir.click();
+                        await sleep(700);
+                    }
+
+                    if (enviado && !cancelado) aprenderOpciones(ejActivo, enviado);
+
+                    await esperarHasta(() => {
+                        const r = ejActivo.querySelector('.btRepetir');
+                        return r && esVisible(r);
+                    }, 2000);
+
+                    const btnRep = ejActivo.querySelector('.btRepetir');
+                    if (!btnRep || !esVisible(btnRep)) break;
+
+                    const antesHTML = ejActivo.innerHTML;
+                    btnRep.click();
+                    await esperarHasta(() => ejActivo.innerHTML !== antesHTML, 2500);
+                    await sleep(150);
+
+                    const nuevoCorregir = ejActivo.querySelector('#btCorregir, .btCorregir');
+                    if (nuevoCorregir) {
+                        nuevoCorregir.removeAttribute('disabled');
+                        nuevoCorregir.disabled = false;
+                    }
+                }
+            }
+
+            if (!inyectadoExitoso) showToast('No se encontró coincidencia para el ejercicio en curso.', 'warning');
             resetearBtn(); return;
         }
 
         const liveEjercicios = Array.from(document.querySelectorAll('div.ejercicio[id]'));
-        let reemplazados = 0; let omitidos = 0;
+        let reemplazados = 0;
+        let omitidos = 0;
 
         for (let i = 0; i < liveEjercicios.length; i++) {
             if (cancelado) return;
+
             const ejActual = liveEjercicios[i];
             const id = ejActual.id;
             if (!id) continue;
 
             const btnGenInicial = ejActual.querySelector('.btGenerar');
             const btnRepInicial = ejActual.querySelector('.btRepetir');
-            const tieneRepetir = !!(btnRepInicial && esVisible(btnRepInicial));
-            const tieneGenerar = !!(btnGenInicial && esVisible(btnGenInicial));
+            const tieneRepetirActivo = !!(btnRepInicial && esVisible(btnRepInicial));
+            const tieneGenerarActivo = !!(btnGenInicial && esVisible(btnGenInicial));
             const notaActual = obtenerNotaEjercicio(ejActual);
 
-            if (modo === 'no_iniciados' && (tieneRepetir || !tieneGenerar)) { omitidos++; continue; }
-            if (modo === 'iniciados' && (!tieneRepetir || notaActual >= 100)) { omitidos++; continue; }
-            if (modo === 'todos' && !tieneGenerar && !tieneRepetir) { omitidos++; continue; }
-
-            const resueltos = Array.from(doc.querySelectorAll(`div.ejercicio[id="${id}"]`));
-            if (resueltos.length === 0) continue; 
-            const enunciadosValidos = resueltos.map(e => e.getAttribute('enunciado'));
+            if (modo === 'no_iniciados') {
+                if (tieneRepetirActivo || !tieneGenerarActivo) { omitidos++; continue; }
+            } else if (modo === 'iniciados') {
+                if (!tieneRepetirActivo || notaActual >= 100) { omitidos++; continue; }
+            } else {
+                if (!tieneGenerarActivo && !tieneRepetirActivo) { omitidos++; continue; }
+            }
 
             btnGitHub.innerHTML = `<span style="font-size:10px; font-weight:bold;">${i + 1}</span>`;
 
-            // === HACK: SECUESTRO DE ALEATORIEDAD SÍNCRONO ===
-            const botonAccion = (tieneGenerar && !tieneRepetir) ? btnGenInicial : btnRepInicial;
-            let interceptadoExitosamente = false;
-            let ejResuelto = null;
-            
-            if (botonAccion) {
-                const originalRandom = Math.random;
-                let valorHack = 0.0;
-                Math.random = function() { return valorHack; };
+            for (let intento = 0; intento < MAX_INTENTOS; intento++) {
+                if (cancelado) return;
 
-                // Hacemos 30 clics en 1 milisegundo (el navegador no parpadea ni lo dibuja)
-                for (let intento = 0; intento < 30; intento++) {
-                    const act = ejActual.getAttribute('enunciado');
-                    if (enunciadosValidos.includes(act)) {
-                        ejResuelto = resueltos.find(e => e.getAttribute('enunciado') === act);
-                        interceptadoExitosamente = true;
-                        break;
-                    }
-                    valorHack = (intento % 20) * 0.049; // Modulamos de 0.0 a 0.98 para forzar variantes locales
-                    botonAccion.click(); // Síncrono
+                const btnGen = ejActual.querySelector('.btGenerar');
+                const btnRep = ejActual.querySelector('.btRepetir');
+                const usarGenerar = (intento === 0 && btnGen && esVisible(btnGen) && !(btnRep && esVisible(btnRep)));
+                const botonAccion = usarGenerar ? btnGen : btnRep;
+
+                if (botonAccion) {
+                    const antesHTML = ejActual.innerHTML;
+                    botonAccion.click();
+                    await esperarHasta(() => ejActual.innerHTML !== antesHTML, 2500);
+                    await sleep(150);
                 }
-                Math.random = originalRandom; // Devolvemos a la normalidad el navegador
-            }
 
-            if (interceptadoExitosamente && ejResuelto) {
-                // Pequeña pausa para que CodeMirror / Canvas terminen de nacer post-hack
-                await sleep(400); 
-                const { diagramaFallo } = await rellenarContenidoEjercicio(ejActual, ejResuelto);
-                if (!diagramaFallo && !cancelado) {
-                    const btnCorregir = ejActual.querySelector('.btCorregir, #btCorregir');
-                    if (btnCorregir) { btnCorregir.removeAttribute('disabled'); btnCorregir.disabled = false; btnCorregir.click(); await sleep(600); }
-                    reemplazados++;
+                if (cancelado) return;
+
+                const numEnunciado = ejActual.getAttribute('enunciado');
+                let ejResuelto = doc.querySelector(`div.ejercicio[id="${id}"][enunciado="${numEnunciado}"]`);
+
+                const tieneCampos = ejActual.querySelector(SEL_TODO) !== null;
+                const soloOpciones = ejActual.querySelector('p.opcionMultiple') !== null && !ejActual.querySelector(SEL_CAMPOS);
+                if (soloOpciones) {
+                    const todasConocidas = Array.from(ejActual.querySelectorAll('p.opcionMultiple')).every(p => conocimiento.has(textoOpcion(p)));
+                    if (!todasConocidas) ejResuelto = null;
+                } else if (ejResuelto && tieneCampos && firmaCampos(ejResuelto) !== firmaCampos(ejActual)) {
+                    ejResuelto = null;
+                }
+
+                const btnCorregir = ejActual.querySelector('.btCorregir, #btCorregir');
+
+                if (ejResuelto) {
+                    const { diagramaFallo } = await rellenarContenidoEjercicio(ejActual, ejResuelto);
+
+                    if (diagramaFallo && intento < MAX_INTENTOS - 1) {
+                        if (btnCorregir && !cancelado) {
+                            btnCorregir.removeAttribute('disabled');
+                            btnCorregir.disabled = false;
+                            btnCorregir.click();
+                            await sleep(700);
+                        }
+                        continue;
+                    }
+
+                    if (btnCorregir && !cancelado) {
+                        btnCorregir.removeAttribute('disabled');
+                        btnCorregir.disabled = false;
+                        btnCorregir.click();
+                        await sleep(700);
+                    }
+                    reemplazados++; break;
+
+                } else {
+                    let enviado = null;
+                    if (soloOpciones) {
+                        llenarOpciones(ejActual);
+                        enviado = new Map(Array.from(ejActual.querySelectorAll('p.opcionMultiple')).map(p => [textoOpcion(p), p.querySelector('input').checked]));
+                    }
+                    if (btnCorregir && !cancelado) {
+                        btnCorregir.removeAttribute('disabled');
+                        btnCorregir.disabled = false;
+                        btnCorregir.click();
+                        await sleep(700);
+                    }
+                    if (enviado && !cancelado) aprenderOpciones(ejActual, enviado);
                 }
             }
         }
 
-        if (reemplazados === 0) showToast(omitidos > 0 ? `No inyectado: ${omitidos} omitidos según el filtro.` : 'No se pudo emparejar ningún ejercicio.', 'warning');
+        if (reemplazados === 0 && omitidos > 0) {
+            const motivo = modo === 'no_iniciados' ? 'ya estaban iniciados' : (modo === 'iniciados' ? 'todos los iniciados ya tienen nota 100' : 'sin botones activos');
+            showToast(`No se inyectó nada: ${omitidos} ejercicios omitidos (${motivo}).`, 'info');
+        } else if (reemplazados === 0) {
+            showToast('No se pudo emparejar ningún ejercicio con el archivo.', 'warning');
+        }
+
         resetearBtn();
     }
 
     btnGitHub.addEventListener('click', async () => {
         if (btnGitHub.disabled) return;
+
         const meta = obtenerMetadatosCapitulo();
-        if (!meta) { showToast('No detectado.', 'error'); return; }
-        btnGitHub.disabled = btnLocal.disabled = selectModo.disabled = true;
+        if (!meta) { showToast('No se pudo detectar la materia ni el capítulo.', 'error'); return; }
+
+        btnGitHub.disabled = true;
+        btnLocal.disabled = true;
+        selectModo.disabled = true;
         btnGitHub.innerHTML = `<span style="font-size:10px; font-weight:bold;">...</span>`;
         btnGitHub.style.opacity = '0.7';
-        try { const html = await descargarHTMLDesdeGitHub(meta); await ejecutarInyeccionConHTML(html); } 
-        catch (err) { showToast(err.message, 'error'); resetearBtn(); }
+
+        try {
+            const html = await descargarHTMLDesdeGitHub(meta);
+            await ejecutarInyeccionConHTML(html);
+        } catch (err) {
+            showToast(err.message || 'Error al conectar con GitHub.', 'error');
+            resetearBtn();
+        }
     });
 
-    btnLocal.addEventListener('click', () => { if (!btnLocal.disabled) inputFile.click(); });
+    btnLocal.addEventListener('click', () => {
+        if (!btnLocal.disabled) inputFile.click();
+    });
+
     inputFile.addEventListener('change', () => {
-        const file = inputFile.files[0]; if (!file) return;
-        btnGitHub.disabled = btnLocal.disabled = selectModo.disabled = true; btnGitHub.innerHTML = `...`; btnGitHub.style.opacity = '0.7';
-        const reader = new FileReader(); reader.onload = async (e) => { inputFile.value = ''; await ejecutarInyeccionConHTML(e.target.result); }; reader.readAsText(file);
+        const file = inputFile.files[0];
+        if (!file) return;
+
+        btnGitHub.disabled = true;
+        btnLocal.disabled = true;
+        selectModo.disabled = true;
+        btnGitHub.innerHTML = `<span style="font-size:10px; font-weight:bold;">...</span>`;
+        btnGitHub.style.opacity = '0.7';
+
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+            inputFile.value = '';
+            await ejecutarInyeccionConHTML(e.target.result);
+        };
+        reader.readAsText(file);
     });
 })();
