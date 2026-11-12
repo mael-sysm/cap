@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         Inyector Maestro V33.1 (One-Shot Interceptor + 4 Modos)
+// @name         Inyector Maestro V33.2 (Ghost Loop Text-Match + 4 Modos)
 // @namespace    http://tampermonkey.net/
-// @version      33.1
-// @description  Descarga desde GitHub (mael-sysm/cap). Pestaña invisible. Cero bucles: Intercepta el núcleo matemático del sistema para forzar la variante exacta en 1 solo clic.
+// @version      33.2
+// @description  Descarga desde GitHub (mael-sysm/cap). Pestaña invisible. Resuelve el problema de las variables internas haciendo cientos de iteraciones invisibles en 0.1 segundos hasta que el texto coincide.
 // @author       mercz d
 // @match        https://cursosabiertos.usfx.bo/materias/*/capitulos/*
 // @grant        none
@@ -119,10 +119,7 @@
         const candidatosDirectos = [`${baseRaw}/${num}.html`, `${baseRaw}/${meta.capitulo}.html`, `${baseRaw}/${num.padStart(2, '0')}.html`];
 
         for (const url of candidatosDirectos) {
-            try {
-                const r = await fetch(url, { cache: 'no-store' });
-                if (r.ok) return cacheHTMLGitHub = await r.text();
-            } catch (e) {}
+            try { const r = await fetch(url, { cache: 'no-store' }); if (r.ok) return cacheHTMLGitHub = await r.text(); } catch (e) {}
         }
 
         const apiUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${meta.materia}?ref=${GITHUB_BRANCH}`;
@@ -140,55 +137,7 @@
     }
 
     // =========================================================================
-    // MÓDULO 3: INTERCEPTOR MATEMÁTICO (EL CEREBRO ONE-SHOT)
-    // =========================================================================
-    function instalarInterceptorGlobal() {
-        if (typeof window.Ejercicio === 'undefined' || window._interceptorInstalado) return;
-        
-        ['generar', 'repetir'].forEach(metodo => {
-            if (typeof window.Ejercicio[metodo] === 'function') {
-                const funcionOriginal = window.Ejercicio[metodo];
-                
-                window.Ejercicio[metodo] = function(e) {
-                    if (window._inyectorTargetVariant !== undefined && window._inyectorTargetVariant !== null) {
-                        try {
-                            // Encontramos cuántas variantes tiene este ejercicio para calcular la fracción exacta
-                            let divEj = (e && e.target) ? e.target : null;
-                            while(divEj && (!divEj.id || !divEj.id.includes('ejercicio'))) divEj = divEj.parentNode;
-                            let numEj = divEj ? parseInt(divEj.id.match(/\d+/)[0], 10) - 1 : 0;
-                            let objEj = window.capitulo && window.capitulo.ejercicios ? window.capitulo.ejercicios[numEj] : null;
-                            let totalVariantes = (objEj && objEj.enunciados) ? objEj.enunciados.length : 15; // 15 de respaldo
-                            
-                            let target = parseInt(window._inyectorTargetVariant, 10);
-                            let origRandom = Math.random;
-                            let llamadasRandom = 0;
-                            
-                            // Hackeamos la aleatoriedad SOLO durante esta generación
-                            Math.random = function() {
-                                if (llamadasRandom === 0) {
-                                    llamadasRandom++;
-                                    // Fórmula mágica: (Objetivo + 0.1) / Total. Asegura que Math.floor caiga exactamente en el Objetivo.
-                                    return (target + 0.1) / totalVariantes; 
-                                }
-                                return 0.5; // Congelamos el resto de variables físicas/matemáticas a la mitad para estabilizar el problema
-                            };
-                            
-                            let resultado = funcionOriginal.apply(this, arguments);
-                            Math.random = origRandom; // Devolvemos la normalidad de inmediato
-                            return resultado;
-                        } catch(err) {
-                            return funcionOriginal.apply(this, arguments); // Respaldo de seguridad
-                        }
-                    }
-                    return funcionOriginal.apply(this, arguments);
-                };
-            }
-        });
-        window._interceptorInstalado = true;
-    }
-
-    // =========================================================================
-    // MÓDULO 4: UTILIDADES DOM Y RELLENO
+    // MÓDULO 3: HUELLA DACTILAR Y UTILIDADES DOM
     // =========================================================================
     function showToast(msg, type = 'info') {
         if (cancelado) return;
@@ -214,6 +163,23 @@
     function obtenerNotaEjercicio(ej) { const inp = ej.querySelector('input.notas, input.itmostrar.notas'); return parseFloat(inp ? (inp.value || inp.getAttribute('value') || '0') : '0') || 0; }
     function textoInst(el) { const d = document.createElement('div'); d.innerHTML = el.innerHTML.replace(/<br\s*[\/]?>/gi, '\n').replace(/<\/p>|<\/div>/gi, '\n'); return d.textContent.replace(/\u200B/g, '').replace(/^\n+|\n+$/g, ''); }
 
+    // NUEVO SISTEMA DE HUELLA DACTILAR: Capta las variables internas del texto del problema
+    function firmaCampos(ej) {
+        const partes = Array.from(ej.querySelectorAll(SEL_TODO))
+            .map(el => el.closest('p, div.dato tr, li') || el.parentElement)
+            .filter((v, i, a) => v && a.indexOf(v) === i)
+            .map(n => {
+                const c = n.cloneNode(true);
+                c.querySelectorAll(SEL_CAMPOS).forEach(sp => {
+                    const ops = (sp.getAttribute('data-opciones') || '').split('&@%').map(norm).sort().join('|');
+                    sp.replaceWith('§' + (ops ? '{' + ops + '}' : ''));
+                });
+                return norm(c.textContent);
+            });
+        const en = ej.getAttribute('enunciado') || 'x';
+        return en + '||' + partes.sort().join('||');
+    }
+
     const conocimiento = new Map();
     try { JSON.parse(localStorage.getItem(KB_KEY) || '[]').forEach(([k, v]) => conocimiento.set(k, v)); } catch (e) {}
     const guardarKB = () => { if (!cancelado) try { localStorage.setItem(KB_KEY, JSON.stringify([...conocimiento])); } catch (e) {} };
@@ -236,7 +202,7 @@
     }
 
     // =========================================================================
-    // MÓDULO 4B: DIAGRAMAS GOJS (Simplificado)
+    // MÓDULO 4: DIAGRAMAS GOJS
     // =========================================================================
     function limpiarComodines(t) { return typeof t !== 'string' || !t.includes('_(') ? t : t.replace(/_\(([\s\S]*?)_\)/g, (m, i) => i.split('_|')[0].replace(/_/g, '')).replace(/[ \t]{2,}/g, ' ').trim(); }
     function extraerModeloGoJS(t) { if (!t) return null; const i = t.lastIndexOf('{"class":"go.GraphLinksModel"'); if (i === -1) return null; let p=0, e=false, s=false; for (let j=i; j<t.length; j++) { const c=t[j]; if(e) { s=(c==='\\' && !s); if(c==='"' && !s) e=false; continue; } if(c==='"') e=true; else if(c==='{') p++; else if(c==='}') { p--; if(p===0) { try{return JSON.parse(t.slice(i, j+1))} catch(err){return null;} } } } return null; }
@@ -301,7 +267,7 @@
     // MÓDULO 5: INTERFAZ GRÁFICA INVISIBLE
     // =========================================================================
     const metaActual = obtenerMetadatosCapitulo();
-    const etiquetaCap = metaActual ? `${metaActual.materia.toUpperCase()} · Cap ${metaActual.num}` : 'V33.1';
+    const etiquetaCap = metaActual ? `${metaActual.materia.toUpperCase()} · Cap ${metaActual.num}` : 'V33.2';
     const contenedorRaiz = document.createElement('div'); contenedorRaiz.className = 'tm-inyectado';
     Object.assign(contenedorRaiz.style, { position: 'fixed', bottom: '28px', right: '0', zIndex: '9999', display: 'flex', alignItems: 'center', fontFamily: 'system-ui, sans-serif' });
     const panelMenu = document.createElement('div'); Object.assign(panelMenu.style, { display: 'none', flexDirection: 'column', gap: '8px', background: 'rgba(15, 23, 42, 0.95)', padding: '10px 12px', border: '1px solid rgba(255,255,255,0.15)', borderRight: 'none' });
@@ -319,11 +285,10 @@
     function resetearBtn() { desactivarEscudoFoco(); if (cancelado) return; btnGitHub.disabled = btnLocal.disabled = selectModo.disabled = false; btnGitHub.innerHTML = iconoDescarga; btnGitHub.style.opacity = '1'; }
 
     // =========================================================================
-    // MÓDULO 6: FLUJO LINEAL "ONE-SHOT" (SIN ITERACIONES)
+    // MÓDULO 6: EL BUCLE FANTASMA SÍNCRONO (GHOST LOOP)
     // =========================================================================
     async function ejecutarInyeccionConHTML(htmlTexto) {
         activarEscudoFoco();
-        instalarInterceptorGlobal(); // Conectamos el "cerebro" al núcleo de la página
         const modo = selectModo.value;
 
         let doc;
@@ -357,16 +322,14 @@
             const resueltos = Array.from(doc.querySelectorAll(`div.ejercicio[id="${id}"]`));
             if (resueltos.length === 0) continue; 
             
-            // 1. IDENTIFICAR QUÉ VARIANTE TENEMOS EN GITHUB
-            const ejResuelto = resueltos[0];
-            const varianteObjetivo = ejResuelto.getAttribute('enunciado');
-            let actEnunciado = ejActual.getAttribute('enunciado');
-
             btnGitHub.innerHTML = `<span style="font-size:10px; font-weight:bold;">${i + 1}</span>`;
 
-            // 2. FORZAR LA VARIANTE SI ES DIFERENTE
-            if (actEnunciado !== varianteObjetivo) {
-                // Si el ejercicio estaba "iniciado" pero no tiene el botón de ruleta activo, lo reprobamos primero
+            // Verificamos si el ejercicio actual ya coincide textualmente
+            let firmaAct = firmaCampos(ejActual);
+            let ejResueltoFinal = resueltos.find(r => firmaCampos(r) === firmaAct);
+
+            // Si no coincide, iniciamos el BUCLE FANTASMA
+            if (!ejResueltoFinal) {
                 if (esVisible(btnCor) && !tieneGenerar && !tieneRepetir) {
                     btnCor.removeAttribute('disabled'); btnCor.disabled = false; btnCor.click();
                     await esperarHasta(() => esVisible(ejActual.querySelector('.btRepetir')), 2000);
@@ -374,32 +337,52 @@
 
                 const botonAccion = esVisible(ejActual.querySelector('.btGenerar')) ? ejActual.querySelector('.btGenerar') : ejActual.querySelector('.btRepetir');
                 
-                if (botonAccion && esVisible(botonAccion)) {
-                    // Le ordenamos al Interceptor qué variante extraer exactamente
-                    window._inyectorTargetVariant = varianteObjetivo;
-                    const antesHTML = ejActual.innerHTML;
+                if (botonAccion) {
+                    const originalRandom = Math.random;
+                    const maxGhostAttempts = 200; // 200 clics ultra rápidos en memoria
+                    let matchFound = false;
+
+                    for (let att = 0; att < maxGhostAttempts; att++) {
+                        // Limpiar el seguro de la plataforma para que nos deje hacer múltiples clics
+                        if (typeof window.Ejercicio !== 'undefined' && window.Ejercicio.intervalId) {
+                            clearInterval(window.Ejercicio.intervalId);
+                            window.Ejercicio.intervalId = null;
+                        }
+
+                        // Alimentamos a la plataforma con una semilla matemática diferente cada milisegundo
+                        Math.random = function() { return (att * 0.137 + originalRandom() * 0.05) % 1; };
+                        
+                        botonAccion.click(); // Clic síncrono (el navegador no dibuja nada aún)
+
+                        // Leemos inmediatamente la firma de los números del texto
+                        let currentFirma = firmaCampos(ejActual);
+                        ejResueltoFinal = resueltos.find(r => firmaCampos(r) === currentFirma);
+
+                        if (ejResueltoFinal) {
+                            matchFound = true;
+                            break; // ¡Coincide con el texto exacto! Rompemos el bucle fantasma.
+                        }
+                    }
                     
-                    // UN SOLO CLIC! El interceptor hará que caiga la variante correcta matemáticamente.
-                    botonAccion.click(); 
-                    
-                    window._inyectorTargetVariant = null; // Limpiamos la orden
-                    await esperarHasta(() => ejActual.innerHTML !== antesHTML, 2500);
-                    await sleep(300); // Pausa breve para estabilización visual
+                    Math.random = originalRandom; // Restauramos
+                    if (matchFound) await sleep(100); // Pequeña pausa para que el navegador dibuje el resultado final en tu pantalla
                 }
             }
 
             // 3. INYECTAR LA RESPUESTA
-            const { diagramaFallo } = await rellenarContenidoEjercicio(ejActual, ejResuelto);
-            if (!diagramaFallo && !cancelado) {
-                const nuevoCor = ejActual.querySelector('#btCorregir, .btCorregir');
-                if (nuevoCor) { nuevoCor.removeAttribute('disabled'); nuevoCor.disabled = false; nuevoCor.click(); await sleep(700); }
-                reemplazados++;
+            if (ejResueltoFinal) {
+                const { diagramaFallo } = await rellenarContenidoEjercicio(ejActual, ejResueltoFinal);
+                if (!diagramaFallo && !cancelado) {
+                    const nuevoCor = ejActual.querySelector('#btCorregir, .btCorregir');
+                    if (nuevoCor) { nuevoCor.removeAttribute('disabled'); nuevoCor.disabled = false; nuevoCor.click(); await sleep(600); }
+                    reemplazados++;
+                }
             }
         }
 
         if (reemplazados === 0 && modo !== 'sin_corregir') {
             const motivo = modo === 'no_iniciados' ? 'ya estaban iniciados' : (modo === 'iniciados' ? 'ya tienen nota 100' : 'sin botones activos');
-            showToast(omitidos > 0 ? `Omitidos: ${omitidos} (${motivo}).` : 'No se emparejó ningún ejercicio.', 'warning');
+            showToast(omitidos > 0 ? `Omitidos: ${omitidos} (${motivo}).` : 'No se emparejó ningún ejercicio. (Ninguno coincidió con los números).', 'warning');
         }
         resetearBtn();
     }
