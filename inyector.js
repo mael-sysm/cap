@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         Inyector Maestro V33.1 (Corrección CodeMirror + RAM)
+// @name         Inyector Maestro V33.2 (RAM + CodeMirror V32 Clásico)
 // @namespace    http://tampermonkey.net/
-// @version      33.1
-// @description  Lectura directa de RAM para Tipos 0-4. GitHub para CodeMirror. Carga dinámica segura.
+// @version      33.2
+// @description  Tipos 0-4 desde RAM. Calculadoras y Diagramas con el motor exacto de la V32.12 (Cupos, GoJS, esperas dinámicas).
 // @author       mercz d
 // @match        https://cursosabiertos.usfx.bo/materias/*/capitulos/*
 // @grant        none
@@ -15,18 +15,20 @@
     if (!document.querySelector('.ejercicio')) return;
 
     // =========================================================================
-    // CONFIGURACION DEL REPOSITORIO GITHUB (SOLO PARA CALCULADORAS)
+    // CONFIGURACION DEL REPOSITORIO GITHUB
     // =========================================================================
     const GITHUB_USER   = 'mael-sysm';
     const GITHUB_REPO   = 'cap';
     const GITHUB_BRANCH = 'main';
 
     const MAX_INTENTOS = 15;
+    const VERIFICAR_DIAGRAMA = true;
+
     let cancelado = false;
     let cacheHTMLGitHub = null;
 
     // =========================================================================
-    // MODULO 0: INTERCEPTOR DE VARIANTES (HACK MATH.RANDOM)
+    // MODULO 0: INTERCEPTOR DE VARIANTES
     // =========================================================================
     const hookVariantesId = setInterval(() => {
         if (typeof window.Ejercicio !== 'undefined' && typeof window.Capitulo !== 'undefined' && !window.Ejercicio.prototype._tm_hooked) {
@@ -85,7 +87,7 @@
     }
 
     // =========================================================================
-    // MODULO 1: LIMPIEZA Y CONTROL DE EVENTOS
+    // MODULO 1: LIMPIEZA Y EVENTOS
     // =========================================================================
     const ESPERA_MS = 300;
     const timers = new Map();
@@ -199,7 +201,7 @@
     }
 
     // =========================================================================
-    // MODULO 3: UTILIDADES Y DOM
+    // MODULO 3: UTILIDADES COMUNES
     // =========================================================================
     function showToast(message, type = 'info') {
         if (cancelado) return;
@@ -229,16 +231,8 @@
     }
 
     const sleep = ms => new Promise(r => setTimeout(r, ms));
-    const esVisible = el => !!(el && (el.offsetParent || el.getClientRects().length));
-    function obtenerNotaEjercicio(ej) {
-        const inp = ej.querySelector('input.notas, input.itmostrar.notas');
-        if (!inp) return 0;
-        const val = parseFloat(inp.value || inp.getAttribute('value') || '0');
-        return isNaN(val) ? 0 : val;
-    }
     
-    // Restaurado: Función para esperar a que los objetos DOM existan dinámicamente
-    async function esperarHasta(cond, max = 2500, paso = 40) {
+    async function esperarHasta(cond, max = 2000, paso = 40) {
         const fin = Date.now() + max;
         while (Date.now() < fin) {
             if (cancelado) return false;
@@ -248,101 +242,161 @@
         return false;
     }
 
-    // =========================================================================
-    // MODULO 4: CALCULADORAS Y DIAGRAMAS (TIPO 5) -> GITHUB
-    // =========================================================================
+    const esVisible = el => !!(el && (el.offsetParent || el.getClientRects().length));
+    function obtenerNotaEjercicio(ej) {
+        const inp = ej.querySelector('input.notas, input.itmostrar.notas');
+        if (!inp) return 0;
+        const val = parseFloat(inp.value || inp.getAttribute('value') || '0');
+        return isNaN(val) ? 0 : val;
+    }
+    
     const textoInst = el => {
         const d = document.createElement('div');
         d.innerHTML = el.innerHTML.replace(/<br\s*[\/]?>/gi, '\n').replace(/<\/p>|<\/div>/gi, '\n');
         return d.textContent.replace(/\u200B/g, '').replace(/^\n+|\n+$/g, '');
     };
-    function limpiarComodinesDiags(t) {
+    
+    const norm = t => (t || '').replace(/\u200B/g, '').replace(/\s+/g, ' ').trim();
+
+    // =========================================================================
+    // MODULO 4: MOTOR CLÁSICO DE CALCULADORAS (V32.12 EXACTO)
+    // =========================================================================
+    function limpiarComodines(t) {
         if (typeof t !== 'string' || !t.includes('_(')) return t;
         return t.replace(/_\(([\s\S]*?)_\)/g, (m, inner) => inner.split('_|')[0].replace(/_/g, '')).replace(/[ \t]{2,}/g, ' ').trim();
     }
+
+    function extraerModeloGoJS(texto) {
+        if (!texto) return null;
+        const ini = texto.lastIndexOf('{"class":"go.GraphLinksModel"');
+        if (ini === -1) return null;
+        let prof = 0, enCadena = false, escape = false;
+        for (let i = ini; i < texto.length; i++) {
+            const ch = texto[i];
+            if (enCadena) {
+                if (escape) escape = false;
+                else if (ch === '\\') escape = true;
+                else if (ch === '"') enCadena = false;
+                continue;
+            }
+            if (ch === '"') { enCadena = true; continue; }
+            if (ch === '{') prof++;
+            else if (ch === '}') {
+                prof--;
+                if (prof === 0) {
+                    try { return JSON.parse(texto.slice(ini, i + 1)); } catch (e) { return null; }
+                }
+            }
+        }
+        return null;
+    }
+
     const esDiagramaSrc  = c => /gojsGraph\s*\(/.test(c.textContent);
     const esDiagramaVivo = c => !!c.querySelector('canvas') || /gojsGraph\s*\(/.test(c.textContent);
 
+    function diagramaDe(calc) {
+        const cv = calc.querySelector('canvas');
+        if (!cv || !window.go || !window.go.Diagram) return null;
+        for (let el = cv; el; el = el.parentElement) {
+            const d = window.go.Diagram.fromDiv(el);
+            if (d) return d;
+        }
+        return null;
+    }
+
+    function correctoEn(calc) {
+        const c = calc.cloneNode(true);
+        c.querySelectorAll('.CodeMirror, .instruccion, textarea, canvas, svg').forEach(e => e.remove());
+        const t = norm(c.textContent).toLowerCase();
+        return /correcto/.test(t) && !/incorrecto/.test(t);
+    }
+
+    function shiftEnterEn(el) {
+        if (!el) return;
+        ['keydown', 'keyup'].forEach(tipo =>
+            el.dispatchEvent(new KeyboardEvent(tipo, {
+                key: 'Enter', code: 'Enter', keyCode: 13, which: 13,
+                shiftKey: true, bubbles: true, cancelable: true
+            })));
+    }
+
+    function inyectarModelo(d, modelo) {
+        const m = d.model;
+        d.startTransaction('InyeccionModelo');
+        try {
+            const enlacesViejos = [...m.linkDataArray];
+            if (m.removeLinkDataCollection) m.removeLinkDataCollection(enlacesViejos);
+            else enlacesViejos.forEach(l => m.removeLinkData(l));
+
+            (modelo.nodeDataArray || []).forEach(src => {
+                const texto = limpiarComodines(src.text);
+                const nodo = m.findNodeDataForKey(src.key);
+                if (nodo) {
+                    if (src.text !== undefined) m.setDataProperty(nodo, 'text', texto);
+                } else {
+                    const copia = JSON.parse(JSON.stringify(src));
+                    copia.text = texto;
+                    m.addNodeData(copia);
+                }
+            });
+
+            (modelo.linkDataArray || []).forEach(l => {
+                const copia = JSON.parse(JSON.stringify(l));
+                if (typeof copia.text === 'string') copia.text = limpiarComodines(copia.text);
+                m.addLinkData(copia);
+            });
+
+            d.commitTransaction('InyeccionModelo');
+            return true;
+        } catch (e) {
+            try { d.rollbackTransaction(); } catch (e2) {}
+            return false;
+        }
+    }
+
     async function escribirCelda(liveCalc, indice, texto) {
         if (!texto || cancelado) return;
-        
-        // CORRECCIÓN: Espera dinámica obligatoria hasta que CodeMirror se vincule al DOM
-        await esperarHasta(() => {
-            let cmDOM = liveCalc.querySelectorAll('.CodeMirror')[indice];
-            return cmDOM && cmDOM.CodeMirror;
-        }, 3000);
-
         let liveCM = liveCalc.querySelectorAll('.CodeMirror')[indice];
+        if (!liveCM) {
+            await esperarHasta(() => liveCalc.querySelectorAll('.CodeMirror')[indice], 2000);
+            liveCM = liveCalc.querySelectorAll('.CodeMirror')[indice];
+        }
         if (liveCM && liveCM.CodeMirror) {
             const cm = liveCM.CodeMirror;
             cm.setValue(texto);
-            
-            // Disparamos Shift+Enter (Tanto down como up para mayor compatibilidad)
-            ['keydown', 'keyup'].forEach(tipo => {
-                cm.getInputField().dispatchEvent(new KeyboardEvent(tipo, {
-                    key: 'Enter', code: 'Enter', keyCode: 13, which: 13, shiftKey: true, bubbles: true, cancelable: true
-                }));
-            });
-            await sleep(150);
-        } else {
-            console.warn("[INYECTOR] CodeMirror no se inicializo a tiempo en indice:", indice);
+            cm.getInputField().dispatchEvent(new KeyboardEvent('keydown', {
+                key: 'Enter', code: 'Enter', keyCode: 13, which: 13,
+                shiftKey: true, bubbles: true, cancelable: true
+            }));
+            await sleep(120);
         }
     }
 
     async function procesarDiagrama(liveCalc, srcCalc) {
-        const extraerM = t => {
-            const ini = t.lastIndexOf('{"class":"go.GraphLinksModel"');
-            if (ini === -1) return null;
-            let prof = 0, enCad = false, esc = false;
-            for (let i = ini; i < t.length; i++) {
-                const ch = t[i];
-                if (enCad) { if (esc) esc = false; else if (ch === '\\') esc = true; else if (ch === '"') enCad = false; continue; }
-                if (ch === '"') { enCad = true; continue; }
-                if (ch === '{') prof++; else if (ch === '}') { prof--; if (prof === 0) try { return JSON.parse(t.slice(ini, i + 1)); } catch (e) { return null; } }
-            }
-            return null;
-        };
-        const modelo = extraerM(srcCalc.textContent);
+        const modelo = extraerModeloGoJS(srcCalc.textContent) || extraerModeloGoJS(liveCalc.textContent);
         if (!modelo) return null;
 
-        // CORRECCIÓN: Espera dinámica obligatoria para GoJS
-        await esperarHasta(() => {
+        await esperarHasta(() => diagramaDe(liveCalc), 2500);
+        const d = diagramaDe(liveCalc);
+
+        if (d && inyectarModelo(d, modelo)) {
+            await sleep(60);
+            shiftEnterEn(liveCalc.querySelector('canvas'));
+        } else {
+            const textos = Array.from(srcCalc.querySelectorAll('.instruccion')).map(textoInst).map(limpiarComodines);
+            for (let k = 0; k < textos.length; k++) await escribirCelda(liveCalc, k, textos[k]);
+        }
+
+        if (!VERIFICAR_DIAGRAMA) return true;
+
+        let ok = await esperarHasta(() => correctoEn(liveCalc), 2500, 100);
+        if (!ok && !cancelado) {
             const cv = liveCalc.querySelector('canvas');
-            if (!cv) return false;
-            let d = null;
-            for (let el = cv; el; el = el.parentElement) {
-                d = window.go && window.go.Diagram && window.go.Diagram.fromDiv(el);
-                if (d) return true;
-            }
-            return false;
-        }, 3000);
-
-        const cv = liveCalc.querySelector('canvas');
-        let d = null;
-        for (let el = cv; el; el = el.parentElement) {
-            d = window.go && window.go.Diagram && window.go.Diagram.fromDiv(el);
-            if (d) break;
+            shiftEnterEn(cv);
+            if (cv && cv.parentElement) shiftEnterEn(cv.parentElement);
+            ok = await esperarHasta(() => correctoEn(liveCalc), 3000, 100);
         }
-
-        if (d) {
-            const m = d.model;
-            d.startTransaction('InyeccionModelo');
-            try {
-                const env = [...m.linkDataArray];
-                if (m.removeLinkDataCollection) m.removeLinkDataCollection(env); else env.forEach(l => m.removeLinkData(l));
-                (modelo.nodeDataArray || []).forEach(src => {
-                    const txt = limpiarComodinesDiags(src.text);
-                    const nodo = m.findNodeDataForKey(src.key);
-                    if (nodo) { if (src.text !== undefined) m.setDataProperty(nodo, 'text', txt); }
-                    else { const c = JSON.parse(JSON.stringify(src)); c.text = txt; m.addNodeData(c); }
-                });
-                (modelo.linkDataArray || []).forEach(l => { const c = JSON.parse(JSON.stringify(l)); if (typeof c.text === 'string') c.text = limpiarComodinesDiags(c.text); m.addLinkData(c); });
-                d.commitTransaction('InyeccionModelo');
-                await sleep(60);
-                ['keydown', 'keyup'].forEach(tipo => cv.dispatchEvent(new KeyboardEvent(tipo, { key: 'Enter', code: 'Enter', keyCode: 13, which: 13, shiftKey: true, bubbles: true })));
-            } catch (e) { d.rollbackTransaction(); }
-        }
-        return true;
+        return ok;
     }
 
     async function inyectarCalculadoras(ejActual, ejResuelto) {
@@ -351,17 +405,24 @@
         if (!ejResuelto) return { error: true, omitido: false };
 
         const sourceCalculadoras = Array.from(ejResuelto.querySelectorAll('.calculadora'));
-        const srcDiag = sourceCalculadoras.filter(esDiagramaSrc);
-        const srcNoDiag = sourceCalculadoras.filter(c => !esDiagramaSrc(c));
+
+        const srcDiag    = sourceCalculadoras.filter(esDiagramaSrc);
+        const srcNoDiag  = sourceCalculadoras.filter(c => !esDiagramaSrc(c));
         const liveNoDiag = liveCalculadoras.filter(c => !esDiagramaVivo(c));
 
         const planPorCalc = new Map();
         if (liveNoDiag.length === srcNoDiag.length) {
-            liveNoDiag.forEach((c, j) => planPorCalc.set(c, Array.from(srcNoDiag[j].querySelectorAll('.instruccion')).map(textoInst)));
+            liveNoDiag.forEach((c, j) =>
+                planPorCalc.set(c, Array.from(srcNoDiag[j].querySelectorAll('.instruccion')).map(textoInst)));
         } else {
-            const todas = srcNoDiag.flatMap(c => Array.from(c.querySelectorAll('.instruccion')).map(textoInst)).filter(t => t);
-            const cupo = liveNoDiag.map(c => Math.max(1, Array.from(c.querySelectorAll('.CodeMirror')).filter(cm => cm.CodeMirror && cm.CodeMirror.getValue().trim() !== '').length));
-            liveNoDiag.forEach((c, j) => planPorCalc.set(c, j === liveNoDiag.length - 1 ? todas.splice(0) : todas.splice(0, cupo[j])));
+            const todas = srcNoDiag
+                .flatMap(c => Array.from(c.querySelectorAll('.instruccion')).map(textoInst))
+                .filter(t => t);
+            const cupo = liveNoDiag.map(c => Math.max(1,
+                Array.from(c.querySelectorAll('.CodeMirror'))
+                    .filter(cm => cm.CodeMirror && cm.CodeMirror.getValue().trim() !== '').length));
+            liveNoDiag.forEach((c, j) =>
+                planPorCalc.set(c, j === liveNoDiag.length - 1 ? todas.splice(0) : todas.splice(0, cupo[j])));
         }
 
         let diagramaFallo = false;
@@ -371,10 +432,13 @@
             if (esDiagramaVivo(liveCalc)) {
                 const srcCalc = srcDiag[idxDiag++];
                 if (!srcCalc) continue;
-                if (await procesarDiagrama(liveCalc, srcCalc) === false) diagramaFallo = true;
+                const res = await procesarDiagrama(liveCalc, srcCalc);
+                if (res === false) diagramaFallo = true;
             } else {
                 const textos = planPorCalc.get(liveCalc) || [];
-                for (let k = 0; k < textos.length; k++) await escribirCelda(liveCalc, k, textos[k]);
+                for (let k = 0; k < textos.length; k++) {
+                    await escribirCelda(liveCalc, k, textos[k]);
+                }
             }
         }
         return { error: diagramaFallo, omitido: false };
@@ -517,7 +581,6 @@
                 if (botonAccion) {
                     const antesHTML = ejActual.innerHTML;
                     botonAccion.click();
-                    // Espera dinamica del renderizado principal del ejercicio
                     await esperarHasta(() => ejActual.innerHTML !== antesHTML, 3000);
                     await sleep(150);
                 }
@@ -551,7 +614,7 @@
     // MODULO 7: INTERFAZ DE USUARIO (GUI)
     // =========================================================================
     const metaActual = obtenerMetadatosCapitulo();
-    const etiquetaCap = metaActual ? `${metaActual.materia.toUpperCase()} CAP ${metaActual.num}` : 'V33.1';
+    const etiquetaCap = metaActual ? `${metaActual.materia.toUpperCase()} CAP ${metaActual.num}` : 'V33.2';
 
     const contenedorRaiz = document.createElement('div');
     contenedorRaiz.className = 'tm-inyectado';
