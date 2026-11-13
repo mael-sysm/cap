@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         Inyector Maestro V33.0 (Motor RAM + Control Variante)
+// @name         Inyector Maestro V33.1 (Corrección CodeMirror + RAM)
 // @namespace    http://tampermonkey.net/
-// @version      33.0
-// @description  Lectura directa de RAM (Base64) para Tipos 0-4. GitHub reservado solo para CodeMirror. Control dinámico de variantes.
+// @version      33.1
+// @description  Lectura directa de RAM para Tipos 0-4. GitHub para CodeMirror. Carga dinámica segura.
 // @author       mercz d
 // @match        https://cursosabiertos.usfx.bo/materias/*/capitulos/*
 // @grant        none
@@ -22,8 +22,6 @@
     const GITHUB_BRANCH = 'main';
 
     const MAX_INTENTOS = 15;
-    const VERIFICAR_DIAGRAMA = true;
-
     let cancelado = false;
     let cacheHTMLGitHub = null;
 
@@ -238,9 +236,16 @@
         const val = parseFloat(inp.value || inp.getAttribute('value') || '0');
         return isNaN(val) ? 0 : val;
     }
-    function extraerNumCapTitulo(titulo) {
-        const m = (titulo || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').match(/capitulo\s*(\d+)/i);
-        return m ? m[1] : null;
+    
+    // Restaurado: Función para esperar a que los objetos DOM existan dinámicamente
+    async function esperarHasta(cond, max = 2500, paso = 40) {
+        const fin = Date.now() + max;
+        while (Date.now() < fin) {
+            if (cancelado) return false;
+            try { if (cond()) return true; } catch (e) {}
+            await sleep(paso);
+        }
+        return false;
     }
 
     // =========================================================================
@@ -260,18 +265,27 @@
 
     async function escribirCelda(liveCalc, indice, texto) {
         if (!texto || cancelado) return;
+        
+        // CORRECCIÓN: Espera dinámica obligatoria hasta que CodeMirror se vincule al DOM
+        await esperarHasta(() => {
+            let cmDOM = liveCalc.querySelectorAll('.CodeMirror')[indice];
+            return cmDOM && cmDOM.CodeMirror;
+        }, 3000);
+
         let liveCM = liveCalc.querySelectorAll('.CodeMirror')[indice];
-        if (!liveCM) {
-            await sleep(500);
-            liveCM = liveCalc.querySelectorAll('.CodeMirror')[indice];
-        }
         if (liveCM && liveCM.CodeMirror) {
             const cm = liveCM.CodeMirror;
             cm.setValue(texto);
-            cm.getInputField().dispatchEvent(new KeyboardEvent('keydown', {
-                key: 'Enter', code: 'Enter', keyCode: 13, which: 13, shiftKey: true, bubbles: true, cancelable: true
-            }));
-            await sleep(120);
+            
+            // Disparamos Shift+Enter (Tanto down como up para mayor compatibilidad)
+            ['keydown', 'keyup'].forEach(tipo => {
+                cm.getInputField().dispatchEvent(new KeyboardEvent(tipo, {
+                    key: 'Enter', code: 'Enter', keyCode: 13, which: 13, shiftKey: true, bubbles: true, cancelable: true
+                }));
+            });
+            await sleep(150);
+        } else {
+            console.warn("[INYECTOR] CodeMirror no se inicializo a tiempo en indice:", indice);
         }
     }
 
@@ -291,7 +305,18 @@
         const modelo = extraerM(srcCalc.textContent);
         if (!modelo) return null;
 
-        await sleep(1500);
+        // CORRECCIÓN: Espera dinámica obligatoria para GoJS
+        await esperarHasta(() => {
+            const cv = liveCalc.querySelector('canvas');
+            if (!cv) return false;
+            let d = null;
+            for (let el = cv; el; el = el.parentElement) {
+                d = window.go && window.go.Diagram && window.go.Diagram.fromDiv(el);
+                if (d) return true;
+            }
+            return false;
+        }, 3000);
+
         const cv = liveCalc.querySelector('canvas');
         let d = null;
         for (let el = cv; el; el = el.parentElement) {
@@ -362,28 +387,16 @@
         d: "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz<>",
         d4c: function(e) {
             var t, r, a = [], i = "";
-            for (let o = 0; o < 4; o++) {
-                t = this.d.indexOf(e[3 - o]);
-                for (let j = 0; j < 6; j++) a.unshift((t >> j) & 1);
-            }
+            for (let o = 0; o < 4; o++) { t = this.d.indexOf(e[3 - o]); for (let j = 0; j < 6; j++) a.unshift((t >> j) & 1); }
             let strBin = a.join("");
-            for (let j = 0; j < 3; j++) {
-                r = parseInt(strBin.slice(8 * j, 8 * (j + 1)), 2);
-                i += String.fromCharCode(r);
-            }
+            for (let j = 0; j < 3; j++) { r = parseInt(strBin.slice(8 * j, 8 * (j + 1)), 2); i += String.fromCharCode(r); }
             return i;
         },
         d4cf: function(e) {
             var t, r, a = [], i = "";
-            for (let o = 0; o < 4; o++) {
-                t = (e[3 - o]) ? this.d.indexOf(e[3 - o]) : 0; 
-                for (let j = 0; j < 6; j++) a.unshift((t >> j) & 1);
-            }
+            for (let o = 0; o < 4; o++) { t = (e[3 - o]) ? this.d.indexOf(e[3 - o]) : 0; for (let j = 0; j < 6; j++) a.unshift((t >> j) & 1); }
             let strBin = a.join("");
-            for (let j = 0; j < 3; j++) {
-                r = parseInt(strBin.slice(8 * j, 8 * (j + 1)), 2);
-                if (r !== 0) i += String.fromCharCode(r);
-            }
+            for (let j = 0; j < 3; j++) { r = parseInt(strBin.slice(8 * j, 8 * (j + 1)), 2); if (r !== 0) i += String.fromCharCode(r); }
             return i;
         },
         decode: function(e) {
@@ -504,9 +517,8 @@
                 if (botonAccion) {
                     const antesHTML = ejActual.innerHTML;
                     botonAccion.click();
-                    await sleep(100);
-                    let timeouts = 0;
-                    while (ejActual.innerHTML === antesHTML && timeouts < 25) { await sleep(100); timeouts++; }
+                    // Espera dinamica del renderizado principal del ejercicio
+                    await esperarHasta(() => ejActual.innerHTML !== antesHTML, 3000);
                     await sleep(150);
                 }
 
@@ -531,7 +543,7 @@
             }
         }
 
-        if (ejecutados === 0) showToast('[INFO] Ningun ejercicio requirio inyeccion con el filtro actual.', 'warning');
+        if (ejecutados === 0) showToast('[INFO] Ningun ejercicio requirio inyeccion.', 'warning');
         resetearBtn();
     }
 
@@ -539,7 +551,7 @@
     // MODULO 7: INTERFAZ DE USUARIO (GUI)
     // =========================================================================
     const metaActual = obtenerMetadatosCapitulo();
-    const etiquetaCap = metaActual ? `${metaActual.materia.toUpperCase()} CAP ${metaActual.num}` : 'V33.0';
+    const etiquetaCap = metaActual ? `${metaActual.materia.toUpperCase()} CAP ${metaActual.num}` : 'V33.1';
 
     const contenedorRaiz = document.createElement('div');
     contenedorRaiz.className = 'tm-inyectado';
