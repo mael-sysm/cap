@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         Inyector Maestro V34.0 (Base V32.12 + Hook Variantes)
+// @name         Inyector Maestro V34.1 (Correccion Modo En Curso)
 // @namespace    http://tampermonkey.net/
-// @version      34.0
-// @description  Descarga desde GitHub/Local. Inyección exacta y sin bucles mediante control nativo de Math.random.
+// @version      34.1
+// @description  Descarga GitHub/Local. Inyeccion exacta, control nativo de Math.random y maquina de estados para ejercicios en curso.
 // @author       mercz d
 // @match        https://cursosabiertos.usfx.bo/materias/*/capitulos/*
 // @grant        none
@@ -28,14 +28,13 @@
     // =========================================================================
     // MODULO 0: INTERCEPTOR DE VARIANTES (HACK MATH.RANDOM)
     // =========================================================================
-    window.__tm_variante_deseada = null; // Variable puente
+    window.__tm_variante_deseada = null; 
 
     const hookVariantesId = setInterval(() => {
         if (typeof window.Ejercicio !== 'undefined' && typeof window.Capitulo !== 'undefined' && !window.Ejercicio.prototype._tm_hooked) {
             const generarOriginal = window.Ejercicio.prototype.generarEjercicio;
             window.Ejercicio.prototype.generarEjercicio = function() {
                 
-                // Si el script inyector esta pidiendo una variante especifica
                 if (window.__tm_variante_deseada !== null) {
                     if (window.Capitulo.reg && window.Capitulo.reg[window.Ejercicio.neg]) {
                         window.Capitulo.reg[window.Ejercicio.neg][0] = 0; 
@@ -59,7 +58,6 @@
                     console.log(`[INYECTOR] Variante forzada con exito al enunciado ${varSegura} (de ${totalVariantes}).`);
                     return resultado;
                 } else {
-                    // Flujo normal de la plataforma si no estamos inyectando
                     return generarOriginal.apply(this, arguments);
                 }
             };
@@ -239,11 +237,6 @@
             toast.style.transform = 'translateX(-50%) translateY(20px)';
             setTimeout(() => toast.remove(), 300);
         }, 3500);
-    }
-
-    function extraerNumCapTitulo(titulo) {
-        const m = (titulo || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').match(/capitulo\s*(\d+)/i);
-        return m ? m[1] : null;
     }
 
     const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -468,7 +461,7 @@
 
         if (diagramaFallo) return { diagramaFallo: true };
 
-        // B) CAMPOS LITERALES Y SELECCIÓN
+        // B) CAMPOS LITERALES Y SELECCION
         if (tieneCampos && !cancelado) {
             const srcLit = ejResuelto.querySelectorAll('.campo_literal');
             const liveLit = ejActual.querySelectorAll('.campo_literal');
@@ -527,14 +520,13 @@
     }
 
     // =========================================================================
-    // MODULO 6: ORQUESTADOR PRINCIPAL (SIN BUCLES, EJECUCIÓN DIRECTA)
+    // MODULO 6: ORQUESTADOR PRINCIPAL CON MÁQUINA DE ESTADOS
     // =========================================================================
     async function ejecutarInyeccionConHTML(htmlTexto) {
         activarEscudoFoco();
-
         const modo = selectModo.value;
-
         let doc;
+        
         try { doc = new DOMParser().parseFromString(htmlTexto, 'text/html'); } 
         catch (err) { showToast('Error: HTML invalido.', 'error'); resetearBtn(); return; }
 
@@ -562,7 +554,7 @@
             const tieneGenerarActivo = !!(btnGen && esVisible(btnGen));
             const notaActual = obtenerNotaEjercicio(ejActual);
 
-            // Filtros de modo
+            // Filtros de modo exactos a V32.12
             if (modo === 'sin_corregir') {
                 const btnCor = ejActual.querySelector('#btCorregir, .btCorregir');
                 const corVis = !!(btnCor && esVisible(btnCor));
@@ -577,7 +569,7 @@
 
             btnGitHub.innerHTML = `<span style="font-size:10px; font-weight:bold;">${i + 1}</span>`;
 
-            // 1. Buscamos cualquier variante de este ejercicio en el archivo base
+            // 1. Verificar si existe la resolucion
             let ejResuelto = doc.querySelector(`div.ejercicio[id="${id}"]`);
             if (!ejResuelto) {
                 console.warn(`[INYECTOR] Ejercicio ${id} no encontrado en el archivo.`);
@@ -585,36 +577,64 @@
                 continue;
             }
 
-            // 2. Extraemos que variante (enunciado) resolvio el autor exactamente
+            // 2. Extraer parametros de las variantes
             let varianteDeseada = parseInt(ejResuelto.getAttribute('enunciado') || '0', 10);
-            
-            // 3. Programamos el hook para que fuerce esa variante
-            window.__tm_variante_deseada = varianteDeseada;
-
             let numEnunciadoActual = parseInt(ejActual.getAttribute('enunciado') || '-1', 10);
-            const botonAccion = (btnGen && esVisible(btnGen)) ? btnGen : (btnRep && esVisible(btnRep) ? btnRep : null);
+            
+            // Evaluacion de estado actual
+            const btnCorregir = ejActual.querySelector('.btCorregir, #btCorregir');
+            const estaCorriendo = !!(btnCorregir && esVisible(btnCorregir) && !tieneGenerarActivo && !tieneRepetirActivo);
+            let necesitaGenerar = false;
 
-            // 4. Si el ejercicio no esta en el enunciado de GitHub, forzamos su recarga
-            if (botonAccion && (numEnunciadoActual !== varianteDeseada || modo !== 'sin_corregir')) {
-                const antesHTML = ejActual.innerHTML;
-                botonAccion.click();
-                await esperarHasta(() => ejActual.innerHTML !== antesHTML, 3000);
-                await sleep(150);
+            // 3. Maquina de estados
+            if (estaCorriendo) {
+                // Modo: sin_corregir (o ejercicio arrancado a mano)
+                if (numEnunciadoActual !== varianteDeseada) {
+                    // El ejercicio corre pero en una variante equivocada. Quemamos el intento.
+                    btnCorregir.removeAttribute('disabled');
+                    btnCorregir.disabled = false;
+                    btnCorregir.click();
+                    await esperarHasta(() => {
+                        const r = ejActual.querySelector('.btRepetir');
+                        return r && esVisible(r);
+                    }, 2500);
+                    necesitaGenerar = true; // Ahora pedira recarga
+                }
+            } else {
+                // Modo: iniciados, no_iniciados, todos
+                necesitaGenerar = true;
             }
 
-            // 5. Apagamos el hook de seguridad
-            window.__tm_variante_deseada = null;
+            // 4. Forzar Variante si fue necesario
+            if (necesitaGenerar) {
+                window.__tm_variante_deseada = varianteDeseada;
+
+                // Re-buscar botones tras quemar intento
+                const btnGenRef = ejActual.querySelector('.btGenerar');
+                const btnRepRef = ejActual.querySelector('.btRepetir');
+                const botonAccion = (btnGenRef && esVisible(btnGenRef)) ? btnGenRef : (btnRepRef && esVisible(btnRepRef) ? btnRepRef : null);
+
+                if (botonAccion) {
+                    const antesHTML = ejActual.innerHTML;
+                    botonAccion.click();
+                    await esperarHasta(() => ejActual.innerHTML !== antesHTML, 3000);
+                    await sleep(150);
+                }
+
+                window.__tm_variante_deseada = null; // Apagar interceptor
+            }
+
             if (cancelado) return;
 
-            // 6. Rellenar las celdas (El DOM en vivo ya es un espejo del GitHub)
+            // 5. Inyectar (Ahora garantizado que DOM actual == DOM resuelto)
             const { diagramaFallo } = await rellenarContenidoEjercicio(ejActual, ejResuelto);
 
-            // 7. Corregir
-            const btnCorregir = ejActual.querySelector('.btCorregir, #btCorregir');
-            if (btnCorregir && !cancelado && !diagramaFallo) {
-                btnCorregir.removeAttribute('disabled');
-                btnCorregir.disabled = false;
-                btnCorregir.click();
+            // 6. Corregir y terminar
+            const btnCorregirFinal = ejActual.querySelector('.btCorregir, #btCorregir');
+            if (btnCorregirFinal && !cancelado && !diagramaFallo) {
+                btnCorregirFinal.removeAttribute('disabled');
+                btnCorregirFinal.disabled = false;
+                btnCorregirFinal.click();
                 await sleep(700);
             }
 
@@ -636,7 +656,7 @@
     // INTERFAZ DE USUARIO (GUI)
     // =========================================================================
     const metaActual = obtenerMetadatosCapitulo();
-    const etiquetaCap = metaActual ? `${metaActual.materia.toUpperCase()} Cap ${metaActual.num}` : 'V34.0';
+    const etiquetaCap = metaActual ? `${metaActual.materia.toUpperCase()} Cap ${metaActual.num}` : 'V34.1';
 
     const contenedorRaiz = document.createElement('div');
     contenedorRaiz.className = 'tm-inyectado';
