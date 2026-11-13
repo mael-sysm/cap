@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         Inyector Maestro V34.1 (Correccion Modo En Curso)
+// @name         Inyector Maestro V34.2 (Correccion GitHub + Estado)
 // @namespace    http://tampermonkey.net/
-// @version      34.1
-// @description  Descarga GitHub/Local. Inyeccion exacta, control nativo de Math.random y maquina de estados para ejercicios en curso.
+// @version      34.2
+// @description  Descarga GitHub/Local. Inyeccion exacta, Math.random y manejo de errores detallado.
 // @author       mercz d
 // @match        https://cursosabiertos.usfx.bo/materias/*/capitulos/*
 // @grant        none
@@ -17,7 +17,7 @@
     // =========================================================================
     // CONFIGURACION DEL REPOSITORIO GITHUB
     // =========================================================================
-    const GITHUB_USER   = 'mael-sysm';
+    const GITHUB_USER   = 'mael-sysm'; // OJO: Cambia a 'mrc-dza' si es necesario
     const GITHUB_REPO   = 'cap';
     const GITHUB_BRANCH = 'main';
 
@@ -153,7 +153,7 @@
     document.addEventListener('click', alHacerClic, true);
 
     // =========================================================================
-    // MODULO 2: DESCARGA GITHUB Y METADATOS
+    // MODULO 2: DESCARGA GITHUB Y METADATOS (ERRORES DETALLADOS)
     // =========================================================================
     function obtenerMetadatosCapitulo() {
         for (const s of document.querySelectorAll('script[src]')) {
@@ -172,8 +172,14 @@
         const num = String(meta.num);
         const numPad = num.padStart(2, '0');
 
-        const candidatosDirectos = [`${baseRaw}/${num}.html`, `${baseRaw}/${meta.capitulo}.html`, `${baseRaw}/${numPad}.html`];
+        const candidatosDirectos = [
+            `${baseRaw}/${num}.html`, 
+            `${baseRaw}/${meta.capitulo}.html`, 
+            `${baseRaw}/${numPad}.html`,
+            `${baseRaw}/Capitulo%20${num}.html`
+        ];
 
+        // Intento directo para no gastar cuota de API
         for (const url of candidatosDirectos) {
             try {
                 const r = await fetch(url, { cache: 'no-store' });
@@ -181,9 +187,15 @@
             } catch (e) {}
         }
 
+        // Si falla el directo, usamos la API para explorar los archivos
         const apiUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${meta.materia}?ref=${GITHUB_BRANCH}`;
         const respApi = await fetch(apiUrl, { cache: 'no-store' });
-        if (!respApi.ok) throw new Error(`Carpeta "${meta.materia}" no encontrada en el repositorio.`);
+        
+        if (!respApi.ok) {
+            if (respApi.status === 404) throw new Error(`Carpeta "${meta.materia}" no existe en GitHub.`);
+            if (respApi.status === 403 || respApi.status === 429) throw new Error(`Limite de API GitHub excedido (Error 403). Intenta usar Local.`);
+            throw new Error(`Error API GitHub: ${respApi.status}`);
+        }
 
         const archivos = await respApi.json();
         if (!Array.isArray(archivos)) throw new Error('Respuesta inesperada de GitHub.');
@@ -201,11 +213,11 @@
             if (archivoElegido) break;
         }
 
-        if (!archivoElegido) throw new Error(`Archivo para el capitulo ${num} no hallado.`);
+        if (!archivoElegido) throw new Error(`El archivo HTML para el capitulo ${num} no se encontro en "${meta.materia}".`);
 
         const urlFinal = archivoElegido.download_url || `${baseRaw}/${encodeURIComponent(archivoElegido.name)}`;
         const respHtml = await fetch(urlFinal, { cache: 'no-store' });
-        if (!respHtml.ok) throw new Error(`Error al descargar archivo.`);
+        if (!respHtml.ok) throw new Error(`Fallo al descargar el archivo final (Error ${respHtml.status}).`);
 
         return (cacheHTMLGitHub = await respHtml.text());
     }
@@ -223,7 +235,7 @@
         Object.assign(toast.style, {
             position: 'fixed', bottom: '20px', left: '50%', transform: 'translateX(-50%) translateY(100px)',
             background: colors[type] || colors.info, color: 'white', padding: '12px 24px', borderRadius: '0px',
-            fontFamily: 'system-ui, sans-serif', fontSize: '14px', fontWeight: '500',
+            fontFamily: 'system-ui, sans-serif', fontSize: '13px', fontWeight: '500',
             boxShadow: '0 4px 15px rgba(0,0,0,0.2)', zIndex: '10000', opacity: '0',
             transition: 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
         });
@@ -237,6 +249,11 @@
             toast.style.transform = 'translateX(-50%) translateY(20px)';
             setTimeout(() => toast.remove(), 300);
         }, 3500);
+    }
+
+    function extraerNumCapTitulo(titulo) {
+        const m = (titulo || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').match(/capitulo\s*(\d+)/i);
+        return m ? m[1] : null;
     }
 
     const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -491,7 +508,7 @@
                 await elegirOpcion(liveSel[k], norm(origen.textContent));
             }
 
-            // Opciones Multiples - Ahora lee exactamente del clon resuelto
+            // Opciones Multiples
             const srcOpciones = Array.from(ejResuelto.querySelectorAll('p.opcionMultiple'));
             ejActual.querySelectorAll('p.opcionMultiple').forEach((p, index) => {
                 const inp = p.querySelector('input');
@@ -520,7 +537,7 @@
     }
 
     // =========================================================================
-    // MODULO 6: ORQUESTADOR PRINCIPAL CON MÁQUINA DE ESTADOS
+    // MODULO 6: ORQUESTADOR PRINCIPAL
     // =========================================================================
     async function ejecutarInyeccionConHTML(htmlTexto) {
         activarEscudoFoco();
@@ -554,7 +571,7 @@
             const tieneGenerarActivo = !!(btnGen && esVisible(btnGen));
             const notaActual = obtenerNotaEjercicio(ejActual);
 
-            // Filtros de modo exactos a V32.12
+            // Filtros de modo
             if (modo === 'sin_corregir') {
                 const btnCor = ejActual.querySelector('#btCorregir, .btCorregir');
                 const corVis = !!(btnCor && esVisible(btnCor));
@@ -563,7 +580,7 @@
                 if (tieneRepetirActivo || !tieneGenerarActivo) { omitidos++; continue; }
             } else if (modo === 'iniciados') {
                 if (!tieneRepetirActivo || notaActual >= 100) { omitidos++; continue; }
-            } else { // todos
+            } else { 
                 if (!tieneGenerarActivo && !tieneRepetirActivo) { omitidos++; continue; }
             }
 
@@ -588,9 +605,8 @@
 
             // 3. Maquina de estados
             if (estaCorriendo) {
-                // Modo: sin_corregir (o ejercicio arrancado a mano)
                 if (numEnunciadoActual !== varianteDeseada) {
-                    // El ejercicio corre pero en una variante equivocada. Quemamos el intento.
+                    // Quemamos el intento temporalmente para activar el Repetir
                     btnCorregir.removeAttribute('disabled');
                     btnCorregir.disabled = false;
                     btnCorregir.click();
@@ -598,18 +614,16 @@
                         const r = ejActual.querySelector('.btRepetir');
                         return r && esVisible(r);
                     }, 2500);
-                    necesitaGenerar = true; // Ahora pedira recarga
+                    necesitaGenerar = true; 
                 }
             } else {
-                // Modo: iniciados, no_iniciados, todos
                 necesitaGenerar = true;
             }
 
-            // 4. Forzar Variante si fue necesario
+            // 4. Forzar Variante
             if (necesitaGenerar) {
                 window.__tm_variante_deseada = varianteDeseada;
 
-                // Re-buscar botones tras quemar intento
                 const btnGenRef = ejActual.querySelector('.btGenerar');
                 const btnRepRef = ejActual.querySelector('.btRepetir');
                 const botonAccion = (btnGenRef && esVisible(btnGenRef)) ? btnGenRef : (btnRepRef && esVisible(btnRepRef) ? btnRepRef : null);
@@ -626,7 +640,7 @@
 
             if (cancelado) return;
 
-            // 5. Inyectar (Ahora garantizado que DOM actual == DOM resuelto)
+            // 5. Inyectar
             const { diagramaFallo } = await rellenarContenidoEjercicio(ejActual, ejResuelto);
 
             // 6. Corregir y terminar
@@ -656,7 +670,7 @@
     // INTERFAZ DE USUARIO (GUI)
     // =========================================================================
     const metaActual = obtenerMetadatosCapitulo();
-    const etiquetaCap = metaActual ? `${metaActual.materia.toUpperCase()} Cap ${metaActual.num}` : 'V34.1';
+    const etiquetaCap = metaActual ? `${metaActual.materia.toUpperCase()} Cap ${metaActual.num}` : 'V34.2';
 
     const contenedorRaiz = document.createElement('div');
     contenedorRaiz.className = 'tm-inyectado';
@@ -734,7 +748,9 @@
             const html = await descargarHTMLDesdeGitHub(meta);
             await ejecutarInyeccionConHTML(html);
         } catch (err) {
-            showToast('Fallo al descargar archivo de GitHub.', 'error');
+            // CORRECCION AQUI: Ahora muestra el error real (404, 403, etc)
+            showToast(err.message || 'Fallo al descargar archivo de GitHub.', 'error');
+            console.error("[INYECTOR ERROR GITHUB]:", err);
             resetearBtn();
         }
     });
