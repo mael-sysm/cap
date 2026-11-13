@@ -131,6 +131,7 @@
     function limpiarRastro() {
         estado.cancelado = true;
         desactivarEscudoFoco();
+        restaurarGenerarEjercicio();
         document.removeEventListener('click', alHacerClic, true);
         document.removeEventListener('click', interceptarGuardar, true);
         timersHabilitar.forEach(id => clearTimeout(id));
@@ -297,16 +298,78 @@
         return ejercicios.find(ej => sinInicio(obtenerEstadoBotones(ej)) && ej.hasAttribute('enunciado')) || null;
     }
 
-    function buscarEjercicioResuelto(doc, ejActual) {
-        const id = ejActual.id;
-        const enunciado = ejActual.getAttribute('enunciado');
-        return doc.querySelector(`div.ejercicio[id="${id}"][enunciado="${enunciado}"]`);
+    /** Ejercicio equivalente en el documento emisor: se busca solo por ID. */
+    function buscarEjercicioEmisor(doc, ej) {
+        return doc.querySelector(`div.ejercicio[id="${ej.id}"]`);
+    }
+
+    /** Número de enunciado (variante) de un ejercicio, o null si no tiene. */
+    function varianteDe(ej) {
+        const n = parseInt(ej.getAttribute('enunciado'), 10);
+        return isNaN(n) ? null : n;
+    }
+
+    const coincideVariante = (ej, objetivo) => varianteDe(ej) === objetivo;
+
+    /** Índice interno del ejercicio (ejercicio3 → 2), igual a Ejercicio.neg. */
+    function indiceEjercicio(ej) {
+        const m = /^ejercicio(\d+)$/.exec(ej.id || '');
+        return m ? Number(m[1]) - 1 : null;
     }
 
     function textoInst(el) {
         const d = document.createElement('div');
         d.innerHTML = el.innerHTML.replace(/<br\s*[\/]?>/gi, '\n').replace(/<\/p>|<\/div>/gi, '\n');
         return d.textContent.replace(/\u200B/g, '').replace(/^\n+|\n+$/g, '');
+    }
+
+    // =========================================================================
+    // 7B. VARIANTE FORZADA (elige qué enunciado se genera, solo para un ejercicio)
+    // =========================================================================
+    const forzado = { original: null, variantes: new Map() };
+
+    function generarConVariante(original, ctx, args, variante) {
+        if (typeof Capitulo !== 'undefined' && Capitulo.reg && Capitulo.reg[Ejercicio.neg]) {
+            Capitulo.reg[Ejercicio.neg][0] = 0;
+        }
+        const total = ctx.enunciados ? ctx.enunciados.length : 1;
+        const segura = Math.min(variante, total - 1);
+        if (segura !== variante) console.warn(`[Inyector] Variante ${variante} fuera de rango (${total}); se usa ${segura}.`);
+
+        const randomOriginal = Math.random;
+        Math.random = () => (segura + 0.1) / total;
+        try { return original.apply(ctx, args); }
+        finally { Math.random = randomOriginal; }
+    }
+
+    function instalarForzadoDeVariante() {
+        if (forzado.original || typeof Ejercicio === 'undefined' || !Ejercicio.prototype) return;
+        const original = Ejercicio.prototype.generarEjercicio;
+        if (typeof original !== 'function') return;
+
+        forzado.original = original;
+        Ejercicio.prototype.generarEjercicio = function () {
+            const variante = forzado.variantes.get(Ejercicio.neg);
+            return variante === undefined
+                ? original.apply(this, arguments)
+                : generarConVariante(original, this, arguments, variante);
+        };
+    }
+
+    function restaurarGenerarEjercicio() {
+        if (!forzado.original) return;
+        Ejercicio.prototype.generarEjercicio = forzado.original;
+        forzado.original = null;
+        forzado.variantes.clear();
+    }
+
+    /** Ejecuta `accion` con la variante forzada SOLO para este ejercicio; devuelve lo que devuelva `accion`. */
+    async function conVarianteForzada(ej, variante, accion) {
+        const idx = indiceEjercicio(ej);
+        const activa = variante !== null && variante !== undefined && idx !== null && !!forzado.original;
+        if (activa) forzado.variantes.set(idx, variante);
+        try { return await accion(); }
+        finally { if (activa) forzado.variantes.delete(idx); }
     }
 
     // =========================================================================
@@ -328,12 +391,12 @@
         await sleep(150);
     }
 
-    async function iniciarOReiniciar(ej, intento) {
+    async function iniciarOReiniciar(ej, intento, variante = null) {
         const gen = ej.querySelector('.btGenerar');
         const rep = ej.querySelector('.btRepetir');
         const usarGenerar = intento === 0 && gen && esVisible(gen) && !(rep && esVisible(rep));
         const boton = usarGenerar ? gen : rep;
-        if (boton) await clickYEsperarCambio(ej, boton);
+        if (boton) await conVarianteForzada(ej, variante, () => clickYEsperarCambio(ej, boton));
     }
 
     async function corregirYRepetir(ej) {
@@ -830,29 +893,29 @@
     // =========================================================================
     const necesitaDocumento = ej => !!ej.querySelector('.calculadora');
 
-    async function intentarRellenarEnCurso(doc, ej) {
-        const resuelto = buscarEjercicioResuelto(doc, ej);
-        if (necesitaDocumento(ej) && !resuelto) return false;
-        const { diagramaFallo } = await rellenarContenidoEjercicio(ej, resuelto);
-        return !diagramaFallo;
-    }
-
     async function procesarModoEnCurso(doc) {
         const ej = encontrarEjercicioCorriendo();
         if (!ej) { showToast('No hay ningún ejercicio corriendo en este momento.', 'warning'); return; }
 
-        const max = CONFIG.MAX_INTENTOS;
-        for (let intento = 0; intento < max; intento++) {
+        const emisor = buscarEjercicioEmisor(doc, ej);
+        if (!emisor && necesitaDocumento(ej)) { showToast('Este ejercicio no existe en el archivo.', 'warning'); return; }
+        const objetivo = emisor ? varianteDe(emisor) : null;
+
+        for (let intento = 0; intento < CONFIG.MAX_INTENTOS; intento++) {
             if (estado.cancelado) return;
             mostrarProgreso(intento + 1);
 
-            if (await intentarRellenarEnCurso(doc, ej)) return;
+            if (objetivo === null || coincideVariante(ej, objetivo)) {
+                const { diagramaFallo } = await rellenarContenidoEjercicio(ej, emisor);
+                if (!diagramaFallo) return;
+            }
 
-            if (intento < max - 1 && !estado.cancelado) {
-                if (!(await corregirYRepetir(ej))) break;
+            if (intento < CONFIG.MAX_INTENTOS - 1 && !estado.cancelado) {
+                const reiniciado = await conVarianteForzada(ej, objetivo, () => corregirYRepetir(ej));
+                if (!reiniciado) break;
             }
         }
-        showToast('No se encontró coincidencia por ID en curso.', 'warning');
+        showToast('No se pudo completar el ejercicio en curso.', 'warning');
     }
 
     // =========================================================================
@@ -866,24 +929,30 @@
     }
 
     /**
-     * Reintenta (hasta MAX_INTENTOS) mientras el enunciado generado no coincida
-     * con el del documento resuelto, o si falla un diagrama.
+     * Genera el ejercicio forzando la variante del emisor (un solo intento en el caso normal).
+     * Los reintentos quedan solo como respaldo si la variante no coincide o falla un diagrama.
      */
     async function procesarEjercicio(doc, ej) {
-        const max = CONFIG.MAX_INTENTOS;
-        for (let intento = 0; intento < max; intento++) {
+        const emisor = buscarEjercicioEmisor(doc, ej);
+        if (!emisor && necesitaDocumento(ej)) return false;
+        const objetivo = emisor ? varianteDe(emisor) : null;
+
+        for (let intento = 0; intento < CONFIG.MAX_INTENTOS; intento++) {
             if (estado.cancelado) return false;
 
-            await iniciarOReiniciar(ej, intento);
+            await iniciarOReiniciar(ej, intento, objetivo);
             if (estado.cancelado) return false;
 
-            const resuelto = buscarEjercicioResuelto(doc, ej);
-            if (necesitaDocumento(ej) && !resuelto) { await clickCorregir(ej); continue; }
+            if (objetivo !== null && !coincideVariante(ej, objetivo)) {
+                console.warn(`[Inyector] ${ej.id}: salió variante ${varianteDe(ej)}, se esperaba ${objetivo}.`);
+                await clickCorregir(ej);
+                continue;
+            }
 
-            const { diagramaFallo } = await rellenarContenidoEjercicio(ej, resuelto);
+            const { diagramaFallo } = await rellenarContenidoEjercicio(ej, emisor);
             await clickCorregir(ej);
 
-            if (diagramaFallo && intento < max - 1) continue;
+            if (diagramaFallo && intento < CONFIG.MAX_INTENTOS - 1) continue;
             return true;
         }
         return false;
@@ -905,7 +974,7 @@
         }
 
         if (procesados === 0 && omitidos > 0) showToast(`No se inyectó nada: ${omitidos} omitidos por filtros.`, 'info');
-        else if (procesados === 0) showToast('No se encontró coincidencia por ID en el archivo.', 'warning');
+        else if (procesados === 0) showToast('Ningún ejercicio coincide con el archivo.', 'warning');
     }
 
     // =========================================================================
@@ -981,6 +1050,7 @@
 
     function iniciar() {
         envolverSavePage();
+        instalarForzadoDeVariante();
         construirUI();
         conectarEventos();
     }
