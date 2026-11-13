@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         Inyector Maestro V36 (Respuestas directas)
+// @name         Inyector Maestro V36
 // @namespace    http://tampermonkey.net/
 // @version      36.0
-// @description  Rellena directo desde el objeto capitulo (sin comparar ni iterar). GitHub/Local solo para calculadoras y diagramas.
+// @description  Campos y opciones desde el objeto capitulo; calculadoras y diagramas desde GitHub/Local.
 // @author       mercz d
 // @match        https://cursosabiertos.usfx.bo/materias/*/capitulos/*
 // @grant        none
@@ -31,8 +31,7 @@
         CAMPOS: '.campo_literal, .campo_arrastrar, .campo_dato',
         TODO: '.campo_literal, .campo_arrastrar, .campo_dato, p.opcionMultiple',
         SELECTORES: '.campo_arrastrar, .campo_dato',
-        CORREGIR: '#btCorregir, .btCorregir',
-        INPUTS_TEXTO: 'input[type="text"]:not(.notas):not(.ittiempo)'
+        CORREGIR: '#btCorregir, .btCorregir'
     };
 
     const estado = {
@@ -462,17 +461,6 @@
         return true;
     }
 
-    /** Inputs de texto sueltos: solo si hay documento resuelto (GitHub/Local). */
-    function llenarInputsTexto(ejActual, ejResuelto) {
-        const src = ejResuelto.querySelectorAll(SEL.INPUTS_TEXTO);
-        const live = ejActual.querySelectorAll(SEL.INPUTS_TEXTO);
-        live.forEach((input, i) => {
-            if (!src[i]) return;
-            input.value = src[i].value || src[i].getAttribute('value') || '';
-            dispararEventos(input, ['input', 'change']);
-        });
-    }
-
     // =========================================================================
     // 10. CALCULADORAS (CodeMirror)
     // =========================================================================
@@ -675,17 +663,14 @@
     // =========================================================================
     // 12. RELLENO COMPLETO DE UN EJERCICIO
     // =========================================================================
-    /** ejResuelto puede ser null (modo directo): solo se llenan los campos desde `capitulo`. */
+    /** Campos y opciones: siempre desde `capitulo`. Calculadoras y diagramas: del documento emisor. */
     async function rellenarContenidoEjercicio(ejActual, ejResuelto) {
         await llenarCamposDesdeCapitulo(ejActual);
         if (estado.cancelado || !ejResuelto) return { diagramaFallo: false };
 
         const { diagramaFallo } = await llenarCalculadoras(ejActual, ejResuelto);
-        if (diagramaFallo) return { diagramaFallo: true };
-
-        llenarInputsTexto(ejActual, ejResuelto);
         await sleep(100);
-        return { diagramaFallo: false };
+        return { diagramaFallo };
     }
 
     // =========================================================================
@@ -738,13 +723,6 @@
         }, { textContent: 'Local' });
     }
 
-    function crearBotonDirecto() {
-        return crearElemento('button', {
-            padding: '6px 12px', background: '#16a34a', color: 'white', border: 'none',
-            borderRadius: '999px', cursor: 'pointer', fontSize: '11px', fontWeight: '600'
-        }, { textContent: '⚡ Directo', title: 'Rellena desde los datos del capítulo (sin descargar)' });
-    }
-
     function crearBotonCerrar() {
         return crearElemento('button', {
             width: '28px', height: '28px', background: '#ef4444', color: 'white', border: 'none',
@@ -788,13 +766,12 @@
         ui.selectModo = crearSelectorModo();
         ui.btnGitHub = crearBotonGitHub();
         ui.btnLocal = crearBotonLocal();
-        ui.btnDirecto = crearBotonDirecto();
         ui.btnCerrar = crearBotonCerrar();
         ui.btnPestana = crearPestana();
         ui.inputFile = crearInputArchivo();
 
         const fila = crearElemento('div', { display: 'flex', alignItems: 'center', gap: '6px' });
-        fila.append(ui.selectModo, ui.btnDirecto, ui.btnGitHub, ui.btnLocal, ui.btnCerrar);
+        fila.append(ui.selectModo, ui.btnGitHub, ui.btnLocal, ui.btnCerrar);
         ui.panel.append(crearSeccionInfo(etiqueta), fila);
         raiz.append(ui.panel, ui.btnPestana);
 
@@ -814,7 +791,6 @@
     function bloquearUI() {
         ui.btnGitHub.disabled = true;
         ui.btnLocal.disabled = true;
-        ui.btnDirecto.disabled = true;
         ui.selectModo.disabled = true;
         ui.btnGitHub.style.opacity = '0.7';
         mostrarProgreso('...');
@@ -825,7 +801,6 @@
         if (estado.cancelado) return;
         ui.btnGitHub.disabled = false;
         ui.btnLocal.disabled = false;
-        ui.btnDirecto.disabled = false;
         ui.selectModo.disabled = false;
         ui.btnGitHub.innerHTML = ICONO_DESCARGA;
         ui.btnGitHub.style.opacity = '1';
@@ -854,12 +829,10 @@
     // 15. ORQUESTACIÓN: MODO "SIN CORREGIR (EN CURSO)"
     // =========================================================================
     const necesitaDocumento = ej => !!ej.querySelector('.calculadora');
-    const resolverEjercicio = (doc, ej) => (doc ? buscarEjercicioResuelto(doc, ej) : null);
-    const maxIntentosPara = doc => (doc ? CONFIG.MAX_INTENTOS : 1);
 
     async function intentarRellenarEnCurso(doc, ej) {
-        const resuelto = resolverEjercicio(doc, ej);
-        if (doc && necesitaDocumento(ej) && !resuelto) return false;
+        const resuelto = buscarEjercicioResuelto(doc, ej);
+        if (necesitaDocumento(ej) && !resuelto) return false;
         const { diagramaFallo } = await rellenarContenidoEjercicio(ej, resuelto);
         return !diagramaFallo;
     }
@@ -868,7 +841,7 @@
         const ej = encontrarEjercicioCorriendo();
         if (!ej) { showToast('No hay ningún ejercicio corriendo en este momento.', 'warning'); return; }
 
-        const max = maxIntentosPara(doc);
+        const max = CONFIG.MAX_INTENTOS;
         for (let intento = 0; intento < max; intento++) {
             if (estado.cancelado) return;
             mostrarProgreso(intento + 1);
@@ -893,20 +866,19 @@
     }
 
     /**
-     * Sin documento: una sola pasada (los datos salen de `capitulo`).
-     * Con documento: solo reintenta si el ejercicio tiene calculadoras/diagramas
-     * y aún no coincide con el enunciado resuelto.
+     * Reintenta (hasta MAX_INTENTOS) mientras el enunciado generado no coincida
+     * con el del documento resuelto, o si falla un diagrama.
      */
     async function procesarEjercicio(doc, ej) {
-        const max = maxIntentosPara(doc);
+        const max = CONFIG.MAX_INTENTOS;
         for (let intento = 0; intento < max; intento++) {
             if (estado.cancelado) return false;
 
             await iniciarOReiniciar(ej, intento);
             if (estado.cancelado) return false;
 
-            const resuelto = resolverEjercicio(doc, ej);
-            if (doc && necesitaDocumento(ej) && !resuelto) { await clickCorregir(ej); continue; }
+            const resuelto = buscarEjercicioResuelto(doc, ej);
+            if (necesitaDocumento(ej) && !resuelto) { await clickCorregir(ej); continue; }
 
             const { diagramaFallo } = await rellenarContenidoEjercicio(ej, resuelto);
             await clickCorregir(ej);
@@ -933,13 +905,12 @@
         }
 
         if (procesados === 0 && omitidos > 0) showToast(`No se inyectó nada: ${omitidos} omitidos por filtros.`, 'info');
-        else if (procesados === 0) showToast(doc ? 'No se encontró coincidencia por ID en el archivo.' : 'No hay ejercicios para procesar.', 'warning');
+        else if (procesados === 0) showToast('No se encontró coincidencia por ID en el archivo.', 'warning');
     }
 
     // =========================================================================
     // 17. ORQUESTADOR PRINCIPAL
     // =========================================================================
-    /** doc = null → modo directo (solo datos de `capitulo`). */
     async function ejecutarInyeccion(doc) {
         activarEscudoFoco();
         const modo = ui.selectModo.value;
@@ -978,19 +949,6 @@
         }
     }
 
-    async function alClickDirecto() {
-        if (ui.btnDirecto.disabled) return;
-        if (typeof capitulo === 'undefined') { showToast('Error: objeto "capitulo" no cargado.', 'error'); return; }
-
-        bloquearUI();
-        try {
-            await ejecutarInyeccion(null);
-        } catch (err) {
-            showToast(err.message || 'Error en modo directo.', 'error');
-            resetearUI();
-        }
-    }
-
     function alClickLocal() {
         if (!ui.btnLocal.disabled) ui.inputFile.click();
     }
@@ -1016,7 +974,6 @@
         document.addEventListener('click', alHacerClic, true);
         ui.btnCerrar.addEventListener('click', limpiarRastro);
         ui.btnPestana.addEventListener('click', alternarMenu);
-        ui.btnDirecto.addEventListener('click', alClickDirecto);
         ui.btnGitHub.addEventListener('click', alClickGitHub);
         ui.btnLocal.addEventListener('click', alClickLocal);
         ui.inputFile.addEventListener('change', alElegirArchivo);
