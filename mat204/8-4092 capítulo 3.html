@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<head>
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Language" content="es">
+
+  <title>8-4092 capítulo 3</title>
+  
+    <!-- Librería y hoja de estilos KATEX  -->
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/katex/katex.min.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/katex/katex.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/katex/contrib/auto-render.min.js"></script>
+
+    <!-- Librerías y hojas de estilo CodeMirror -->
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/lib/codemirror.min.css">
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/theme/mdn-like.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/lib/codemirror.min.js"></script>
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/fold/foldgutter.min.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/fold/foldcode.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/fold/brace-fold.min.js"></script>
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/dialog/dialog.min.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/dialog/dialog.min.js"></script>
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/hint/show-hint.min.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/hint/show-hint.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/hint/javascript-hint.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/search/searchcursor.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/search/search.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/edit/matchbrackets.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/edit/closebrackets.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/comment/comment.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/addon/wrap/hardwrap.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/javascript/javascript.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/mathematica/mathematica.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/octave/octave.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/python/python.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/css/css.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/xml/xml.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/markdown/markdown.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/mode/htmlmixed/htmlmixed.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/codemirror/keymap/sublime.min.js"></script>
+
+    <!-- Librería Plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script><style id="plotly.js-style-global"></style>
+
+    <!-- Librerías y hojas de estilo function-plot -->
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/function-plot/site/js/vendor/d3.min.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/function-plot/dist/function-plot.js"></script>
+    
+    <!-- Librería quantities -->
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/quantities/quantities.min.js"></script>
+
+    <!-- Librería GoJs para la creación de diagramas de flujo -->
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/gojs/release/go.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/flowchart_gojs.js"></script>
+
+    <!-- Librerías matemáticas propias -->
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/math.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/number.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/array.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/string.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/cplx.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/function.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/object.js"></script>
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/prq.js"></script>
+
+    <!-- Librería y hoja de estilos propias para la creación y manejo de la calculadora  -->
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/src/cjs.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/cjs.js"></script>
+
+    <!-- Librería y hoja de estilos propias para la creación y manejo de los capítulos -->
+    <link rel="stylesheet" href="https://cursosabiertos.usfx.bo/materias/librerias/src/texto.css">
+    <script src="https://cursosabiertos.usfx.bo/materias/librerias/src/texto.js"></script>
+   
+    <!-- Librería del capítulo actual -->
+    <script src="https://cursosabiertos.usfx.bo/materias/mat204/capitulos/capitulo3/files/capitulo3.js"></script>
+
+    <!-- Fuentes empleadas en el capítulo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro&amp;family=Darker+Grotesque:wght@300;400;500;600;700;800&amp;family=Roboto+Mono&amp;display=swap" rel="stylesheet">
+
+    <script>
+        function katexRender() {
+            renderMathInElement(document.getElementById("capitulo"));
+        }
+        document.addEventListener("DOMContentLoaded", katexRender);
+        window.onerror = function(msg, url, lineNo, columnNo, error) {
+            __error__ = msg;
+        };
+        window.onload = function(){
+            capitulo.iniciar();
+        };
+    </script>
+
+</head>
+
+<body class="text">  
+
+
+<div id="capitulo">
+
+  <button id="btGuardar" style="z-index:15;" onclick="savePage()">Guardar</button>
+
+    <h1 class="text" onclick="alerta(capitulo.idPagina,'')" style="cursor: pointer;">Elementos del lenguaje 2</h1>
+
+    <p class="text">Continuando con el estudio de los elementos del lenguaje, en este capítulo se estudian otros tipos de datos de uso frecuente.</p>
+
+
+
+    <h2 class="text">Datos de tipo cadena (String)</h2>
+
+    <p class="text">Los datos en programación pueden ser igualmente de tipo texto, conocidos como cadenas de caracteres o simplemente cadenas (<dfn class="style1">strings</dfn> por su denominación en inglés).</p>
+
+    <p class="text">Las cadenas se crean escribiendo el texto entre comillas o entre apóstrofos. También pueden ser creadas escribiendo el texto entre acentos graves: <b class="style1">` `</b> (tildes invertidas).</p>
+
+    <p class="text">Por ejemplo, en las siguientes instrucciones se asignan dos cadenas a las variables "s1" y "s2":</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">var s1 = "Programación en",<br>    s2 = "JavaScript";<br>print(s1, s2)</div>
+        <div class="resultado"></div>
+    </div>
+    
+    <p class="text">En JavaScript, las variables no tienen un tipo de dato predefinido. Las variables toman su tipo del valor que se les asigna, así, las variables a las que se les asigna un número, son de tipo numérico (<dfn class="style1">number</dfn>) y las variables a las que se les asigna una cadena, como es el caso de "s1" y "s2", son de tipo cadena (<dfn class="style1">string</dfn>).</p>
+
+    <p class="text">El tipo de dato de una variable puede ser determinado con el operador <dfn class="style1">typeof</dfn>, por ejemplo, para averiguar el tipo de dato de las variables "s1" y "s2", se escribe:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">print(typeof s1, typeof s2)</div>
+        <div class="resultado"></div>
+    </div>
+    
+    <p class="text">Como era de esperar, <dfn class="style1">typeof</dfn>, informa que las variables son de tipo cadena (<dfn class="style1">string</dfn>). Si se crean tres variables: "n1", "n2" y "n3", con tres números y se imprime su tipo de dato, se obtiene:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">var n1 = 12, n2 = 16, n3 = 21;<br>print(typeof n1, typeof n2, typeof n3)</div>
+        <div class="resultado"></div>
+    </div>
+    
+    <p class="text">Con las cadenas se puede emplear el operador de suma (<b class="style1">+</b>), que en el caso de las cadenas, concatena (une) dos o más cadenas, como se muestra en las siguientes instrucciones:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">s1+s2</div>
+        <div class="resultado"></div>
+        <div class="instruccion">var s3 = 'Juan Carlos', s4 = 'Romero Céspedes';<br>s3+' '+ s4</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Observe que, para concatenar los nombres y los apellidos (s3 y s4), se añade un espacio (' ') para evitar que el segundo nombre y el primer apellido queden juntos.</p>
+    
+    <p class="text">Como ya se vio, las variables pueden ser declaradas también con <dfn class="style1">let</dfn> y <dfn class="style1">const</dfn>, pero estos comandos se emplean casi siempre al interior de las funciones (y otros bloques de código).</p>
+
+    <p class="text">Si se crea un texto con comillas, en su interior los apóstrofos son tratados como texto normal, igualmente, si se crea un texto con apóstrofos, en su interior las comillas son tratadas como texto normal:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">print("El tipo de una 'variable' se obtiene con 'typeOf'")</div>
+        <div class="resultado"></div>
+        <div class="instruccion">print('El "texto", en programación, se denomina "cadena"')</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Para escribir comillas, en un texto creado con comillas, se debe escribir un quebrado invertido (<strong class="type">\</strong>) delante de las comillas (lo que se denomina <dfn class="style1">secuencia de escape</dfn>). Igualmente, en un texto creado con apóstrofos, se debe escribir un quebrado invertidio (<strong class="type">\</strong>) delante de los apóstrofos:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">print("El tipo de una \"variable\" se obtiene con 'typeOf'")</div>
+        <div class="resultado"></div>
+        <div class="instruccion">print('El \'texto\', en programación, se denomina "cadena"')</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Como se dijo, las cadenas pueden ser creadas también con acentos graves y, en ese caso, se denominan <dfn class="style1">plantillas literales</dfn> (o <dfn class="style1">plantillas cadena</dfn>) porque es posible incorporar en ellas expresiones JavaScript. Además, dentro de las plantillas literales se pueden emplear saltos de línea, así como comillas y apóstrofos:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">print(`Las variables en "JavaScript"<br>pueden ser declaradas con<br>'var', 'let' o 'const'.`)</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Para insertar una expresión JavaScript en una plantilla literal, se sigue la sintaxis: <b class="style1">${expresión_JavaScript}</b>. Por ejemplo, en la siguiente instrucción, se crea una plantilla literal que muestra el resultado de calcular la raíz cuadrada de 2 (en este caso, al ser la última instrucción, no es necesario emplear "print"):</p>
+    
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">print(`La raíz cuadrada de 2 es: ${Math.sqrt(2)}`)</div>
+        <div class="resultado"></div>
+    </div>
+    
+    <p class="text">En la siguiente, se muestra el resultado de calcular la hipotenusa de dos números:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">`La hipotenusa de 5 y 8 es: ${Math.hypot(5,8)}`</div>
+        <div class="resultado"></div>
+    </div>
+    
+    <p class="text">Y en la siguiente, se crea la variable "n1" con el número 3.187, se calcula el seno hiperbólico de "n1", se guarda el resultado en la variable "senoh" y se muestra el mensaje respectivo en una plantilla literal: </p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">var n1 = 3.187;<br>var senoh = Math.sinh(n1);<br>`El seno hiperbólico de ${n1} es: ${senoh}`</div>
+        <div class="resultado"></div>
+    </div>
+    
+    <p class="text">El mismo resultado puede ser obtenido empleando el operador de concatenación (<strong class="style1">+</strong>):</p>
+
+    <div class="calculadora" spellcheck="false">
+    <div class="instruccion">"El seno hiperbólico de "+n1+" es: "+senoh</div>
+    <div class="resultado"></div>
+    </div>
+
+    <p class="text">Cuando se emplea el operador "+", JavaScript realiza automáticamente las operaciones de conversión necesarias. En el ejemplo, convierte los valores de "n1" y "senoh" en cadenas y luego las une a las cadenas existentes. Sin embargo, las plantillas literales son más compactas y permiten escribir cadenas con saltos de línea y emplear comillas simples y dobles en su interior. </p>
+
+    <p class="text">Las cadenas de caracteres son de uso frecuente en programación, pues la mayoría de la información que se recibe del y/o muestra al usuario, está en forma de texto.</p>
+
+    <p class="text">En el siguiente ejemplo y en los ejercicios correspondientes, se emplearán dos funciones (métodos) disponibles en JavaScript (en el objeto Windows) para pedir y mostrar información: <strong class="style1">alert</strong> y <strong class="style1">prompt</strong>.</p>
+
+    <p class="text">La instrucción <b class="style1">alert</b> despliega un cuadro de diálogo con un mensaje correspondiente a la información que se quiere mostrar y un botón <dfn class="style1">Aceptar</dfn>, en el que se debe hacer clic para cerrar el cuadro de diálogo. El cuadro de diálogo se muestra sobre la página.</p>
+    
+    <p class="text">Su sintaxis es la siguiente:</p>
+
+    <div class="codigo">alert("mensaje")</div>
+
+    <p class="text">Donde <dfn class="style1">mensaje</dfn> es el texto que aparece en el cuadro de diálogo.</p>
+
+    <p class="text">La instrucción <b class="style1">prompt</b> despliega un cuadro de diálogo donde el usuario puede escribir texto.</p>
+
+    <p class="text">El cuadro de diálogo <dfn class="style1">prompt</dfn> tiene dos botones: <dfn class="style1">Aceptar</dfn> y <dfn class="style1">Cancelar</dfn>. Si el usuario pulsa el botón Aceptar, <dfn class="style1">prompt</dfn> devuelve el texto escrito, si pulsa Cancelar, <dfn class="style1">prompt</dfn> devuelve <dfn class="style1">null</dfn> (nulo).</p>
+
+    <p class="text">Su sintaxis es la siguiente:</p>
+
+    <div class="codigo">variable = prompt("mensaje", "valor por defecto")</div>
+
+    <p class="text">Donde: <dfn class="style1">mensaje</dfn> es el texto que se muestra, en el cuadro de diálogo, para orientar al usuario con relación a la información que se le solicita.</p>
+    
+    <p class="text"><dfn class="style1">Valor por defecto</dfn>, es el texto que aparece inicialmente en el campo donde el usuario debe escribir el texto. Este texto sirve de ejemplo para el usuario. Este parámetro puede ser omitido (o ser una cadena vacía: ""), en cuyo caso no aparece ningún texto inicial en el cuadro de diálogo.</p>
+
+    <p class="text">El valor que devuelve esta función es siempre de tipo texto (String), por lo que para transformarla en número (u otro tipo de dato) se debe emplear alguna de las funciones (u operadores) disponibles en el lenguaje. Por ejemplo, para convertir el texto escrito por el usuario en un número, se pueden emplear las funciones: <dfn class="style1">parseFloat</dfn>, <dfn class="style1">parseInt</dfn> y <dfn class="style1">eval</dfn>. Además, la mayoría de las funciones y operadores matemáticos, convierten automáticamente el texto a número cuando así se requiere.</p>   
+
+    <p class="text">Por ejemplo, en las siguientes instrucciones se pide al usuario, con la función <dfn class="style1">prompt</dfn>, que escriba un número. Ese número es guardado en la variable "valor", pero es un texto (no un número). En este caso el texto es convertido automáticamente en número por la función <dfn class="style1">cbrt</dfn>. Luego, se emplea una plantilla literal para convertir el resultado (que es un número) en texto y mostrarla al usuario con <dfn class="style1">alert</dfn>, finalmente se muestra el mismo resultado en la calculadora (evalúe la instrucción, con Shift+Enter, para ver en acción "prompt" y "alert").</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">var valor = prompt("Escriba un número válido:","0");<br>var rcubica = Math.cbrt(valor);<br>alert(`La raíz cúbica de ${valor} es: ${rcubica}`);<br>`La raíz cúbica de ${valor} es: ${rcubica}`</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Después de ejecutar las anteriores instrucciones, podrá comprobar que la variable "valor" es de tipo cadena (string), no "undefined" como se muestra en este momento:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">print(typeof valor, typeof rcubica)</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">El ejemplo puede ser resuelto también calculando directamente el resultado en la instrucción <dfn class="style1">alert</dfn>:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">var valor = prompt("Escriba un número válido:","0");<br>alert(`La raíz cúbica de ${valor} es: ${Math.cbrt(valor)}`);<br>`La raíz cúbica de ${valor} es: ${Math.cbrt(valor)}`</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Si bien muchas de las conversiones de texto a número y viceversa, son manejadas automáticamente por JavaScript, se debe tener presente que la información introducida por el usuario está en forma de texto y que la información mostrada al usuario está, también, en forma de texto.</p>
+
+    <p class="text">Las cadenas (strings) tienen varios métodos que permiten manipularlas. Estos métodos serán presentados y estudiados, a medida que se requieran. Por el momento, sin embargo, es suficiente conocer las tres formas en que pueden ser creadas y saber que el operador (<b class="style1">+</b>) puede ser empleado para concatenarlas (unirlas).</p>
+
+    <div class="ejercicio" id="ejercicio1" enunciado="3"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span>Empleando apóstrofos cree las variables "s1" y "s2", con los textos: "Datos de", "tipo cadena", luego concatene s1 y s2, añadiendo un espacio al medio.</p></div><p class="pregunta"><span class="pregunta"></span></p><div id="pregunta4" class="calculadora" spellcheck="false"><div class="instruccion">var s1 = 'Datos de';<br>var s2 = 'tipo cadena';<br>s1+' '+s2</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="5" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div> <!-- ejercicio 1 -->
+
+    <div class="ejercicio" id="ejercicio2" enunciado="4"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span>Empleando una plantilla literal, escriba una instrucción que muestre el texto "El valor de 3.82 elevado a 2.16 es: ", seguido del valor correspondiente a 3.82<sup>2.16</sup>.</p></div><p class="pregunta"><span class="pregunta"></span></p><div id="pregunta10" class="calculadora" spellcheck="false"><div class="instruccion">`El valor de 3.82 elevado a 2.16 es: ${3.82**2.16}`</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="5" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div> <!-- ejercicio 2 -->
+
+    <div class="ejercicio" id="ejercicio3" enunciado="2"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span>Guarde en la variable "x" el número 0.35, calcule y guarde en la variable "r", el logaritmo en base 10 de ese número, luego muestre el texto: "El logaritmo en base 10 de (número), es: (valor_logaritmo)". Donde (número), es el número guardado y (valor_logaritmo), es el logaritmo en base 10 calculado. .</p></div><p class="pregunta"><span class="pregunta"></span></p><div id="pregunta13" class="calculadora" spellcheck="false"><div class="instruccion">var x = 0.35;<br>var r = Math.log10(x);<br>`El logaritmo en base 10 de ${x}, es: ${r}`</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="6" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div> <!-- ejercicio 3 -->
+
+    <div class="ejercicio" id="ejercicio4" enunciado="0"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span>Guarde en la variable "x" el número 7.12, calcule y guarde en la variable "r" la raíz séptima del número, luego, empleando una plantilla literal, muestre el texto: "La raíz séptima de  (número), es: (raíz_séptima)". Donde (número) es el número guardado y (raíz_séptima) es la raíz séptima calculada.</p></div><p class="pregunta"><span class="pregunta"></span></p><div id="pregunta14" class="calculadora" spellcheck="false"><div class="instruccion">var x = 7.12;<br>var r = Math.nthroot(x, 7);<br>`La raíz séptima de ${x}, es: ${r}`</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="6" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div> <!-- ejercicio 4 -->
+
+    <div class="ejercicio" id="ejercicio5" enunciado="0"><hr><div class="enunciado"><p class="ejercicio extern"><span class="ejercicio"></span>Escriba las instrucciones para pedir un número, en un prompt, con el mensaje: "Escriba un número válido", calcule con el mismo el logaritmo natural del número y muestre el resultado en un alert, con el formato: "El logaritmo natural de (número) es: (resultado)", donde (número) es el número introducido por el usuario y (resultado) es el resultado calculado.</p></div><p class="pregunta"><span class="pregunta"></span></p><div id="pregunta17" class="calculadora" spellcheck="false"><div class="instruccion">var n = prompt("Escriba un número válido");<br>var r = Math.log(n);<br>alert(`El logaritmo natural de ${n} es: ${r}`);</div><div class="resultado"></div></div><p class="pregunta" id="pregunta18"><span class="pregunta"></span>Ejecutando las instrucciones del anterior inciso para un número igual a 12.5, el resultado obtenido es: <span class="campo_arrastrar correcta" tabindex="0" data-opciones="2.5257286443082556&amp;@%3.2257286443082556&amp;@%4.8932286443082556&amp;@%2.182937233082556" onclick="Pregunta.mostrarOpcionesCampo(this)" onkeydown="if (event.key=='Enter' || event.key==' ') {Pregunta.mostrarOpcionesCampo(this); event.preventDefault(); event.stopPropagation();}">2.5257286443082556</span>.</p><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="7" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div> <!-- ejercicio 5 -->
+
+    <div class="ejercicio" id="ejercicio6" enunciado="1"><hr><div class="enunciado"><p class="ejercicio extern"><span class="ejercicio"></span>Escriba las instrucciones para pedir un número (el radio "r"), en un prompt, con el mensaje: "Escriba un número válido", calcule con el mismo el área (a) de un círculo (πr<sup>2</sup>) y muestre el resultado en un alert, con el formato (plantilla literal): "El área de un círculo de radio (número) es: (resultado)", donde (número) es el número introducido por el usuario y (resultado) es el resultado calculado.</p></div><p class="pregunta"><span class="pregunta"></span></p><div id="pregunta25" class="calculadora" spellcheck="false"><div class="instruccion">var r = prompt("Escriba un número válido");<br>var a = Math.PI*r**2;<br>alert(`El área de un círculo de radio ${r} es: ${a}`);</div><div class="resultado"></div></div><p class="pregunta" id="pregunta26"><span class="pregunta"></span>Ejecutando las instrucciones del anterior inciso para un número igual a 4, el resultado obtenido es: <span class="campo_arrastrar correcta" tabindex="0" data-opciones="51.35448245743669&amp;@%50.26548245743669&amp;@%52.12548245743669&amp;@%54.21748245743669" onclick="Pregunta.mostrarOpcionesCampo(this)" onkeydown="if (event.key=='Enter' || event.key==' ') {Pregunta.mostrarOpcionesCampo(this); event.preventDefault(); event.stopPropagation();}">50.26548245743669</span>.</p><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="7" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div> <!-- ejercicio 6 -->
+
+
+    
+    <h2 class="text">Datos de tipo booleano (Boolean)</h2>
+
+    <p class="text">Los datos de tipo <dfn class="style1">booleano</dfn> (de tipo lógico) sólo pueden tener uno de dos valores <dfn class="style1">true</dfn> (verdadero) o <dfn class="style1">false</dfn> (falso). El resultado de cualquier expresión relacional (o lógica), es siempre un valor booleano, tal como se demuestra en los siguientes ejemplos:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">var b1 = true;<br>var b2 = false;<br>var b3 = 34&gt;20;<br>var b4 = 7==6;<br>print(b1, b2, b3, b4);<br>print(typeof b1, typeof b2, typeof b3, typeof b4);</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">En JavaScript se pueden emplear (en primera instancia) los siguientes operadores relacionales:</p>
+        
+    <div class="table borderAll">
+        <table align="center" style="width:290px;">
+            <caption>Operadores Relacionales</caption>
+            <tbody><tr><th style="width:72px">Operador</th><th>Descripción</th></tr>
+            <tr><td class="center"><dfn>==</dfn></td><td>Igual a</td></tr>
+            <tr><td class="center"><dfn><span style="font-style:normal">!</span>=</dfn></td><td>Diferente de</td></tr>
+            <tr><td class="center"><dfn>&gt;</dfn></td><td>Mayor a</td></tr>
+            <tr><td class="center"><dfn>&lt;</dfn></td><td>Menor a</td></tr>
+            <tr><td class="center"><dfn>&gt;=</dfn></td><td>Mayor o igual a</td></tr>
+            <tr><td class="center"><dfn>&lt;=</dfn></td><td>Menor o igual a</td></tr>
+        </tbody></table>
+    </div>
+
+    <p class="text">Que tienen el mismo significado (la misma semántica) que los operadores matemáticos equivalentes (=, ≠, &gt;, &lt;, ≥, ≤). Así, <dfn class="style1">&gt;=</dfn> (≥), es verdadero (devuelve <dfn class="style1">true</dfn>) si el valor a su izquierda es mayor o igual al valor a su derecha (existen dos operadores relacionales más, pero los mismos serán estudiados posteriormente).</p>
+
+    <div class="ejercicio" id="ejercicio7" enunciado="0"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span>Cree cuatro variables booleanas con los valores falso (false), verdadero (true), la negación (!) de 3 es menor a 7 y el resultado de 23 es menor o igual a 50, imprima (con print) sus valores e imprima (con print) sus tipos.</p></div><p class="pregunta"><span class="pregunta"></span></p><div id="pregunta29" class="calculadora" spellcheck="false"><div class="instruccion">var a = false, b = true, c = !(3&lt;7), d = 23&lt;=50;<br>print(a, b, c, d);<br>print(typeof a, typeof b, typeof c, typeof d);</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="6" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div> <!-- ejercicio 7 -->
+
+
+
+    <h2 class="text">Datos de tipo arreglo (Array)</h2>
+
+    <p class="text">Otro tipo de dato de uso frecuente son los arreglos (vectores y matrices), más conocidos como arrays (por su denominación en inglés). En JavaScript, los arreglos se declaran simplemente escribiendo sus elementos (separados con comas) entre corchetes, como se muestra en los siguientes ejemplos:</p>
+
+    <div class="calculadora" spellcheck="false"><div class="instruccion">var v1 = [1, 2, 3, 4, 5];<br>var v2 = ["a", "b", "c", "d", "e"];<br>print(v1, v2);<br>print(typeof v1, typeof v2);</div>
+    <div class="resultado"></div>
+    </div>
+
+    <p class="text">En estas instrucciones se han creado dos arreglos "v1" y "v2", el primero con 5 números y el segundo con 5 letras, sin embargo, como se puede ver, al imprimir el tipo de dato se obtiene <dfn class="style1">object</dfn>, no como se esperaría <dfn class="style1">array</dfn>.</p>
+    
+    <p class="text">Esto se debe a que los arreglos no son un tipo de dato primitivo (un tipo de dato base), sino mas bien un tipo de dato estructurado (compuesto por dos o más datos de tipo simple). En JavaScript, el tipo arreglo, ha sido implementado en una clase, la clase <dfn class="style1">Array</dfn>. Todos los arreglos son instancias (objetos) de la clase Array, por esa razón (dado que son objetos), cuando se pide su tipo se obtiene <dfn class="style1">object</dfn>.</p>
+        
+    <p class="text">Para obtener el tipo de dato, más propiamente la clase de objeto, se debe recuperar el nombre del constructor del objeto (el nombre de la clase):</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">print(v1.constructor.name, v2.constructor.name)</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Por lo tanto, "v1" y "v2" son objetos de la clase Array.</p>
+    
+    <p class="text">Para emplear los elementos de un arreglo, se escribe su nombre (el nombre de la variable) y entre corchetes su índice (su posición). La primera posición, el índice del primer elemento, es 0.</p>
+    
+    <p class="text">Los elementos de un array se emplean igual que una variable normal de ese  tipo. Así un elemento de tipo numérico, se emplea igual que cualquier variable de tipo Number, un elemento de tipo cadena se emplea igual que cualquier variable de tipo String, etc.</p>
+
+    <p class="text">Por ejemplo, en la siguiente instrucción, se calcula la raíz cúbica de la suma del primer, tercer y quinto elementos del arreglo "v1":</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">Math.cbrt(v1[0]+v1[2]+v1[4])</div>
+        <div class="resultado"></div>
+    </div>
+    
+    <p class="text">En JavaScript, los arreglos son dinámicos. Esto significa que su tamaño (el número de elementos) puede ser modificado en cualquier momento, lo que es de mucha utilidad cuando se elaboran programas de propósito general.</p>
+    
+    <p class="text">En JavaScript, los elementos no sólo pueden ser de cualquier tipo, sino que, un mismo arreglo, puede tener elementos de diferentes tipos. Por ejemplo, en la siguiente instrucción, se crea un arreglo con datos de tipo cadena, numéricos, booleanos y Array:</p>
+
+    <div class="calculadora" spellcheck="false">
+        <div class="instruccion">var v3 = ["uno", 1, "dos", 2, true, false, ["r", "s"], 2.1e34];<br>v3</div>
+        <div class="resultado"></div>
+    </div>
+
+    <p class="text">Los arreglos en Javascript tienen varios métodos, algunos de los cuales serán introducidos a medida que se requieran, mientras que el resto serán estudiados en un capítulo dedicado a los mismos. Por el momento es suficiente saber como se declaran (se crean) y como se utilizan para realizar operaciones simples.</p>
+
+    <div class="ejercicio" id="ejercicio8" enunciado="1"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span>Cree una variable "x" con los elementos: 2, 5, 7, 8 y 9, la variable "y" con las letras "e", "f", "g", "k" y "m", muestre (con print) el valor de las dos variables y muestre (con print) el constructor de las variables.</p></div><p class="pregunta"><span class="pregunta"></span></p><div id="pregunta35" class="calculadora" spellcheck="false"><div class="instruccion">var x = [2, 5, 7, 8, 9];<br>var y = ["e", "f", "g", "k", "m"];<br>print(x, y);<br>print(x.constructor.name, y.constructor.name);</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="8" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div> <!-- ejercicio 8 -->
+
+    <div class="ejercicio" id="ejercicio9" enunciado="2"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span>Cree la variable Array "v" con los elementos: 2, 6, 11, 14, 22, 33 y calcule y muestre (con print) la suma del primer y quinto elementos, calcule (y muestre con print) la hipotenusa (hypot) del segundo y sexto elementos y calcule (y muestre con print) el exponente de la suma del tercer y cuarto elementos.</p></div><p class="pregunta"><span class="pregunta"></span></p><div id="pregunta39" class="calculadora" spellcheck="false"><div class="instruccion">var v = [2, 6, 11, 14, 22, 33];<br>print(v[0]+v[4]);<br>print(Math.hypot(v[1],v[5]));<br>print(Math.exp(v[2]+v[3]));</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="8" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div> <!-- ejercicio 9 -->
+
+    <div class="ejercicio" id="ejercicio10" enunciado="1"><hr><div class="enunciado"><p class="ejercicio"><span class="ejercicio"></span>Cree la variable "x" con los elementos: 2, 5, 7, 8 y 9, calcule y guarde en la variable "p" el producto de sus elementos, luego muestre el texto (plantilla literal): "El producto de los elementos de [(vector)], es: (producto)", donde (vector) es el vector creado y (producto) es el producto calculado.</p></div><p class="pregunta"><span class="pregunta"></span></p><div id="pregunta43" class="calculadora" spellcheck="false"><div class="instruccion">var x = [2, 5, 7, 8, 9];<br>var p = x[0] * x[1] * x[2] * x[3] * x[4];<br>`El producto de los elementos de [${x}], es: ${p}`</div><div class="resultado"></div></div><br><label style="margin-left:0px;">Nota: </label><input type="text" class="itmostrar notas" value="100" disabled="disabled"><label style="padding-left:25px;">Puntos: </label><input type="text" class="itmostrar notas" value="10" disabled="disabled"><button class="btRepetir" style="margin-left:25px;" onclick="Ejercicio.repetir(event)">Repetir</button><hr></div> <!-- ejercicio 10 -->
+
+
+
+
+    <div id="generarPrueba" data-scroll-y="12085.912109375"><br><hr><label class="lnotacapitulo">Nota del capítulo: </label><input type="text" id="notaCapitulo" disabled="disabled" class="itnotacapitulo"><br><br><button id="btGenerarPrueba" style="visibility: visible;" onclick="capitulo.registrarCapitulo()">Iniciar defensa</button><button id="btEmplearBono" style="margin-left:1.1rem;width:9.686rem;display:none;" onclick="capitulo.emplearBono()">Emplear Bono</button><br><br></div>
+
+
+<d id="dAutor" style="font-size: 0.9rem;text-align:center;color: #0808f24f;font-weight:bolder;position:fixed;top: 5px;right: 5px;user-select:none;display:inline-block;z-index:15;">Hernan G. Peñaranda V.</d></div><!-- Cierre del div capítulo -->
+          
+<span id="dato" style="display:none;">JK5KCZ0q938lCZ0oDYGuBJGmEJ8aCJCsC2GsE2GsE2GnC30aC2GpGNflU000</span>
+<span id="reg" style="display:none;">D30mC34mEpKmC30mCJipC30nEp4nC30xCJ4mC3ioC34mEp4nC30mC3ioC34mEpCmC34mC3ioC34m</span>
+
+
+
+
+<div id="divDialogo" style="display: none;"><div onfocus="document.querySelector('#divDialogo input').focus();"><div>Carnet universitario</div><div>Escriba el número de su carnet universitario, verificando que el guión haya sido correctamente insertado.</div><input type="text" onkeydown="return Capitulo.divDialogo.funKeydown(event)" onkeyup="Capitulo.divDialogo.funKeyup(event)"><div><button onclick="Capitulo.divDialogo.funClick('aceptar');">Aceptar</button><button style="margin-left:35px;" onclick="Capitulo.divDialogo.funClick('cancelar');">Cancelar</button></div></div></div></body>
